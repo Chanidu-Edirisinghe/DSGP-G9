@@ -1,0 +1,85 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+
+- intent: know_diabetes
+  examples: |
+    - what is diabetes?
+    - can you explain diabetes?
+    - tell me about diabetes
+    - what does diabetes mean?
+    - explain diabetes in simple terms
+    - give me information about diabetes
+    - what are the basics of diabetes?
+    - help me understand diabetes
+
+- intent: know_chronic
+  examples: |
+    - what is a chronic disease?
+    - can you explain chronic diseases?
+    - tell me about chronic illnesses
+    - what does chronic disease mean?
+    - explain chronic diseases in simple terms
+    - what are chronic conditions?
+    - how does a disease become chronic?
+    - give me information about chronic diseases
+    - what are some examples of chronic illnesses?
+    - help me understand chronic diseases
+
+- intent: know_insulin
+  examples: |
+    - What is insulin?
+    - Can you tell me about insulin?
+    - Explain insulin.
+    - What does insulin do?
+    - What is the function of insulin in the body?
+    - How does insulin work?
+
+- intent: give_sources
+  examples: |
+    - what are your sources?
+    - where do you get your information from?
+    - can you share your sources?
+    - where did you find that information?
+    - what references do you use?
+    - where do you pull your data from?
+    - can you tell me the sources of this info?
+    - what data supports this?
+    - who are the authors of this information?
+    - how do you know this is accurate?
+

@@ -1,0 +1,37 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - bot_challenge
+  - know_diabetes
+  - know_chronic
+  - give_sources
+  - know_insulin
+
+responses:
+  utter_greet:
+  - text: "Hi there! I'm a medical chatbot specializing in diabetes. Feel free to ask me anything about diabetes—I'm here to help!"
+
+  utter_goodbye:
+  - text: "Bye. Have a wonderful day."
+
+  utter_iamabot:
+  - text: "I am a medical chatbot, powered by Rasa."
+
+  utter_diabetes:
+  - text: "Diabetes is a chronic disease that occurs either when the pancreas does not produce enough insulin or when the body cannot effectively use the insulin it produces."
+
+  utter_chronic:
+  - text: "Chronic diseases are defined broadly as conditions that last 1 year or more and require ongoing medical attention or limit activities of daily living or both."
+
+  utter_insulin:
+  - text: " Insulin is a hormone that regulates blood glucose."
+
+  utter_sources:
+  - text: "My sources are: \n1) https://www.who.int/news-room/fact-sheets/detail/diabetes\n
+          2) https://www.cdc.gov/chronic-disease/about/index.html"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

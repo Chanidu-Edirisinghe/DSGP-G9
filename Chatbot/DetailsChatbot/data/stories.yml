@@ -1,0 +1,18 @@
+version: "3.1"
+
+stories:
+
+- story: gain knowledge
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: know_diabetes
+  - action: utter_diabetes
+  - intent: know_chronic
+  - action: utter_chronic
+  - intent: give_sources
+  - action: utter_sources
+  - intent: know_insulin
+  - action: utter_insulin
+
+
