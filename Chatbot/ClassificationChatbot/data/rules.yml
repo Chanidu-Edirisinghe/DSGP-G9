@@ -1,0 +1,23 @@
+version: "3.1"
+
+rules:
+
+- rule: Activate diabetes classification form
+  steps:
+  - intent: request_diabetes_prediction
+  - action: utter_gather_data
+  - action: diabetes_classification_form
+  - active_loop: diabetes_classification_form
+
+- rule: Submit diabetes classification form
+  condition: 
+  - active_loop: diabetes_classification_form
+  steps:
+  - action: diabetes_classification_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_submit
+  - action: utter_diabetic_slots
+  - action: action_clear_slots
+  - action: utter_diabetic_slots

@@ -1,0 +1,52 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+
+- intent: request_diabetes_prediction
+  examples: |
+    - Can you predict my diabetic status?
+    - Am I diabetic?
+    - I want to know if I might have diabetes.
+    - Can you tell if I have diabetes?
+    - Predict my diabetes risk.
+    - Can you analyze my health for diabetes?
+    - I need a prediction about my diabetes status.
+    - Can you help me check if I am diabetic?
+    - Will you predict if I have diabetes?
+    - Tell me if I am diabetic or not.
+
