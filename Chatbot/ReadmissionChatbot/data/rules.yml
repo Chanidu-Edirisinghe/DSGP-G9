@@ -1,0 +1,23 @@
+version: "3.1"
+
+rules:
+
+- rule: Activate diabetes readmission form
+  steps:
+  - intent: request_readmission_prediction
+  - action: utter_gather_data
+  - action: diabetes_readmission_form
+  - active_loop: diabetes_readmission_form
+
+- rule: Submit diabetes readmission form
+  condition: 
+  - active_loop: diabetes_readmission_form
+  steps:
+  - action: diabetes_readmission_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_submit
+  - action: utter_all_slots
+  - action: action_clear_slots
+  - action: utter_all_slots
