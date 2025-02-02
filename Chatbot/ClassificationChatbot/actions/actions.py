@@ -242,38 +242,38 @@ class ValidateDiabetesForm(FormValidationAction):
             dispatcher.utter_message(text="Please provide a numeric age value.")
             return {"age": None}  
 
-    def validate_income(
-        self,
-        value: Text,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: DomainDict,
-    ) -> Dict[Text, Any]:
-        try:
-            income_value = float(value)
+    # def validate_income(
+    #     self,
+    #     value: Text,
+    #     dispatcher: CollectingDispatcher,
+    #     tracker: Tracker,
+    #     domain: DomainDict,
+    # ) -> Dict[Text, Any]:
+    #     try:
+    #         income_value = float(value)
             
-            if income_value >= 0 and income_value < 10000:
-                return {"income": 1}
-            elif income_value >= 10000 and income_value < 15000:
-                return {"income": 2}
-            elif income_value >= 15000 and income_value < 20000:
-                return {"income": 3}
-            elif income_value >= 20000 and income_value < 25000:
-                return {"income": 4}
-            elif income_value >= 25000 and income_value < 35000:
-                return {"income": 5}
-            elif income_value >= 35000 and income_value < 50000:
-                return {"income": 6}
-            elif income_value >= 50000 and income_value < 75000:
-                return {"income": 7}
-            elif income_value >= 75000:
-                return {"income": 8}
-            else:
-                dispatcher.utter_message(text="Please provide a valid income value between $0 and $75000.")
-                return {"income": None}
-        except ValueError:
-            dispatcher.utter_message(text="Please provide a numeric income value.")
-            return {"income": None}  
+    #         if income_value >= 0 and income_value < 10000:
+    #             return {"income": 1}
+    #         elif income_value >= 10000 and income_value < 15000:
+    #             return {"income": 2}
+    #         elif income_value >= 15000 and income_value < 20000:
+    #             return {"income": 3}
+    #         elif income_value >= 20000 and income_value < 25000:
+    #             return {"income": 4}
+    #         elif income_value >= 25000 and income_value < 35000:
+    #             return {"income": 5}
+    #         elif income_value >= 35000 and income_value < 50000:
+    #             return {"income": 6}
+    #         elif income_value >= 50000 and income_value < 75000:
+    #             return {"income": 7}
+    #         elif income_value >= 75000:
+    #             return {"income": 8}
+    #         else:
+    #             dispatcher.utter_message(text="Please provide a valid income value between $0 and $75000.")
+    #             return {"income": None}
+    #     except ValueError:
+    #         dispatcher.utter_message(text="Please provide a numeric income value.")
+    #         return {"income": None}  
         
 
 class ActionClearSlots(Action):
@@ -291,5 +291,4 @@ class ActionClearSlots(Action):
                 SlotSet("mentHealth", None),
                 SlotSet("diffWalk", None),
                 SlotSet("sex", None),
-                SlotSet("age", None),
-                SlotSet("income", None)]
+                SlotSet("age", None)]

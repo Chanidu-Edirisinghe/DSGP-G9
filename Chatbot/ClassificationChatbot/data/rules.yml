@@ -18,6 +18,6 @@ rules:
   - slot_was_set:
     - requested_slot: null
   - action: utter_submit
-  - action: utter_diabetic_slots
+  - action: utter_all_slots
   - action: action_clear_slots
-  - action: utter_diabetic_slots
+  - action: utter_all_slots

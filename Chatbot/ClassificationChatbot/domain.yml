@@ -121,13 +121,13 @@ slots:
           - active_loop: diabetes_classification_form
             requested_slot: age
 
-  income:
-    type: float
-    mappings:
-      - type: from_text
-        conditions:
-          - active_loop: diabetes_classification_form
-            requested_slot: income
+  # income:
+  #   type: float
+  #   mappings:
+  #     - type: from_text
+  #       conditions:
+  #         - active_loop: diabetes_classification_form
+  #           requested_slot: income
 
 forms:
   diabetes_classification_form:
@@ -143,7 +143,7 @@ forms:
       - diffWalk
       - sex
       - age
-      - income
+
     
 
 actions:
@@ -195,9 +195,7 @@ responses:
   utter_ask_age:
     - text: "What is your age?"
   
-  utter_ask_income:
-    - text: "What is your annual household income from all sources? (in USD)"
-  
+
   # diabetic readmission form questions
 
 
@@ -208,8 +206,19 @@ responses:
   utter_submit:
     - text: "Details submitted."
 
-  utter_diabetic_slots:
-    - text: "High blood pressure is {high_blood_pressure} and high cholesterol is {high_cholesterol} and BMI is {bmi}."
+  utter_all_slots:
+    - text: |
+        High blood pressure: {high_blood_pressure}
+        High cholesterol: {high_cholesterol}
+        BMI: {bmi}
+        Smoker: {smoker}
+        Physical activity: {physical_activity}
+        Fruits: {fruits}
+        Veggies: {veggies}
+        Mental Health: {mentHealth}
+        Difficulty Walking: {diffWalk}
+        Sex: {sex}
+        Age: {age}
 
   
 
