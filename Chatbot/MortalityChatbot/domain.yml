@@ -1,0 +1,452 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - bot_challenge
+  - request_mortality_prediction
+
+slots:
+  age:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: age
+
+  bmi:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: bmi
+
+  pre_icu_los_days:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: pre_icu_los_days
+
+  d1_diasbp_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_diasbp_max
+
+  d1_diasbp_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_diasbp_min
+
+  d1_heartrate_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_heartrate_max
+
+  d1_heartrate_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_heartrate_min
+
+  d1_mbp_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_mbp_max
+
+  d1_mbp_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_mbp_min
+
+  d1_resprate_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_resprate_max
+
+  d1_resprate_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_resprate_min
+
+  d1_spo2_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_spo2_min
+
+  d1_sysbp_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_sysbp_max
+
+  d1_sysbp_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_sysbp_min
+
+  d1_temp_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_temp_max
+
+  d1_temp_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_temp_min
+
+  h1_diasbp_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: h1_diasbp_max
+
+  h1_diasbp_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: h1_diasbp_min
+
+  h1_heartrate_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: h1_heartrate_max
+
+  h1_heartrate_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: h1_heartrate_min
+
+  h1_mbp_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: h1_mbp_max
+
+  h1_mbp_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: h1_mbp_min
+
+  h1_spo2_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: h1_spo2_max
+
+  h1_spo2_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: h1_spo2_min
+
+  h1_resprate_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: h1_resprate_max
+
+  h1_resprate_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: h1_resprate_min
+
+  h1_sysbp_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: h1_sysbp_max
+
+  h1_sysbp_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: h1_sysbp_min
+
+  d1_potassium_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_potassium_max
+
+  d1_potassium_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_potassium_min
+
+  d1_glucose_max:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_glucose_max
+
+  d1_glucose_min:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: d1_glucose_min
+
+forms:
+  mortality_prediction_form:
+    required_slots:
+      - age
+      - bmi
+      - pre_icu_los_days
+      - d1_diasbp_max
+      - d1_diasbp_min
+      - d1_heartrate_max
+      - d1_heartrate_min
+      - d1_mbp_max
+      - d1_mbp_min
+      - d1_resprate_max
+      - d1_resprate_min
+      - d1_spo2_min
+      - d1_sysbp_max
+      - d1_sysbp_min
+      - d1_temp_max
+      - d1_temp_min
+      - h1_diasbp_max
+      - h1_diasbp_min
+      - h1_heartrate_max
+      - h1_heartrate_min
+      - h1_mbp_max
+      - h1_mbp_min
+      - h1_spo2_max
+      - h1_spo2_min
+      - h1_resprate_max
+      - h1_resprate_min
+      - h1_sysbp_max
+      - h1_sysbp_min
+      - d1_potassium_max
+      - d1_potassium_min
+      - d1_glucose_max
+      - d1_glucose_min
+
+actions:
+  - validate_mortality_prediction_form
+  - action_clear_slots
+
+responses:
+  utter_greet:
+    - text: "Hello! I can help assess a patient's mortality risk based on clinical data."
+
+  utter_goodbye:
+    - text: "Goodbye! Stay healthy."
+
+  utter_iamabot:
+    - text: "I am a bot, powered by Rasa."
+
+  # mortality form questions
+
+  utter_ask_age:
+    - text: "What is the patient's age?"
+
+  utter_ask_bmi:
+    - text: "Please provide the patient's BMI."
+
+  utter_ask_pre_icu_los_days:
+    - text: "How many days was the patient in ICU before?"
+
+  utter_ask_d1_diasbp_max:
+    - text: "What is the patient's day-1 max diastolic blood pressure?"
+
+  utter_ask_d1_diasbp_min:
+    - text: "What is the patient's day-1 min diastolic blood pressure?"
+
+  utter_ask_d1_heartrate_max:
+    - text: "What is the patient's day-1 max heart rate?"
+
+  utter_ask_d1_heartrate_min:
+    - text: "What is the patient's day-1 min heart rate?"
+
+  utter_ask_d1_mbp_max:
+    - text: "What is the patient's day-1 max mean blood pressure?"
+
+  utter_ask_d1_mbp_min:
+    - text: "What is the patient's day-1 min mean blood pressure?"
+
+  utter_ask_d1_resprate_max:
+    - text: "What is the patient's day-1 max respiratory rate?"
+
+  utter_ask_d1_resprate_min:
+    - text: "What is the patient's day-1 min respiratory rate?"
+
+  utter_ask_d1_spo2_min:
+    - text: "What is the patient's day-1 min SpO2?"
+
+  utter_ask_d1_sysbp_max:
+    - text: "What is the patient's day-1 max systolic blood pressure?"
+
+  utter_ask_d1_sysbp_min:
+    - text: "What is the patient's day-1 min systolic blood pressure?"
+
+  utter_ask_d1_temp_max:
+    - text: "What is the patient's day-1 max temperature?"
+
+  utter_ask_d1_temp_min:
+    - text: "What is the patient's day-1 min temperature?"
+
+  utter_ask_h1_diasbp_max:
+    - text: "What is the patient's hour-1 max diastolic blood pressure?"
+
+  utter_ask_h1_diasbp_min:
+    - text: "What is the patient's hour-1 min diastolic blood pressure?"
+
+  utter_ask_h1_heartrate_max:
+    - text: "What is the patient's hour-1 max heart rate?"
+
+  utter_ask_h1_heartrate_min:
+    - text: "What is the patient's hour-1 min heart rate?"
+
+  utter_ask_h1_mbp_max:
+    - text: "What is the patient's hour-1 max mean blood pressure?"
+
+  utter_ask_h1_mbp_min:
+    - text: "What is the patient's hour-1 min mean blood pressure?"
+
+  utter_ask_h1_resprate_max:
+    - text: "What is the patient's hour-1 max respiratory rate?"
+
+  utter_ask_h1_resprate_min:
+    - text: "What is the patient's hour-1 min respiratory rate?"
+
+  utter_ask_h1_spo2_max:
+    - text: "What is the patient's hour-1 max SpO2?"
+
+  utter_ask_h1_spo2_min:
+    - text: "What is the patient's hour-1 min SpO2?"
+
+  utter_ask_h1_sysbp_max:
+    - text: "What is the patient's hour-1 max systolic blood pressure?"
+
+  utter_ask_h1_sysbp_min:
+    - text: "What is the patient's hour-1 min systolic blood pressure?"
+
+  utter_ask_d1_glucose_max:
+    - text: "What is the patient's day-1 max glucose?"
+
+  utter_ask_d1_glucose_min:
+    - text: "What is the patient's day-1 min glucose?"
+
+  utter_ask_d1_potassium_max:
+    - text: "What is the patient's day-1 max potassium?"
+    
+  utter_ask_d1_potassium_min:
+    - text: "What is the patient's day-1 min potassium?"
+
+  utter_all_slots:
+    - text: |
+        age: {age}
+        bmi: {bmi}
+        pre_icu_los_days: {pre_icu_los_days}
+        d1_diasbp_max: {d1_diasbp_max}
+        d1_diasbp_min: {d1_diasbp_min}
+        d1_heartrate_max: {d1_heartrate_max}
+        d1_heartrate_min: {d1_heartrate_min}
+        d1_mbp_max: {d1_mbp_max}
+        d1_mbp_min: {d1_mbp_min}
+        d1_resprate_max: {d1_resprate_max}
+        d1_resprate_min: {d1_resprate_min}
+        d1_spo2_min: {d1_spo2_min}
+        d1_sysbp_max: {d1_sysbp_max}
+        d1_sysbp_min: {d1_sysbp_min}
+        d1_temp_max: {d1_temp_max}
+        d1_temp_min: {d1_temp_min}
+        h1_diasbp_max: {h1_diasbp_max}
+        h1_diasbp_min: {h1_diasbp_min}
+        h1_heartrate_max: {h1_heartrate_max}
+        h1_heartrate_min: {h1_heartrate_min}
+        h1_mbp_max: {h1_mbp_max}
+        h1_mbp_min: {h1_mbp_min}
+        h1_resprate_max: {h1_resprate_max}
+        h1_resprate_min: {h1_resprate_min}
+        h1_spo2_max: {h1_spo2_max}
+        h1_spo2_min: {h1_spo2_min}
+        h1_sysbp_max: {h1_sysbp_max}
+        h1_sysbp_min: {h1_sysbp_min}
+        d1_glucose_max: {d1_glucose_max}
+        d1_glucose_min: {d1_glucose_min}
+        d1_potassium_max: {d1_potassium_max}
+        d1_potassium_min: {d1_potassium_min}
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
