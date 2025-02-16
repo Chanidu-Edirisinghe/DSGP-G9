@@ -8,11 +8,19 @@
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     padding: 1rem;
     background: linear-gradient(135deg, #6a11cb, #2575fc);
+    filter: brightness(0.9);
     color: white;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  .chat-heading{
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 5rem;
+    text-align: center;
   }
   
   .chat-messages {
@@ -28,7 +36,7 @@
   
   /* Custom scrollbar styling */
   .chat-messages::-webkit-scrollbar {
-    width: 12px; /* Adjust scrollbar width */
+    width: 6px;
   }
   
   .chat-messages::-webkit-scrollbar-thumb {
@@ -54,18 +62,20 @@
   
   .message-card {
     padding: 0.5rem;
-    max-width: 16rem;
+    max-width: 50rem;
     border-radius: 0.5rem;
   }
   
   .message-card.user {
     background: #6a11cb;
     color: white;
+    font-size: 20px;  
   }
   
   .message-card.bot {
     background: #2575fc;
     color: white;
+    font-size: 20px;
   }
   
   .chat-input {
@@ -74,7 +84,7 @@
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     padding: 0.5rem;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 0;
+    border-radius: 10px;
   }
   
   .input-field {
@@ -83,7 +93,13 @@
     border: none;
     border-radius: 0.5rem;
     background: rgba(255, 255, 255, 0.2);
-    color: white;
+    color: black;
+  }
+
+  .input-field:focus {
+    outline: none;
+    border: 2px solid white;
+    /* box-shadow: 0 0 5px black; */
   }
   
   .input-field::placeholder {
