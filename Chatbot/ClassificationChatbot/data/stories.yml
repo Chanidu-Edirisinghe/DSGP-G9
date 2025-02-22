@@ -12,5 +12,5 @@ stories:
 
   - story: Say 'I am a bot' anytime the user challenges
     steps:
-    - intent: bot_challenge
-    - action: utter_iamabot
+      - intent: bot_challenge
+      - action: utter_iamabot

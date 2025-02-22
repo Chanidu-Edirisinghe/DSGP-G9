@@ -22,7 +22,12 @@ class ValidateDiabetesForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         # Normalize the input to lowercase and strip spaces
         normalized_value = value.lower().strip()
+
+        # Check if the user wants to exit
+        if tracker.latest_message['intent'].get('name') == "quit":
+            return { "requested_slot": None}
         
+
         # Validate the input
         if normalized_value in ["yes", "y"]:
             return {"high_blood_pressure": "1"}

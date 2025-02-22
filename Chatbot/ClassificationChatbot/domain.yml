@@ -5,8 +5,7 @@ intents:
   - goodbye
   - bot_challenge
   - request_diabetes_prediction
-
-
+  - quit
 
 slots:
   high_blood_pressure:
@@ -19,7 +18,7 @@ slots:
         conditions:
           - active_loop: diabetes_classification_form
             requested_slot: high_blood_pressure
-  
+
   high_cholesterol:
     type: categorical
     values:
@@ -38,7 +37,7 @@ slots:
         conditions:
           - active_loop: diabetes_classification_form
             requested_slot: bmi
-  
+
   smoker:
     type: categorical
     values:
@@ -60,7 +59,7 @@ slots:
         conditions:
           - active_loop: diabetes_classification_form
             requested_slot: physical_activity
-  
+
   fruits:
     type: categorical
     values:
@@ -71,7 +70,7 @@ slots:
         conditions:
           - active_loop: diabetes_classification_form
             requested_slot: fruits
-  
+
   veggies:
     type: categorical
     values:
@@ -82,7 +81,7 @@ slots:
         conditions:
           - active_loop: diabetes_classification_form
             requested_slot: veggies
-  
+
   mentHealth:
     type: float
     mappings:
@@ -144,30 +143,32 @@ forms:
       - sex
       - age
 
-    
-
 actions:
   - action_clear_slots
   - validate_diabetes_classification_form
+  - action_deactivate_loop
 
 responses:
   utter_greet:
     - text: "Hey! I am a medical chatbot that can help you assess your diabetic status."
-  
+
+  utter_form_exit:
+    - text: "Exiting form."
+
   utter_goodbye:
     - text: "Bye. Have a nice day."
-  
+
   utter_iamabot:
     - text: "I am a bot, powered by Rasa."
-  
+
   # diabetic classification form questions
 
   utter_ask_high_blood_pressure:
     - text: "Do you have high blood pressure? Please answer 'yes' or 'no'."
-  
+
   utter_ask_high_cholesterol:
     - text: "Do you have high cholesterol? Please answer 'yes' or 'no'."
-  
+
   utter_ask_bmi:
     - text: "What is your BMI value?"
 
@@ -176,7 +177,7 @@ responses:
 
   utter_ask_physical_activity:
     - text: "In the past 30 days, have you participated in any physical activity or exercise outside of your job? Please answer 'yes' or 'no'."
-  
+
   utter_ask_fruits:
     - text: "Do you consume fruits one or more times per day? Please answer 'yes' or 'no'."
 
@@ -191,18 +192,13 @@ responses:
 
   utter_ask_sex:
     - text: "What is your sex? Please answer 'male' or 'female'."
-  
+
   utter_ask_age:
     - text: "What is your age?"
-  
-
-  # diabetic readmission form questions
-
-
 
   utter_gather_data:
     - text: "I can guide you in getting your diabetic status classified. Please answer the next set of questions."
-  
+
   utter_submit:
     - text: "Details submitted."
 
@@ -219,8 +215,6 @@ responses:
         Difficulty Walking: {diffWalk}
         Sex: {sex}
         Age: {age}
-
-  
 
 session_config:
   session_expiration_time: 60
