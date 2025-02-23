@@ -21,12 +21,12 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  height: 60px; /* Ensuring the navbar has a set height */
+  height: 60px;
   z-index: 100;
 }
 
 .logo {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
   color: #6a11cb;
 }
@@ -35,11 +35,7 @@ body {
   list-style: none;
   display: flex;
   gap: 20px;
-  margin-right: auto; 
-}
-
-.navbar ul li {
-  display: inline;
+  margin-right: auto;
 }
 
 .navbar ul li a {
@@ -52,45 +48,91 @@ body {
 .navbar ul li a:hover {
   color: #6a11cb;
 }
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  margin: 40px 10%;
+}
 
-/* Main container to align the form properly */
+.hero h1 {
+  font-size: 36px;
+}
+
+.hero p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* Content Section */
+.content {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 10%;
+}
+
+/* About Section */
+.info-box {
+  background: white;
+  color: #333;
+  padding: 30px;
+  border-radius: 12px;
+  width: 25%;
+  height: 650pt;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-box p{
+  line-height: 0.5cm;
+}
+.info-box h2 {
+  color: #6a11cb;
+}
+
+/* Main container */
 .main-container {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-top: 120px; /* Adjusted to ensure it does not touch the navbar */
+  margin-top: 120px;
 }
 
 /* Form container */
 .container {
   background: white;
-  padding: 25px;
+  padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  width: 420px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  width: 650px;
   text-align: center;
-  margin-top: 40%; /* Push the container down */
+  margin-bottom: 8%; /* Push the container down */
+  margin-top: 4%;
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Title */
+.container:hover {
+  transform: scale(1.02);
+}
+
 h1 {
-  font-size: 24px;
+  font-size: 26px;
   color: #333;
   font-weight: 600;
   margin-bottom: 15px;
 }
 
-/* Form container with scrollbar */
+/* Scrollable form container */
 .form-container {
-  max-height: 380px;
+  max-height: 700px;
   overflow-y: auto;
   width: 100%;
   padding-right: 10px;
 }
 
-/* Styling the scrollbar */
 .form-container::-webkit-scrollbar {
   width: 8px;
 }
@@ -104,38 +146,30 @@ h1 {
   background: #f1f1f1;
 }
 
-
-/* Form styles */
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Input fields */
+/* Input styles */
 .input-group {
-  margin-bottom: 12px;
+  margin-bottom: 15px;
+  text-align: left;
 }
 
 label {
   font-size: 14px;
   font-weight: 500;
-  display: block;
-  margin-bottom: 5px;
-  text-align: left;
   color: #444;
+  margin-bottom: 5px;
+  display: block;
 }
 
-input {
+input, select {
   width: 100%;
   padding: 10px;
   border: 2px solid #ccc;
   border-radius: 8px;
-  transition: 0.3s ease-in-out;
+  transition: 0.3s;
   font-size: 14px;
 }
 
-/* Input focus effect */
-input:focus {
+input:focus, select:focus {
   border-color: #6a11cb;
   box-shadow: 0 0 8px rgba(106, 17, 203, 0.3);
   outline: none;
@@ -145,21 +179,22 @@ input:focus {
 .submit-btn {
   background: linear-gradient(90deg, #6a11cb, #2575fc);
   color: white;
-  padding: 12px;
+  padding: 14px;
   border: none;
-  border-radius: 8px;
+  width: 100%;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-  transition: 0.3s ease-in-out;
+  transition: 0.3s;
   text-transform: uppercase;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
-/* Hover effect for button */
 .submit-btn:hover {
   background: linear-gradient(90deg, #2575fc, #6a11cb);
   box-shadow: 0 4px 12px rgba(106, 17, 203, 0.4);
+  transform: scale(1.05);
 }
 
 /* Prediction result */
@@ -168,7 +203,7 @@ input:focus {
   font-weight: bold;
   color: #28a745;
   font-size: 18px;
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
   background: #e3ffe3;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
