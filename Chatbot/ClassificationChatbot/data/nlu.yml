@@ -60,3 +60,27 @@ nlu:
       - leave
       - exit
       - done
+
+  - intent: affirm
+    examples: |
+      - yes
+      - indeed
+      - of course
+      - correct
+      - absolutely
+      - sure
+      - definitely
+      - yes please
+      - yes, I do
+
+  - intent: deny
+    examples: |
+      - no
+      - never
+      - I don't think so
+      - don't like that
+      - no way
+      - not really
+      - nope
+      - definitely no
+      - no, I don't

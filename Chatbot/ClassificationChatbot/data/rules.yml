@@ -8,26 +8,27 @@ rules:
       - action: diabetes_classification_form
       - active_loop: diabetes_classification_form
 
-  # - rule: Submit diabetes classification form
-  #   condition:
-  #     - active_loop: diabetes_classification_form
-  #   steps:
-  #     - action: diabetes_classification_form
-  #     - active_loop: null
-  #     - slot_was_set:
-  #         - requested_slot: null
-  #     - action: utter_submit
-  #     - action: utter_all_slots
-  #     - action: action_clear_slots
-  #     - action: utter_all_slots
-
-  - rule: Exit form when user says they want to exit
+  - rule: User quits the form
     condition:
       - active_loop: diabetes_classification_form
     steps:
-      - intent: quit
       - action: diabetes_classification_form
       - active_loop: null
       - slot_was_set:
           - requested_slot: null
+      - action: action_submit_details
+      - action: utter_ask_continue
+
+  - rule: User chooses to continue after quitting
+    steps:
+      - action: utter_ask_continue
+      - intent: affirm
+      - action: diabetes_classification_form
+      - active_loop: diabetes_classification_form
+
+  - rule: User chooses to exit after quitting
+    steps:
+      - action: utter_ask_continue
+      - intent: deny
+      - action: action_clear_slots
       - action: utter_form_exit

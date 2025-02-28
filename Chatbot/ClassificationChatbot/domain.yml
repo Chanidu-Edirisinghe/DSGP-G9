@@ -6,6 +6,8 @@ intents:
   - bot_challenge
   - request_diabetes_prediction
   - quit
+  - affirm
+  - deny
 
 slots:
   high_blood_pressure:
@@ -146,7 +148,7 @@ forms:
 actions:
   - action_clear_slots
   - validate_diabetes_classification_form
-  - action_deactivate_loop
+  - action_submit details
 
 responses:
   utter_greet:
@@ -160,6 +162,9 @@ responses:
 
   utter_iamabot:
     - text: "I am a bot, powered by Rasa."
+
+  utter_ask_continue:
+    - text: "Do you want to continue?"
 
   # diabetic classification form questions
 

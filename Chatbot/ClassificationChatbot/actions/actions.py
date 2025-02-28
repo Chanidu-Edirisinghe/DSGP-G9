@@ -12,6 +12,28 @@ from rasa_sdk.events import SlotSet
 class ValidateDiabetesForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_diabetes_classification_form"
+    
+    async def required_slots(
+            self,
+            domain_slots: List[Text],
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "DomainDict",
+        ) -> List[Text]:
+
+        # Get all current slot values from the tracker
+        current_slots = tracker.current_slot_values()
+        
+        # Print the slots and their values
+        print("Current slots and values:")
+        for slot_name, slot_value in current_slots.items():
+            print(f"  {slot_name}: {slot_value}")
+
+        print(f"Domain slots:{domain_slots}")
+        
+        # Return the copied list of required slots
+        updated_slots = domain_slots.copy()
+        return updated_slots
 
     def validate_high_blood_pressure(
         self,
@@ -22,18 +44,22 @@ class ValidateDiabetesForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         # Normalize the input to lowercase and strip spaces
         normalized_value = value.lower().strip()
+        print("Inside validate_high_blood_pressure")
 
-        # Check if the user wants to exit
-        if tracker.latest_message['intent'].get('name') == "quit":
-            return { "requested_slot": None}
+        if tracker.latest_message['intent'].get('name') == "quit":  
+            print("Inside quit condition")           
+            return {"high_blood_pressure": None, "requested_slot": None} 
         
 
         # Validate the input
-        if normalized_value in ["yes", "y"]:
+        if normalized_value in ["yes", "y", "1"]:
+            print("Set high_blood_pressure to 1")
             return {"high_blood_pressure": "1"}
-        elif normalized_value in ["no", "n"]:
+        elif normalized_value in ["no", "n", "0"]:
+            print("Set high_blood_pressure to 0")
             return {"high_blood_pressure": "0"}
         else:
+            print("Invalid input for high_blood_pressure")
             dispatcher.utter_message(text="Invalid input. Please respond with 'yes' or 'no'.")
             return {"high_blood_pressure": None}
         
@@ -46,13 +72,22 @@ class ValidateDiabetesForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         # Normalize the input to lowercase and strip spaces
         normalized_value = value.lower().strip()
+        print("Inside validate_high_cholesterol")
+
+        if tracker.latest_message['intent'].get('name') == "quit": 
+            print("Inside quit condition")            
+            return {"high_cholesterol": None, "requested_slot": None} 
+
         
         # Validate the input
-        if normalized_value in ["yes", "y"]:
+        if normalized_value in ["yes", "y", "1"]:
+            print("Set high_cholesterol to 1")
             return {"high_cholesterol": "1"}
-        elif normalized_value in ["no", "n"]:
+        elif normalized_value in ["no", "n", "0"]:
+            print("Set high_cholesterol to 0")
             return {"high_cholesterol": "0"}
         else:
+            print("Invalid input for high_cholesterol")
             dispatcher.utter_message(text="Invalid input. Please respond with 'yes' or 'no'.")
             return {"high_cholesterol": None}
 
@@ -63,6 +98,14 @@ class ValidateDiabetesForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
+        
+        print("Inside validate_bmi")
+
+
+        if tracker.latest_message['intent'].get('name') == "quit":    
+            print("Inside quit condition")         
+            return {"bmi": None, "requested_slot": None} 
+
         try:
             bmi_value = float(value)
             if bmi_value <= 0 or bmi_value > 100:  # Check for invalid BMI ranges
@@ -81,12 +124,21 @@ class ValidateDiabetesForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         # Normalize the input to lowercase and strip spaces
+
+        # if tracker.latest_message['intent'].get('name') == "quit":
+        #     all_slots = {slot: None for slot in tracker.slots.keys()}
+        #     all_slots["requested_slot"] = None
+        #     return all_slots
+        
+        if tracker.latest_message['intent'].get('name') == "quit":             
+            return {"smoker": None, "requested_slot": None} 
+
         normalized_value = value.lower().strip()
         
         # Validate the input
-        if normalized_value in ["yes", "y"]:
+        if normalized_value in ["yes", "y" "1"]:
             return {"smoker": "1"}
-        elif normalized_value in ["no", "n"]:
+        elif normalized_value in ["no", "n","0"]:
             return {"smoker": "0"}
         else:
             dispatcher.utter_message(text="Invalid input. Please respond with 'yes' or 'no'.")
@@ -297,3 +349,12 @@ class ActionClearSlots(Action):
                 SlotSet("diffWalk", None),
                 SlotSet("sex", None),
                 SlotSet("age", None)]
+
+
+class ActionSubmitDetails(Action):
+    def name(self) -> str:
+        return "action_submit_details"
+
+    def run(self, dispatcher, tracker, domain):
+        # Check if all the slot values are not None and send the details to the API
+        slot_values = tracker.current_slot_values()
