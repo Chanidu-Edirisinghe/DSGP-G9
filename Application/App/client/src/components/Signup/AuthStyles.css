@@ -1,0 +1,177 @@
+/* General layout and background for authentication */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: auto;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    padding: 20px;
+    margin-top: 0;
+  }
+  
+  .auth-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    max-height: 110vh;
+    overflow-y: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+  
+  .auth-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .auth-card h2 {
+    color: #6a11cb;
+    margin-bottom: 30px;
+    font-weight: 600;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+    width: 100%; /* Ensure the form group takes full width */
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .form-group input {
+    width: 100%; /* Ensure input takes up full width of its parent container */
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Include padding and border in the width */
+  }
+  
+  
+  .form-group input:focus {
+    outline: none;
+    border-color: #6a11cb;
+    box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.2);
+  }
+  
+  .auth-card button {
+    font-weight: 600;
+    border-radius: 16px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  /* Adjusted button styles */
+  .btn-primary {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    padding: 14px;
+    width: 100%; /* Keep the login button full width */
+    margin-top: 10px;
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(to right, #5a0db3, #1d65df);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+  }
+  
+  /* Limit the width of the Sign Up button */
+  .btn-secondary {
+    background: transparent;
+    color: #6a11cb;
+    border: 2px solid #6a11cb;
+    border-radius: 16px;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+    width: auto; /* Adjust width to auto to prevent overflow */
+    max-width: 100%; /* Limit the maximum width */
+  }
+  
+  .btn-secondary:hover {
+    background: rgba(106, 17, 203, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .auth-footer {
+    margin-top: 30px;
+  }
+  
+  .auth-footer p {
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .auth-card {
+    animation: fadeIn 1s ease;
+  }
+  
+  /* Media Queries for Responsive Design */
+  @media (max-height: 700px) {
+    .auth-card {
+      padding: 25px;
+    }
+  
+    .auth-card h2 {
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+  
+    .form-group {
+      margin-bottom: 15px;
+    }
+  
+    .form-group input {
+      padding: 10px;
+    }
+  
+    .auth-footer {
+      margin-top: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .auth-card {
+      padding: 25px 20px;
+      width: 95%;
+    }
+  
+    .auth-card h2 {
+      font-size: 1.4rem;
+    }
+  
+    .form-group input {
+      font-size: 14px;
+    }
+  
+    .auth-card button {
+      font-size: 14px;
+    }
+  
+    .btn-secondary {
+      width: 100%; /* Full width for small screens */
+    }
+  }
+  
