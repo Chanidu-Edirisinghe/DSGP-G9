@@ -1,18 +1,112 @@
 version: "3.1"
 
 stories:
+  - story: User asks about diabetes
+    steps:
+      - intent: know_diabetes
+      - action: utter_diabetes
 
-- story: gain knowledge
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: know_diabetes
-  - action: utter_diabetes
-  - intent: know_chronic
-  - action: utter_chronic
-  - intent: give_sources
-  - action: utter_sources
-  - intent: know_insulin
-  - action: utter_insulin
+  - story: User asks about chronic diseases
+    steps:
+      - intent: know_chronic
+      - action: utter_chronic
 
+  - story: User asks about insulin
+    steps:
+      - intent: know_insulin
+      - action: utter_insulin
 
+  - story: User asks for sources
+    steps:
+      - intent: give_sources
+      - action: utter_sources
+
+  - story: User asks about preventing diabetes
+    steps:
+      - intent: prevent_diabetes
+      - action: utter_prevent_diabetes
+
+  - story: User asks about diabetes symptoms
+    steps:
+      - intent: diabetes_symptoms
+      - action: utter_diabetes_symptoms
+
+  - story: User asks about diabetes complications
+    steps:
+      - intent: diabetes_complications
+      - action: utter_diabetes_complications
+
+  - story: User asks about type 1 diabetes
+    steps:
+      - intent: type1_diabetes_information
+      - action: utter_type1_diabetes_information
+
+  - story: User asks about type 2 diabetes
+    steps:
+      - intent: type2_diabetes_information
+      - action: utter_type2_diabetes_information
+
+  - story: User asks about gestational diabetes
+    steps:
+      - intent: gestational_diabetes_information
+      - action: utter_gestational_diabetes
+
+  - story: User asks about prediabetes
+    steps:
+      - intent: prediabetes_information
+      - action: utter_prediabetes
+
+  - story: User asks about type 1 diabetes symptoms
+    steps:
+      - intent: type1_diabetes_symptoms
+      - action: utter_type1_diabetes_symptoms
+
+  - story: User asks about type 2 diabetes symptoms
+    steps:
+      - intent: type2_diabetes_symptoms
+      - action: utter_type2_diabetes_symptoms
+
+  - story: User asks about gestational diabetes symptoms
+    steps:
+      - intent: gestational_diabetes_symptoms
+      - action: utter_gestational_diabetes_symptoms
+
+  - story: User asks about type 1 diabetes risk factors
+    steps:
+      - intent: type1_diabetes_risk_factors
+      - action: utter_type1_diabetes_risk_factors
+
+  - story: User asks about type 1 diabetes causes
+    steps:
+      - intent: type1_diabetes_causes
+      - action: utter_type1_diabetes_causes
+
+  - story: User asks about diabetes testing
+    steps:
+      - intent: diabetes_testing
+      - action: utter_diabetes_testing
+
+  - story: User asks about managing diabetes
+    steps:
+      - intent: managing_diabetes
+      - action: utter_managing_diabetes
+
+  - story: User asks about insulin and blood sugar management
+    steps:
+      - intent: insulin_blood_sugar_management
+      - action: utter_insulin_blood_sugar_management
+
+  - story: User asks about healthy lifestyle with diabetes
+    steps:
+      - intent: healthy_lifestyle_and_appointments
+      - action: utter_healthy_lifestyle_and_appointments
+
+  - story: User asks about type 2 diabetes risk factors
+    steps:
+      - intent: type2_diabetes_risk_factors
+      - action: utter_type2_diabetes_risk_factors
+
+  - story: User asks about type 2 diabetes causes
+    steps:
+      - intent: type2_diabetes_causes
+      - action: utter_type2_diabetes_causes

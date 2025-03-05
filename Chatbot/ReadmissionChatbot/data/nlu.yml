@@ -1,0 +1,52 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+
+- intent: request_readmission_prediction
+  examples: |
+    - Can you predict the likelihood of my patient being readmitted within 30 days?
+    - What is the 30-day readmission risk for my patient?
+    - Based on my patient's data, what are the chances of them being readmitted within 30 days?
+    - Run a readmission risk analysis for my patient.
+    - Does my patient have a high risk of being readmitted within the next 30 days?
+    - Generate a prediction on whether my patient will be readmitted within 30 days.
+    - Can you assess my patient's risk of hospital readmission within the next month?
+    - Is my patient at risk for a 30-day readmission? 
+    - Please analyze my patient's medical records and predict the likelihood of a hospital readmission within 30 days.
+
+

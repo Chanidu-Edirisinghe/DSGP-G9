@@ -1,0 +1,20 @@
+version: "3.1"
+
+rules:
+  - rule: Activate diabetes readmission form
+    steps:
+      - intent: request_readmission_prediction
+      - action: utter_gather_data
+      - action: diabetes_readmission_form
+      - active_loop: diabetes_readmission_form
+
+  - rule: The form ends
+    condition:
+      - active_loop: diabetes_readmission_form
+    steps:
+      - action: diabetes_readmission_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: action_submit_details # handle with custom action
+

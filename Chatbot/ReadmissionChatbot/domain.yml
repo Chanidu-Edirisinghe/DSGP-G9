@@ -1,0 +1,414 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - bot_challenge
+  - request_readmission_prediction
+
+slots:
+  continue_form:
+    type: categorical
+    initial_value: "yes"
+    values:
+      - "yes"
+      - "no"
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: continue_form
+  race:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: race
+
+  sex:
+    type: categorical
+    values:
+      - "0"
+      - "1"
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: sex
+
+  age:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: age
+
+  admission_type:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: admission_type
+
+  admission_source:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: admission_source
+
+  time_in_hospital:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: time_in_hospital
+
+  num_lab_procedures:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: num_lab_procedures
+
+  num_procedures:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: num_procedures
+
+  num_medications:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: num_medications
+
+  number_outpatient:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: number_outpatient
+
+  number_inpatient:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: number_inpatient
+
+  number_emergency:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: number_emergency
+
+  metformin:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: metformin
+
+  glipizide:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: glipizide
+
+  pioglitazone:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: pioglitazone
+
+  rosiglitazone:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: rosiglitazone
+
+  acarbose:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: acarbose
+
+  insulin:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: insulin
+
+  change:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: change
+
+  diag_1:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: diag_1
+
+  diag_2:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: diag_2
+
+  diag_3:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: diag_3
+
+forms:
+  diabetes_readmission_form:
+    required_slots:
+      - continue_form
+      - race
+      - sex
+      - age
+      - admission_type
+      - admission_source
+      - time_in_hospital
+      - num_lab_procedures
+      - num_procedures
+      - num_medications
+      - number_outpatient
+      - number_inpatient
+      - number_emergency
+      - metformin
+      - glipizide
+      - pioglitazone
+      - rosiglitazone
+      - acarbose
+      - insulin
+      - change
+      - diag_1
+      - diag_2
+      - diag_3
+
+actions:
+  - action_clear_slots
+  - validate_diabetes_readmission_form
+  - action_submit_details
+
+responses:
+  utter_greet:
+    - text: "Hey! I am a medical chatbot that can help you assess your patients' 30 day readmission possibility and mortality risk."
+
+  utter_goodbye:
+    - text: "Bye. Have a nice day."
+
+  utter_iamabot:
+    - text: "I am a bot, powered by Rasa."
+
+  # diabetic readmission form questions
+
+  utter_ask_race:
+    - text: |
+        What is the patient's race/ethnicity? Please select one:
+          1. Caucasian
+          2. Asian
+          3. African American
+          4. Hispanic
+          5. Other
+        Reply with the corresponding number.
+
+  utter_ask_sex:
+    - text: "What is the patient's sex? Please answer 'male' or 'female'."
+
+  utter_ask_age:
+    - text: "What is the patient's age?"
+
+  utter_ask_admission_type:
+    - text: |
+        What is the admission type? Please select one:
+          1. Emergency
+          2. Urgent
+          3. Elective
+          4. Newborn
+          5. Not Available
+          6. Trauma Center
+        Reply with the corresponding number.
+
+  utter_ask_admission_source:
+    - text: |
+        What is the admission source? Please select one:
+          1. Physician Referral
+          2. Clinic Referral
+          3. HMO Referral
+          4. Transfer from a hospital
+          5. Transfer from a Skilled Nursing Facility (SNF)
+          6. Transfer from another health care facility
+          7. Emergency Room
+          8. Court/Law Enforcement
+          9. Not Available
+          10. Transfer from critical access hospital
+          11. Normal Delivery
+          12. Sick Baby
+          13. Extramural Birth
+          14. Transfer from hospital inpatient/same facility result in a separate claim
+          15. Transfer from Ambulatory Surgery Center
+        Reply with the corresponding number.
+
+  utter_ask_time_in_hospital:
+    - text: "How many days have the patient been in the hospital?"
+
+  utter_ask_num_lab_procedures:
+    - text: "How many lab tests have been performed on the patient?"
+
+  utter_ask_num_procedures:
+    - text: "How many procedures (other than lab tests) have been performed on the patient?"
+
+  utter_ask_num_medications:
+    - text: "How many distinct generic names have been administered to the patient?"
+
+  utter_ask_number_outpatient:
+    - text: "How many outpatient visits have been made by the patient in the year preceding the current hospital admission?"
+
+  utter_ask_number_inpatient:
+    - text: "How many inpatient visits have been made by the patient in the year preceding the current hospital admission?"
+
+  utter_ask_number_emergency:
+    - text: "How many emergency visits have been made by the patient in the year preceding the current hospital admission?"
+
+  utter_ask_metformin:
+    - text: |
+        Was Metformin prescribed or was there a change in its dosage?
+        Please select one of the following numbers:
+          1. No (drug was not prescribed)
+          2. Down (dosage decreased)
+          3. Steady (dosage remained unchanged)
+          4. Up (dosage increased)
+
+  utter_ask_glipizide:
+    - text: |
+        Was Glipizide prescribed or was there a change in its dosage?
+        Please select one of the following numbers:
+          1. No (drug was not prescribed)
+          2. Down (dosage decreased)
+          3. Steady (dosage remained unchanged)
+          4. Up (dosage increased)
+
+  utter_ask_pioglitazone:
+    - text: |
+        Was Pioglitazone prescribed or was there a change in its dosage?
+        Please select one of the following numbers:
+          1. No (drug was not prescribed)
+          2. Down (dosage decreased)
+          3. Steady (dosage remained unchanged)
+          4. Up (dosage increased)
+
+  utter_ask_rosiglitazone:
+    - text: |
+        Was Rosiglitazone prescribed or was there a change in its dosage?
+        Please select one of the following numbers:
+          1. No (drug was not prescribed)
+          2. Down (dosage decreased)
+          3. Steady (dosage remained unchanged)
+          4. Up (dosage increased)
+
+  utter_ask_acarbose:
+    - text: |
+        Was Acarbose prescribed or was there a change in its dosage?
+        Please select one of the following numbers:
+          1. No (drug was not prescribed)
+          2. Down (dosage decreased)
+          3. Steady (dosage remained unchanged)
+          4. Up (dosage increased)
+
+  utter_ask_insulin:
+    - text: |
+        Was Insulin prescribed or was there a change in its dosage?
+        Please select one of the following numbers:
+          1. No (drug was not prescribed)
+          2. Down (dosage decreased)
+          3. Steady (dosage remained unchanged)
+          4. Up (dosage increased)
+
+  utter_ask_change:
+    - text: |
+        Did the diabetic medication change during the encounter (either dosage or generic name)?
+        Please select one of the following numbers:
+          1. Change (if there was a change)
+          2. No change (if there was no change)
+
+  utter_ask_diag_1:
+    - text: "What is the primary diagnosis? Please provide the ICD9 code."
+
+  utter_ask_diag_2:
+    - text: "What is the secondary diagnosis? Please provide the ICD9 code."
+
+  utter_ask_diag_3:
+    - text: "What is the tertiary diagnosis? Please provide the ICD9 code."
+
+  utter_gather_data:
+    - text: "I can guide you in getting your diabetic status classified. Please answer the next set of questions."
+
+  utter_submit:
+    - text: "Details submitted."
+
+  utter_all_slots:
+    - text: |
+        Race: {race}
+        Sex: {sex}
+        Age: {age}
+        Admission Type: {admission_type}
+        Admission Source: {admission_source}
+        Time in Hospital: {time_in_hospital}
+        Number of Lab Procedures: {num_lab_procedures}
+        Number of Procedures: {num_procedures}
+        Number of Medications: {num_medications}
+        Number Outpatient: {number_outpatient}
+        Number Inpatient: {number_inpatient}
+        Number Emergency: {number_emergency}
+        Metformin: {metformin}
+        Glipizide: {glipizide}
+        Pioglitazone: {pioglitazone}
+        Rosiglitazone: {rosiglitazone}
+        Acarbose: {acarbose}
+        Insulin: {insulin}
+        Primary Diagnosis: {diag_1}
+        Secondary Diagnosis: {diag_2}
+        Tertiary Diagnosis: {diag_3}
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

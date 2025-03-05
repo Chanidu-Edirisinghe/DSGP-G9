@@ -1,0 +1,55 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+
+- intent: request_mortality_prediction
+  examples: |
+    - Can you predict my patient's mortality risk?
+    - Can you predict the mortality risk of my patient?
+    - What is the mortality risk for my patient?
+    - Can you estimate the likelihood of my patient surviving?
+    - Please assess my patient's risk of death.
+    - How likely is my patient to survive based on their data?
+    - Can you provide a mortality prediction?
+    - Is there a high risk of mortality for my patient?
+    - What are the chances of my patient passing away?
+    - Based on the patient's condition, what is their survival probability?
+    - Can you analyze and predict my patient's life expectancy?
+    - Does my patient have a high risk of death?
+
+

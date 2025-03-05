@@ -1,0 +1,34 @@
+version: "3.1"
+
+rules:
+  - rule: Activate diabetes classification form
+    steps:
+      - intent: request_diabetes_prediction
+      - action: utter_gather_data
+      - action: diabetes_classification_form
+      - active_loop: diabetes_classification_form
+
+  - rule: User quits the form
+    condition:
+      - active_loop: diabetes_classification_form
+    steps:
+      - action: diabetes_classification_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: action_submit_details
+      - action: utter_ask_continue
+
+  - rule: User chooses to continue after quitting
+    steps:
+      - action: utter_ask_continue
+      - intent: affirm
+      - action: diabetes_classification_form
+      - active_loop: diabetes_classification_form
+
+  - rule: User chooses to exit after quitting
+    steps:
+      - action: utter_ask_continue
+      - intent: deny
+      - action: action_clear_slots
+      - action: utter_form_exit

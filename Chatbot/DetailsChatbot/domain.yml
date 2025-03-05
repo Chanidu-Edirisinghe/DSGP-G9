@@ -1,37 +1,157 @@
 version: "3.1"
 
 intents:
-  - greet
-  - goodbye
-  - bot_challenge
   - know_diabetes
   - know_chronic
-  - give_sources
   - know_insulin
+  - give_sources
+  - prevent_diabetes
+  - diabetes_symptoms
+  - diabetes_complications
+  - type1_diabetes_information
+  - type2_diabetes_information
+  - gestational_diabetes_information
+  - prediabetes_information
+  - type1_diabetes_symptoms
+  - type2_diabetes_symptoms
+  - gestational_diabetes_symptoms
+  - type1_diabetes_risk_factors
+  - type1_diabetes_causes
+  - diabetes_testing
+  - managing_diabetes
+  - insulin_blood_sugar_management
+  - healthy_lifestyle_and_appointments
+  - type2_diabetes_risk_factors
+  - type2_diabetes_causes
 
 responses:
-  utter_greet:
-  - text: "Hi there! I'm a medical chatbot specializing in diabetes. Feel free to ask me anything about diabetes—I'm here to help!"
-
-  utter_goodbye:
-  - text: "Bye. Have a wonderful day."
-
-  utter_iamabot:
-  - text: "I am a medical chatbot, powered by Rasa."
-
   utter_diabetes:
-  - text: "Diabetes is a chronic disease that occurs either when the pancreas does not produce enough insulin or when the body cannot effectively use the insulin it produces."
+    - text: "Diabetes is a chronic disease that occurs either when the pancreas does not produce enough insulin or when the body cannot effectively use the insulin it produces. There are three main types of diabetes: type 1, type 2, and gestational diabetes (diabetes while pregnant)."
 
   utter_chronic:
-  - text: "Chronic diseases are defined broadly as conditions that last 1 year or more and require ongoing medical attention or limit activities of daily living or both."
+    - text: "Chronic diseases are defined broadly as conditions that last 1 year or more and require ongoing medical attention or limit activities of daily living or both."
 
   utter_insulin:
-  - text: " Insulin is a hormone that regulates blood glucose."
+    - text: " Insulin is a hormone that regulates blood glucose."
 
   utter_sources:
-  - text: "My sources are: \n1) https://www.who.int/news-room/fact-sheets/detail/diabetes\n
-          2) https://www.cdc.gov/chronic-disease/about/index.html"
+    - text: |
+        My sources are:
+        1) https://www.who.int/news-room/fact-sheets/detail/diabetes
+        2) https://www.cdc.gov/chronic-disease/about/index.html
+        3) https://www.cdc.gov/diabetes/about/
+        4) https://www.cdc.gov/diabetes/about/about-type-1-diabetes.html
+        5) https://www.cdc.gov/diabetes/about/about-type-2-diabetes.html
+        6) https://www.cdc.gov/diabetes/signs-symptoms/index.html
 
+  utter_prevent_diabetes:
+    - text: "A healthy diet, regular physical activity, maintaining a normal body weight and avoiding tobacco use are ways to prevent or delay the onset of type 2 diabetes."
+
+  utter_diabetes_complications:
+    - text: "Over time, diabetes can damage blood vessels in the heart, eyes, kidneys, and nerves."
+    - text: "People with diabetes have a higher risk of health problems including heart attack, stroke, and kidney failure."
+    - text: "Diabetes can cause permanent vision loss by damaging blood vessels in the eyes."
+    - text: "Many people with diabetes develop problems with their feet from nerve damage and poor blood flow. This can cause foot ulcers and may lead to amputation."
+
+  utter_type1_diabetes_information:
+    - text: "Type 1 diabetes is thought to be caused by an autoimmune reaction (the body attacks itself by mistake). This reaction stops your body from making insulin. If you have type 1 diabetes, you'll need to take insulin every day to survive. Currently, no one knows how to prevent type 1 diabetes."
+
+  utter_type2_diabetes_information:
+    - text: "With type 2 diabetes, your body doesn't use insulin well and can't keep blood sugar at normal levels. It develops over many years and is usually diagnosed in adults. You may not notice any symptoms, so it's important to get tested if you're at risk."
+
+  utter_gestational_diabetes:
+    - text: "Gestational diabetes develops in pregnant women who have never had diabetes. If you have gestational diabetes, your baby could be at higher risk for health problems. Gestational diabetes usually goes away after your baby is born."
+
+  utter_prediabetes:
+    - text: "With prediabetes, blood sugar levels are higher than normal, but not high enough for a type 2 diabetes diagnosis. Prediabetes raises your risk for type 2 diabetes, heart disease, and stroke. Prediabetes can be prevented with lifestyle changes."
+
+  utter_diabetes_symptoms:
+    - text: |
+        Some common symptoms of diabetes include
+        Urinating (peeing) a lot, often at night  
+        Feeling very thirsty  
+        Losing weight without trying  
+        Feeling very hungry  
+        Having blurry vision  
+        Numbness or tingling in hands or feet  
+        Feeling very tired  
+        Having very dry skin  
+        Sores that heal slowly  
+        More infections than usual  
+
+        If you experience any of these symptoms, it's a good idea to consult a doctor and get your blood sugar tested.
+
+  utter_type1_diabetes_symptoms:
+    - text: |
+        People with type 1 diabetes may experience:
+        Nausea  
+        Vomiting  
+        Stomach pains   
+
+        Type 1 diabetes can develop at any age, often in just a few weeks or months, and symptoms can be severe. If you notice these signs, see a doctor for testing.
+
+  utter_type2_diabetes_symptoms:
+    - text: |
+        Type 2 diabetes symptoms often develop slowly over several years. Some people may not notice symptoms at all.
+        Since symptoms can be hard to spot, knowing your risk factors is important. If you're at risk, regular check-ups can help with early diagnosis.
+
+  utter_gestational_diabetes_symptoms:
+    - text: |
+        Gestational diabetes (diabetes during pregnancy) usually doesn't have noticeable symptoms. Since symptoms are rare, doctors recommend screening between 24 and 28 weeks of pregnancy.  
+        If diagnosed, managing blood sugar through healthy eating and physical activity can help protect both your health and your baby's health. If lifestyle changes aren't enough, your doctor may prescribe medication to assist in blood sugar control.
+
+  utter_type1_diabetes_risk_factors:
+    - text: |
+        The exact cause of type 1 diabetes is not clear, but there are a few known risk factors:
+        1) Family history: Having a parent, sibling, or close relative with type 1 diabetes increases the risk.
+        2) Age: Type 1 diabetes can develop at any age, but it is most commonly diagnosed in children, teens, or young adults.
+
+        While these are common risk factors, other factors may contribute to the development of type 1 diabetes, and ongoing research is working to better understand them.
+
+  utter_type1_diabetes_causes:
+    - text: |
+        Type 1 diabetes is caused by an autoimmune reaction where the body mistakenly attacks and destroys the insulin-producing beta cells in the pancreas. This process can take months or years before symptoms appear.
+        Certain genes can increase the risk of developing type 1 diabetes, but not everyone with these genes will get it. Environmental triggers, such as a virus, may also play a role. Diet and lifestyle habits do not cause type 1 diabetes.
+
+  utter_diabetes_testing:
+    - text: |
+        To screen for diabetes, a simple blood test is used. If you were tested at a health fair or pharmacy, it's important to follow up with a clinic or doctor's office to ensure the results are accurate.
+
+  utter_managing_diabetes:
+    - text: |
+        Managing diabetes is largely up to you, with support from your healthcare team, family, and others. It can be challenging, but every step you take to improve your health is valuable!
+        You can often manage your diabetes through healthy eating and being active. Regular physical activity, enough sleep, and relaxation exercises can help. Be sure to talk to your doctor and diabetes educator about ways to manage stress effectively.
+
+  utter_insulin_blood_sugar_management:
+    - text: |
+        For type 1 diabetes, you'll need to take insulin every day, either through insulin shots or an insulin pump. Insulin is essential to regulate blood sugar levels and provide energy to your body. 
+        Regular blood sugar checks are also necessary. Ask your doctor how often you should check your levels and what your target should be.
+
+  utter_healthy_lifestyle_and_appointments:
+    - text: |
+        Maintaining a healthy lifestyle is essential to managing diabetes:
+        - Choose healthy foods
+        - Stay physically active
+        - Keep your blood pressure and cholesterol under control
+        Regular appointments with your healthcare team will ensure you stay on track with your treatment plan and help you find new strategies if needed.
+
+  utter_type2_diabetes_risk_factors:
+    - text: |
+        You may be at risk for type 2 diabetes if you:
+        - Have prediabetes  
+        - Are overweight  
+        - Are 45 years or older  
+        - Have a parent, sibling, or close relative with type 2 diabetes  
+        - Are physically active less than 3 times a week  
+        - Have ever had gestational diabetes or given birth to a baby who weighed 9 pounds or more  
+        - Have non-alcoholic fatty liver disease  
+
+        If any of these apply to you, it's important to talk to your healthcare provider about your risk and steps you can take to prevent or manage type 2 diabetes.
+
+  utter_type2_diabetes_causes:
+    - text: |
+        Type 2 diabetes occurs when your body's cells become resistant to insulin, a hormone made by the pancreas. In type 2 diabetes, cells don't respond properly to insulin, causing the body to make more insulin to compensate. 
+        Over time, the pancreas can't produce enough insulin to keep blood sugar levels in check, leading to higher blood sugar levels. This condition can eventually develop into prediabetes and type 2 diabetes.
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

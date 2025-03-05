@@ -1,0 +1,31 @@
+version: "3.1"
+stories:
+  - story: Greet the user
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - story: User says goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: Say 'I am a bot' anytime the user challenges
+    steps:
+      - intent: bot_challenge
+      - action: utter_iamabot
+
+  - story: User chooses to continue after quitting
+    steps:
+      - action: utter_ask_continue
+      - intent: affirm
+      - action: diabetes_classification_form
+      - active_loop: diabetes_classification_form
+
+  - story: User chooses to exit after quitting
+    steps:
+      - action: utter_ask_continue
+      - intent: deny
+      - action: action_clear_slots
+      - action: utter_form_exit
+      - action: utter_greet
