@@ -28,3 +28,4 @@ stories:
       - intent: deny
       - action: action_clear_slots
       - action: utter_form_exit
+      - action: utter_greet

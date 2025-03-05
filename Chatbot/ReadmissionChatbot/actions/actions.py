@@ -13,6 +13,51 @@ class ValidateReadmissionForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_diabetes_readmission_form"
 
+    async def required_slots(
+            self,
+            domain_slots: List[Text],
+            dispatcher: "CollectingDispatcher",
+            tracker: "Tracker",
+            domain: "DomainDict",
+        ) -> List[Text]:
+
+        # Get all current slot values from the tracker
+        current_slots = tracker.current_slot_values()
+        
+        # Print the slots and their values
+        print("Current slots and values:")
+        for slot_name, slot_value in current_slots.items():
+            print(f"  {slot_name}: {slot_value}")
+
+        print(f"Domain slots:{domain_slots}")
+        
+        # Return the copied list of required slots
+        updated_slots = domain_slots.copy()
+        return updated_slots
+    
+    def validate_continue_form(
+        self,   
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        # Normalize the input to lowercase and strip spaces
+        normalized_value = value.lower().strip()
+        print("Inside validate_continue_form")
+
+        # Validate the input
+        if normalized_value in ["yes"]:
+            print("Continue with form")
+            return {"continue_form": "yes"}
+        elif normalized_value in ["no"]:
+            print("End form")
+            return {"continue_form": "no", "requested_slot": None}
+        else:
+            print("Invalid input")
+            dispatcher.utter_message(text="Invalid input. Please respond with 'yes' or 'no'.")
+            return {"continue_form": None}
+
     def validate_race(
         self,
         value: Text,
@@ -537,4 +582,14 @@ class ActionClearSlots(Action):
             SlotSet("diag_3", None)
         ]
 
+class ActionSubmitDetails(Action):
+    def name(self) -> str:
+        return "action_submit_details"
+
+    def run(self, dispatcher, tracker, domain):
+        # Check if all the slot values are not None and send the details to the API
+        slot_values = tracker.current_slot_values()
+        dispatcher.utter_message(text="Submitting the details to the API...")
+        return []
+    
 

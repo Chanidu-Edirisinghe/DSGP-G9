@@ -6,9 +6,18 @@ intents:
   - bot_challenge
   - request_readmission_prediction
 
-
-
 slots:
+  continue_form:
+    type: categorical
+    initial_value: "yes"
+    values:
+      - "yes"
+      - "no"
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: diabetes_readmission_form
+            requested_slot: continue_form
   race:
     type: text
     mappings:
@@ -16,7 +25,7 @@ slots:
         conditions:
           - active_loop: diabetes_readmission_form
             requested_slot: race
-  
+
   sex:
     type: categorical
     values:
@@ -91,7 +100,7 @@ slots:
         conditions:
           - active_loop: diabetes_readmission_form
             requested_slot: number_outpatient
-  
+
   number_inpatient:
     type: text
     mappings:
@@ -100,14 +109,14 @@ slots:
           - active_loop: diabetes_readmission_form
             requested_slot: number_inpatient
 
-  number_emergency: 
+  number_emergency:
     type: text
     mappings:
       - type: from_text
         conditions:
           - active_loop: diabetes_readmission_form
             requested_slot: number_emergency
-  
+
   metformin:
     type: text
     mappings:
@@ -131,7 +140,7 @@ slots:
         conditions:
           - active_loop: diabetes_readmission_form
             requested_slot: pioglitazone
-  
+
   rosiglitazone:
     type: text
     mappings:
@@ -139,7 +148,7 @@ slots:
         conditions:
           - active_loop: diabetes_readmission_form
             requested_slot: rosiglitazone
-  
+
   acarbose:
     type: text
     mappings:
@@ -163,7 +172,7 @@ slots:
         conditions:
           - active_loop: diabetes_readmission_form
             requested_slot: change
-  
+
   diag_1:
     type: text
     mappings:
@@ -171,7 +180,7 @@ slots:
         conditions:
           - active_loop: diabetes_readmission_form
             requested_slot: diag_1
-  
+
   diag_2:
     type: text
     mappings:
@@ -187,12 +196,11 @@ slots:
         conditions:
           - active_loop: diabetes_readmission_form
             requested_slot: diag_3
-  
-
 
 forms:
   diabetes_readmission_form:
     required_slots:
+      - continue_form
       - race
       - sex
       - age
@@ -216,22 +224,21 @@ forms:
       - diag_2
       - diag_3
 
-    
-
 actions:
   - action_clear_slots
   - validate_diabetes_readmission_form
+  - action_submit_details
 
 responses:
   utter_greet:
     - text: "Hey! I am a medical chatbot that can help you assess your patients' 30 day readmission possibility and mortality risk."
-  
+
   utter_goodbye:
     - text: "Bye. Have a nice day."
-  
+
   utter_iamabot:
     - text: "I am a bot, powered by Rasa."
-  
+
   # diabetic readmission form questions
 
   utter_ask_race:
@@ -246,7 +253,7 @@ responses:
 
   utter_ask_sex:
     - text: "What is the patient's sex? Please answer 'male' or 'female'."
-  
+
   utter_ask_age:
     - text: "What is the patient's age?"
 
@@ -283,12 +290,12 @@ responses:
 
   utter_ask_time_in_hospital:
     - text: "How many days have the patient been in the hospital?"
-  
+
   utter_ask_num_lab_procedures:
     - text: "How many lab tests have been performed on the patient?"
-  
+
   utter_ask_num_procedures:
-      - text: "How many procedures (other than lab tests) have been performed on the patient?"
+    - text: "How many procedures (other than lab tests) have been performed on the patient?"
 
   utter_ask_num_medications:
     - text: "How many distinct generic names have been administered to the patient?"
@@ -365,7 +372,7 @@ responses:
 
   utter_ask_diag_1:
     - text: "What is the primary diagnosis? Please provide the ICD9 code."
-  
+
   utter_ask_diag_2:
     - text: "What is the secondary diagnosis? Please provide the ICD9 code."
 
@@ -374,7 +381,7 @@ responses:
 
   utter_gather_data:
     - text: "I can guide you in getting your diabetic status classified. Please answer the next set of questions."
-  
+
   utter_submit:
     - text: "Details submitted."
 
@@ -401,7 +408,6 @@ responses:
         Primary Diagnosis: {diag_1}
         Secondary Diagnosis: {diag_2}
         Tertiary Diagnosis: {diag_3}
-  
 
 session_config:
   session_expiration_time: 60

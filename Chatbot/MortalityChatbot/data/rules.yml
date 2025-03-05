@@ -1,23 +1,20 @@
 version: "3.1"
 
 rules:
+  - rule: Activate diabetes mortality form
+    steps:
+      - intent: request_mortality_prediction
+      - action: utter_gather_data
+      - action: mortality_prediction_form
+      - active_loop: mortality_prediction_form
 
-- rule: Activate mortality prediction form
-  steps:
-    - intent: request_mortality_prediction
-    - action: utter_gather_data
-    - action: mortality_prediction_form
-    - active_loop: mortality_prediction_form
+  - rule: The form ends
+    condition:
+      - active_loop: mortality_prediction_form
+    steps:
+      - action: mortality_prediction_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: action_submit_details # handle with custom action
 
-- rule: Submit mortality prediction form
-  condition: 
-    - active_loop: mortality_prediction_form
-  steps:
-    - action: mortality_prediction_form
-    - active_loop: null
-    - slot_was_set:
-      - requested_slot: null
-    - action: utter_submit
-    - action: utter_all_slots
-    - action: action_clear_slots
-    - action: utter_all_slots

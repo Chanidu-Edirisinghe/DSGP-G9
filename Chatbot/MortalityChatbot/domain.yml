@@ -7,6 +7,18 @@ intents:
   - request_mortality_prediction
 
 slots:
+  continue_form:
+    type: categorical
+    initial_value: "yes"
+    values:
+      - "yes"
+      - "no"
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: continue_form
+
   age:
     type: float
     mappings:
@@ -15,13 +27,21 @@ slots:
           - active_loop: mortality_prediction_form
             requested_slot: age
 
-  bmi:
+  height:
     type: float
     mappings:
       - type: from_text
         conditions:
           - active_loop: mortality_prediction_form
-            requested_slot: bmi
+            requested_slot: height
+
+  weight:
+    type: float
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: mortality_prediction_form
+            requested_slot: weight
 
   pre_icu_los_days:
     type: float
@@ -266,8 +286,10 @@ slots:
 forms:
   mortality_prediction_form:
     required_slots:
+      - continue_form
       - age
-      - bmi
+      - height
+      - weight
       - pre_icu_los_days
       - d1_diasbp_max
       - d1_diasbp_min
@@ -302,6 +324,7 @@ forms:
 actions:
   - validate_mortality_prediction_form
   - action_clear_slots
+  - action_submit_details
 
 responses:
   utter_greet:
@@ -407,7 +430,7 @@ responses:
 
   utter_ask_d1_potassium_max:
     - text: "What is the patient's day-1 max potassium?"
-    
+
   utter_ask_d1_potassium_min:
     - text: "What is the patient's day-1 min potassium?"
 
@@ -445,7 +468,6 @@ responses:
         d1_glucose_min: {d1_glucose_min}
         d1_potassium_max: {d1_potassium_max}
         d1_potassium_min: {d1_potassium_min}
-
 
 session_config:
   session_expiration_time: 60
