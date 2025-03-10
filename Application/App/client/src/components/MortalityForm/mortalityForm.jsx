@@ -63,18 +63,28 @@ function MortalityForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:5000/predict",
-        formData
-      );
-      setPrediction(response.data.hospital_death);
-      setPredictionProbability(response.data.death_probability);
-    } catch (error) {
-      setPrediction("error");
-      console.error("Error making prediction", error);
-    }
-  };
+  
+  console.log("Sending formData:", formData);
+  
+  try {
+    const response = await axios.post(
+      "http://127.0.0.1:5000/predict-mortality",
+      formData
+    );
+
+    console.log("Received response:", response.data); // 
+
+    setPrediction(response.data.hospital_death ?? "N/A");
+    const probability = parseFloat(response.data.death_probability) || 0
+
+    console.log(probability)
+
+    setPredictionProbability((probability));
+  } catch (error) {
+    setPrediction("error");
+    console.error("Error making prediction", error);
+  }
+};
 
   const getRiskColor = (probability) => {
     const colors = [
@@ -150,7 +160,7 @@ function MortalityForm() {
       unit: "",
     };
 
-    console.log(label);
+    //console.log(label);
 
     return (
       <div className="form-group">
@@ -187,7 +197,7 @@ function MortalityForm() {
       unit: "",
     };
 
-    console.log(label);
+    //console.log(label);
 
     return (
       <div className="form-group">
