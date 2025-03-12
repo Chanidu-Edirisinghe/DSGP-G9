@@ -1,0 +1,92 @@
+version: "3.1"
+
+stories:
+  - story: Diabetes Information for both types
+    steps:
+      - intent: diabetes_information_types
+      - action: action_diabetes_types_info
+
+  - story: Diabetes Symptoms for both types
+    steps:
+      - intent: diabetes_symptoms_types
+      - action: action_diabetes_types_symptoms
+
+  - story: Diabetes Risk factors for both types
+    steps:
+      - intent: diabetes_risk_factors_types
+      - action: action_diabetes_types_risk_factors
+
+  - story: Diabetes causes for both types
+    steps:
+      - intent: diabetes_causes_types
+      - action: action_diabetes_types_causes
+
+  - story: General Diabetes Information
+    steps:
+      - intent: know_diabetes
+      - action: utter_diabetes
+
+  - story: User asks about chronic diseases
+    steps:
+      - intent: know_chronic
+      - action: utter_chronic
+
+  - story: User asks about insulin
+    steps:
+      - intent: know_insulin
+      - action: utter_insulin
+
+  - story: User asks for sources
+    steps:
+      - intent: give_sources
+      - action: utter_sources
+
+  - story: User asks about preventing diabetes
+    steps:
+      - intent: prevent_diabetes
+      - action: utter_prevent_diabetes
+
+  - story: User asks about diabetes symptoms
+    steps:
+      - intent: diabetes_symptoms
+      - action: utter_diabetes_symptoms
+
+  - story: User asks about diabetes complications
+    steps:
+      - intent: diabetes_complications
+      - action: utter_diabetes_complications
+
+  - story: User asks about gestational diabetes
+    steps:
+      - intent: gestational_diabetes_information
+      - action: utter_gestational_diabetes
+
+  - story: User asks about prediabetes
+    steps:
+      - intent: prediabetes_information
+      - action: utter_prediabetes
+
+  - story: User asks about gestational diabetes symptoms
+    steps:
+      - intent: gestational_diabetes_symptoms
+      - action: utter_gestational_diabetes_symptoms
+
+  - story: User asks about diabetes testing
+    steps:
+      - intent: diabetes_testing
+      - action: utter_diabetes_testing
+
+  - story: User asks about managing diabetes
+    steps:
+      - intent: managing_diabetes
+      - action: utter_managing_diabetes
+
+  - story: User asks about insulin and blood sugar management
+    steps:
+      - intent: insulin_blood_sugar_management
+      - action: utter_insulin_blood_sugar_management
+
+  - story: User asks about healthy lifestyle with diabetes
+    steps:
+      - intent: healthy_lifestyle_and_appointments
+      - action: utter_healthy_lifestyle_and_appointments

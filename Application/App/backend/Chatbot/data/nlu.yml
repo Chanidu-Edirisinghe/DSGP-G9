@@ -1,0 +1,249 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hey
+      - hello
+      - hi
+      - hello there
+      - good morning
+      - good evening
+      - moin
+      - hey there
+      - let's go
+      - hey dude
+      - goodmorning
+      - goodevening
+      - good afternoon
+
+  - intent: goodbye
+    examples: |
+      - cu
+      - good by
+      - cee you later
+      - good night
+      - bye
+      - goodbye
+      - have a nice day
+      - see you around
+      - bye bye
+      - see you later
+
+  - intent: know_diabetes
+    examples: |
+      - what is diabetes?
+      - can you explain diabetes?
+      - tell me about diabetes
+      - what does diabetes mean?
+      - explain diabetes in simple terms
+      - give me information about diabetes
+      - what are the basics of diabetes?
+      - help me understand diabetes
+
+  - intent: know_chronic
+    examples: |
+      - what is a chronic disease?
+      - can you explain chronic diseases?
+      - tell me about chronic illnesses
+      - what does chronic disease mean?
+      - explain chronic diseases in simple terms
+      - what are chronic conditions?
+      - how does a disease become chronic?
+      - give me information about chronic diseases
+      - what are some examples of chronic illnesses?
+      - help me understand chronic diseases
+
+  - intent: know_insulin
+    examples: |
+      - What is insulin?
+      - Can you tell me about insulin?
+      - Explain insulin.
+      - What does insulin do?
+      - What is the function of insulin in the body?
+      - How does insulin work?
+
+  - intent: give_sources
+    examples: |
+      - what are your sources?
+      - where do you get your information from?
+      - can you share your sources?
+      - where did you find that information?
+      - what references do you use?
+      - where do you pull your data from?
+      - can you tell me the sources of this info?
+      - what data supports this?
+      - who are the authors of this information?
+      - how do you know this is accurate?
+
+  - intent: prevent_diabetes
+    examples: |
+      - How can I prevent type 2 diabetes?
+      - What are some ways to avoid getting type 2 diabetes?
+      - What lifestyle changes help prevent type 2 diabetes?
+      - How do I delay the onset of diabetes?
+      - What should I do to prevent type 2 diabetes?
+      - Can a healthy diet help prevent diabetes?
+      - How does physical activity help prevent diabetes?
+      - Does maintaining a normal weight prevent type 2 diabetes?
+      - Can avoiding tobacco prevent type 2 diabetes?
+      - What are the most effective ways to prevent type 2 diabetes?
+
+  - intent: diabetes_symptoms
+    examples: |
+      - symptoms
+      - What are the symptoms of diabetes?
+      - Can you tell me the signs of diabetes?
+      - How do I know if I have diabetes?
+      - What symptoms should I watch for diabetes?
+      - What are early warning signs of diabetes?
+      - What are the common diabetes symptoms?
+      - How can I tell if I might have diabetes?
+
+  - intent: diabetes_complications
+    examples: |
+      - What complications can diabetes cause?
+      - What problems can diabetes lead to?
+      - How does diabetes affect the body over time?
+      - What health risks are associated with diabetes?
+      - What damage can diabetes do to the body?
+      - What are the long-term effects of diabetes?
+      - What is the risk of heart attack with diabetes?
+      - How can diabetes affect my kidneys?
+      - Can diabetes cause vision loss?
+
+  - intent: gestational_diabetes_information
+    examples: |
+      - What is gestational diabetes?
+      - Can you explain gestational diabetes?
+      - How does gestational diabetes affect pregnancy?
+      - Does gestational diabetes go away after birth?
+      - Is gestational diabetes dangerous for the baby?
+      - How is gestational diabetes diagnosed?
+      - Can gestational diabetes be prevented?
+      - Does gestational diabetes mean I will get type 2 diabetes?
+      - What are the risks of gestational diabetes?
+
+  - intent: prediabetes_information
+    examples: |
+      - What is prediabetes?
+      - Can you explain prediabetes?
+      - How is prediabetes different from diabetes?
+      - Does prediabetes mean I will get type 2 diabetes?
+      - What are the risks of prediabetes?
+      - Can prediabetes be reversed?
+      - How is prediabetes diagnosed?
+      - What causes prediabetes?
+
+  - intent: gestational_diabetes_symptoms
+    examples: |
+      - What are the symptoms of gestational diabetes?
+      - How do I know if I have gestational diabetes?
+      - Can you tell me about gestational diabetes symptoms?
+      - Are there any signs of gestational diabetes?
+      - Does gestational diabetes have noticeable symptoms?
+      - How do doctors test for gestational diabetes?
+
+  - intent: diabetes_testing
+    examples: |
+      - What tests are done for diabetes?
+      - How do doctors test for diabetes?
+      - Can you explain the screening process for diabetes?
+      - What blood tests are done for diabetes?
+      - How is diabetes diagnosed?
+
+  - intent: managing_diabetes
+    examples: |
+      - How do I manage my diabetes?
+      - Can you tell me how to manage type 1 diabetes?
+      - What are some tips for managing diabetes?
+      - How can I take care of my diabetes?
+
+  - intent: insulin_blood_sugar_management
+    examples: |
+      - How do I manage blood sugar levels with insulin?
+      - Do I need to take insulin for type 1 diabetes?
+      - Can you explain how insulin helps manage diabetes?
+      - What role does insulin play in blood sugar control?
+      - How does insulin therapy work?
+
+  - intent: healthy_lifestyle_and_appointments
+    examples: |
+      - How do I maintain a healthy lifestyle with diabetes?
+      - How often should I see my doctor for diabetes?
+      - Can my lifestyle affect my diabetes?
+      - What lifestyle changes can help manage diabetes?
+
+  - intent: diabetes_information_types
+    examples: |
+      - What is [type 1](diabetes_type) diabetes?
+      - What is [type 2](diabetes_type) diabetes?
+      - Can you explain [type 1](diabetes_type) diabetes?
+      - Can you explain [type 2](diabetes_type) diabetes?
+      - How does [type 1](diabetes_type) diabetes affect the body?
+      - How does [type 2](diabetes_type) diabetes affect the body?
+      - Do people with [type 1](diabetes_type) diabetes need insulin?
+      - Do people with [type 2](diabetes_type) diabetes need insulin?
+      - What happens if you have [type 1](diabetes_type) diabetes?
+      - What happens if you have [type 2](diabetes_type) diabetes?
+
+  - intent: diabetes_symptoms_types
+    examples: |
+      - What are the symptoms of [type 1](diabetes_type) diabetes?
+      - How do I know if I have [type 1](diabetes_type) diabetes?
+      - What signs indicate [type 1](diabetes_type) diabetes?
+      - Can you tell me about [type 1](diabetes_type) diabetes symptoms?
+      - What are the early symptoms of [type 1](diabetes_type) diabetes?
+      - How quickly do [type 1](diabetes_type) diabetes symptoms appear?
+      - What are the symptoms of [type 2](diabetes_type) diabetes?
+      - How do I know if I have [type 2](diabetes_type) diabetes?
+      - What signs indicate [type 2](diabetes_type) diabetes?
+      - Can you tell me about [type 2](diabetes_type) diabetes symptoms?
+      - What are the early symptoms of [type 2](diabetes_type) diabetes?
+      - How quickly do [type 2](diabetes_type) diabetes symptoms appear?
+
+  - intent: diabetes_risk_factors_types
+    examples: |
+      - What are the risk factors for [type 1](diabetes_type) diabetes?
+      - How do I know if I'm at risk for [type 1](diabetes_type) diabetes?
+      - Can you tell me the risk factors for [type 1](diabetes_type) diabetes?
+      - What increases the chances of getting [type 1](diabetes_type) diabetes?
+      - Who is at risk for [type 1](diabetes_type) diabetes?
+      - What are the risk factors for [type 2](diabetes_type) diabetes?
+      - How do I know if I'm at risk for [type 2](diabetes_type) diabetes?
+      - Can you tell me the risk factors for [type 2](diabetes_type) diabetes?
+      - What increases the chances of getting [type 2](diabetes_type) diabetes?
+      - Who is at risk for [type 2](diabetes_type) diabetes?
+
+  - intent: diabetes_causes_types
+    examples: |
+      - What causes [type 1](diabetes_type) diabetes?
+      - How does [type 1](diabetes_type) diabetes develop?
+      - Why do people get [type 1](diabetes_type) diabetes?
+      - What triggers [type 1](diabetes_type) diabetes?
+      - Can lifestyle cause [type 1](diabetes_type) diabetes?
+      - What causes [type 2](diabetes_type) diabetes?
+      - How does [type 2](diabetes_type) diabetes develop?
+      - Why do people get [type 2](diabetes_type) diabetes?
+      - What triggers [type 2](diabetes_type) diabetes?
+      - Can lifestyle cause [type 2](diabetes_type) diabetes?
+
+  - intent: bot_challenge
+    examples: |
+      - are you a bot?
+      - are you a human?
+      - am I talking to a bot?
+      - am I talking to a human?
+
+  - intent: request_diabetes_prediction
+    examples: |
+      - Can you predict my diabetic status?
+      - Am I diabetic?
+      - I want to know if I might have diabetes.
+      - Can you tell if I have diabetes?
+      - Predict my diabetes risk.
+      - Can you analyze my health for diabetes?
+      - I need a prediction about my diabetes status.
+      - Can you help me check if I am diabetic?
+      - Will you predict if I have diabetes?
+      - Tell me if I am diabetic or not.
