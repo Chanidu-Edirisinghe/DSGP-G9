@@ -1,0 +1,50 @@
+[
+  {
+    "text": "Tell me about type 2 diabetes.",
+    "entities": [
+      {
+        "start": 14,
+        "end": 20,
+        "value": "type 2",
+        "entity": "diabetes_type"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "What are the common symptoms of type 1 diabetes?",
+    "entities": [
+      {
+        "start": 32,
+        "end": 38,
+        "value": "type 1",
+        "entity": "diabetes_type"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "What are the risk factors for type 1 diabetes?",
+    "entities": [
+      {
+        "start": 30,
+        "end": 36,
+        "value": "type 1",
+        "entity": "diabetes_type"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "What are the causes of type 2 diabetes?",
+    "entities": [
+      {
+        "start": 23,
+        "end": 29,
+        "value": "type 2",
+        "entity": "diabetes_type"
+      }
+    ],
+    "predicted_entities": []
+  }
+]
