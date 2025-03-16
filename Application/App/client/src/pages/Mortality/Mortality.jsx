@@ -9,7 +9,7 @@ import "./mortality.css";
 
 function Mortality() {
   return (
-    <div>
+    <main className="mortality-container">
       <Hero
         heading="Mortality Risk Prediction"
         description="Predicting patient mortality rates is essential for early intervention, efficient resource allocation, and improved decision-making in healthcare.
@@ -18,15 +18,18 @@ function Mortality() {
          In DiaTrack, this prediction supports doctors and lab technicians in making informed clinical decisions, optimizing patient care, and improving overall healthcare quality.
          It also serves as a key performance metric for evaluating hospital outcomes and treatment efficacy."
       />
+
       <PatientManager />
-      {/* <section className="content">
-        <InfoBox />
+
+      {/* Section for InfoBox & Mortality Form */}
+      <section className="content">
         <MortalityForm />
-      </section> */}
-      <MortalityForm />
+      </section>
+
       <ChatbotUI />
+
       <Footer />
-    </div>
+    </main>
   );
 }
 

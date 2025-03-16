@@ -188,7 +188,7 @@ function MortalityForm() {
     d1_heartrate: { label: "Heart Rate (d1)", unit: "(bpm)" },
     d1_mbp: { label: "Mean BP (d1)", unit: "(mmHg)" },
     d1_resprate: { label: "Respiratory Rate (d1)", unit: "(breaths/min)" },
-    d1_spo2_min: { label: "SpO2 (d1)", unit: "(%)" }, //single feature
+    d1_spo2_min: { label: "SpO2 min (d1)", unit: "(%)" }, //single feature
     d1_sysbp: { label: "Systolic BP (d1)", unit: "(mmHg)" },
     d1_temp: { label: "Temperature (d1)", unit: "(°C)" },
     h1_diasbp: { label: "Diastolic BP (h1)", unit: "(mmHg)" },

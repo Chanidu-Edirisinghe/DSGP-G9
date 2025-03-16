@@ -1,11 +1,13 @@
 /* src/components/Footer/Footer.css */
-.footer {
+/* .footer {
   background: #fff;
   text-align: center;
   width: 100%;
   height: 100px;
   bottom: 0;
   margin: 0;
+  border-top-right-radius: 80px;
+  border-top-left-radius: 80px;
 }
 
 .footer p {
@@ -13,4 +15,83 @@
   margin: 0;
   font-size: 16px;
   color: #666;
+} */
+
+/* Footer Base Styles */
+.footer {
+  background-color: #222;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
 }
+
+/* Flexbox Layout */
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px 10px;
+  gap: 20px;
+}
+
+.footer-section {
+  max-width: 300px;
+  text-align: left;
+}
+
+.footer-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #6a11cb;
+}
+
+.footer-section p {
+  font-size: 0.9rem;
+  margin: 5px 0;
+}
+
+.footer-section a {
+  color: #6a11cb;
+  text-decoration: none;
+}
+
+.footer-section a:hover {
+  text-decoration: underline;
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-links a {
+  color: #fff;
+  font-size: 1.5rem;
+  transition: 0.3s;
+}
+
+.social-links a:hover {
+  color: #00aaff;
+}
+
+/* Copyright Section */
+.footer-bottom {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #444;
+  font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+

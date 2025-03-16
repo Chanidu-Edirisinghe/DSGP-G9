@@ -7,6 +7,7 @@ import Mortality from "./pages/Mortality/Mortality";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import "./index.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
   // Track authentication status
