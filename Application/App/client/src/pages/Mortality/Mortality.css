@@ -1,0 +1,114 @@
+/* Form Box */
+.form-box {
+    margin: 2% auto 5%;
+    width: 90%;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 24px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+  
+h2 {
+    color: #2575fc;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: bold;
+}
+  
+/* Form Grid - Always 3 Columns */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Fixed 3-column layout */
+    gap: 20px;
+    padding: 20px;
+    color: #555;
+}
+
+/* Responsive: Switch to 2 Columns on Smaller Screens */
+@media (max-width: 1024px) {
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Responsive: Switch to 1 Column on Mobile */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Form Group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Label */
+label {
+    font-size: 15px;
+    margin-bottom: 6px;
+    font-weight: 700;
+    color: #333;
+}
+
+/* Input Fields */
+input {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: 0.3s ease-in-out;
+}
+
+/* Input Focus Effect */
+input:focus {
+    border-color: #2575fc;
+    box-shadow: 0 0 5px rgba(37, 117, 252, 0.4);
+    outline: none;
+}
+
+/* Min-Max Row (Two Inputs Side by Side) */
+.min-max-row {
+    display: flex;
+    gap: 10px;
+}
+
+.min-max-row input {
+    width: 48%;
+}
+
+/* Submit Button */
+.submit-btn1 {
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    color: white;
+    padding: 14px;
+    border: none;
+    width: 60%;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+    text-transform: uppercase;
+    margin: auto;
+    display: block;
+}
+
+/* Hover Effect */
+.submit-btn1:hover {
+    background: linear-gradient(90deg, #2575fc, #6a11cb);
+    box-shadow: 0 4px 12px rgba(106, 17, 203, 0.4);
+    transform: scale(1.05);
+}
+
+/* Prediction Result */
+.prediction-result {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #2575fc;
+    margin-top: 20px;
+}
