@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./mortalityForm.css";
 
-function MortalityForm() {
+function MortalityForm({ selectedPatient }) {
   const [formData, setFormData] = useState({
     age: "", // Patient's Age at Unit Admission
     weight: "", // Add weight input
     height: "", // Add height input
-    bmi: "", // Keep Body Mass Index but compute it dynamically
+    bmi: 0, // Keep Body Mass Index but compute it dynamically
     pre_icu_los_days: "", // Length of Stay Before ICU Admission
     d1_diasbp_max: "", // Highest Diastolic Blood Pressure in First 24 Hours
     d1_diasbp_min: "", // Lowest Diastolic Blood Pressure in First 24 Hours
@@ -47,63 +47,63 @@ function MortalityForm() {
     const { name, value } = e.target;
     let updatedFormData = { ...formData, [name]: value };
 
-    // Define validation limits for specific fields
-    const fieldLimits = {
-      age: { min: 0, max: 105 },
-      weight: { min: 5, max: 150 }, // kg
-      height: { min: 50, max: 250 }, // cm
-      pre_icu_los_days: { min: 0, max: 60 },
-      d1_spo2_min: { min: 50, max: 100 },
-      d1_diasbp_max: { min: 30, max: 200 },
-      d1_diasbp_min: { min: 0, max: 150 },
-      d1_heartrate_max: { min: 40, max: 200 },
-      d1_heartrate_min: { min: 0, max: 200 },
-      d1_mbp_max: { min: 30, max: 200 },
-      d1_mbp_min: { min: 0, max: 150 },
-      d1_resprate_max: { min: 5, max: 100 },
-      d1_resprate_min: { min: 0, max: 100 },
-      d1_sysbp_max: { min: 60, max: 250 },
-      d1_sysbp_min: { min: 30, max: 190 },
-      d1_temp_max: { min: 30, max: 45 },
-      d1_temp_min: { min: 25, max: 45 },
-      h1_diasbp_max: { min: 30, max: 175 },
-      h1_diasbp_max: { min: 0, max: 140 },
-      h1_heartrate_max: { min: 30, max: 200 },
-      h1_heartrate_min: { min: 0, max: 175 },
-      h1_mbp_max: { min: 30, max: 200 },
-      h1_mbp_min: { min: 0, max: 150 },
-      h1_spo2_max: { min: 0, max: 100 },
-      h1_spo2_min: { min: 0, max: 100 },
-      h1_resprate_max: { min: 0, max: 100 },
-      h1_resprate_min: { min: 0, max: 60 },
-      h1_sysbp_max: { min: 50, max: 250 },
-      h1_sysbp_max: { min: 50, max: 250 },
-      d1_potassium_max: { min: 0, max: 10 },
-      d1_potassium_min: { min: 0, max: 10 },
-      d1_glucose_max: { min: 0, max: 1000 },
-      d1_glucose_max: { min: 0, max: 500 },
-    };
+    // // Define validation limits for specific fields
+    // const fieldLimits = {
+    //   age: { min: 0, max: 105 },
+    //   weight: { min: 5, max: 150 }, // kg
+    //   height: { min: 50, max: 250 }, // cm
+    //   pre_icu_los_days: { min: 0, max: 60 },
+    //   d1_spo2_min: { min: 50, max: 100 },
+    //   d1_diasbp_max: { min: 30, max: 200 },
+    //   d1_diasbp_min: { min: 0, max: 150 },
+    //   d1_heartrate_max: { min: 40, max: 200 },
+    //   d1_heartrate_min: { min: 0, max: 200 },
+    //   d1_mbp_max: { min: 30, max: 200 },
+    //   d1_mbp_min: { min: 0, max: 150 },
+    //   d1_resprate_max: { min: 5, max: 100 },
+    //   d1_resprate_min: { min: 0, max: 100 },
+    //   d1_sysbp_max: { min: 60, max: 250 },
+    //   d1_sysbp_min: { min: 30, max: 190 },
+    //   d1_temp_max: { min: 30, max: 45 },
+    //   d1_temp_min: { min: 25, max: 45 },
+    //   h1_diasbp_max: { min: 30, max: 175 },
+    //   h1_diasbp_min: { min: 0, max: 140 },
+    //   h1_heartrate_max: { min: 30, max: 200 },
+    //   h1_heartrate_min: { min: 0, max: 175 },
+    //   h1_mbp_max: { min: 30, max: 200 },
+    //   h1_mbp_min: { min: 0, max: 150 },
+    //   h1_spo2_max: { min: 0, max: 100 },
+    //   h1_spo2_min: { min: 0, max: 100 },
+    //   h1_resprate_max: { min: 0, max: 100 },
+    //   h1_resprate_min: { min: 0, max: 60 },
+    //   h1_sysbp_max: { min: 50, max: 250 },
+    //   h1_sysbp_min: { min: 50, max: 250 },
+    //   d1_potassium_max: { min: 0, max: 10 },
+    //   d1_potassium_min: { min: 0, max: 10 },
+    //   d1_glucose_max: { min: 0, max: 1000 },
+    //   d1_glucose_min: { min: 0, max: 500 },
+    // };
 
-    // If the field has a limit, enforce the range
-    if (fieldLimits[name]) {
-      let numericValue = parseFloat(value);
-      if (isNaN(numericValue)) {
-        numericValue = ""; // Reset invalid input
-      } else {
-        numericValue = Math.max(
-          fieldLimits[name].min,
-          Math.min(fieldLimits[name].max, numericValue)
-        );
-      }
-      updatedFormData[name] = numericValue;
-    }
+    // // If the field has a limit, enforce the range
+    // if (fieldLimits[name]) {
+    //   let numericValue = parseFloat(value);
+    //   if (isNaN(numericValue)) {
+    //     numericValue = ""; // Reset invalid input
+    //   } else {
+    //     numericValue = Math.max(
+    //       fieldLimits[name].min,
+    //       Math.min(fieldLimits[name].max, numericValue)
+    //     );
+    //   }
+    //   updatedFormData[name] = numericValue;
+    // }
 
     if (name === "weight" || name === "height") {
       const weight = parseFloat(updatedFormData.weight);
       const height = parseFloat(updatedFormData.height) / 100; // Convert cm to meters
 
       if (weight > 0 && height > 0) {
-        updatedFormData.bmi = (weight / (height * height)).toFixed(2);
+        updatedFormData.bmi =  parseFloat((weight / (height * height)).toFixed(2));
       } else {
         updatedFormData.bmi = "";
       }

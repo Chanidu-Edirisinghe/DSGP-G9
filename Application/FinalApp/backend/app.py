@@ -31,9 +31,9 @@ chatbot_handler = ChatbotHandler()
 
 
 # Initialize Predictor
-predictor = ReadmissionPredictor("catboost_model.pkl", "scaler.pkl")
-diabetic_predictor = DiabetesClassifier("gradient_boosting.pkl", "minmax_scaler.pkl")
-mortality_predictor = MortalityPredictor('models/catboost_model72.cbm')
+predictor = ReadmissionPredictor("Application\\FinalApp\\backend\models\\catboost_model.pkl", "Application\\FinalApp\\backend\models\\scaler.pkl")
+diabetic_predictor = DiabetesClassifier("Application\\FinalApp\\backend\models\\gradient_boosting.pkl", "Application\\FinalApp\\backend\models\\minmax_scaler.pkl")
+mortality_predictor = MortalityPredictor('Application\\FinalApp\\backend\models\\catboost_model72.cbm')
 
 @app.route("/predict-readmission", methods=["POST"])
 @jwt_required()
@@ -103,8 +103,11 @@ def predict_mortality():
     data = request.json
     print("Received Data:", data)  # Debugging
     patientName = data.pop("patientName", None)
-    print("Cleaned Data:", data)
-    response = mortality_predictor.predict(data)
+    cleaned_data = data
+    cleaned_data.pop("weight")
+    cleaned_data.pop("height")
+    print("Cleaned Data:", cleaned_data)
+    response = mortality_predictor.predict(cleaned_data)
     if response.get("error"):
         return jsonify({"error": response["error"]})
     db_handler.add_mortality(user_email, data, response, patientName)
