@@ -190,9 +190,6 @@ class DBHandler:
         readmission_record_collection = self.mongo.db['ReadmissionRecords']  # Access the collection
         readmission_record_collection.insert_one(record)
 
-
-    # Add these methods to your DBHandler class
-
     def get_readmission_records(self, email):
         users_collection = self.mongo.db['User']
         user = users_collection.find_one({"email": email})

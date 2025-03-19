@@ -10,8 +10,6 @@ function Signup({ setIsAuthenticated }) {
     password: "",
   });
 
-  const [message, setMessage] = useState("");
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -21,6 +19,13 @@ function Signup({ setIsAuthenticated }) {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+
+    // Check password length before submitting
+    if (formData.password.length < 6) {
+      alert("Password must be at least 6 characters long");
+      return;
+    }
+
     try {
       const response = await fetch("http://127.0.0.1:5000/signup", {
         method: "POST",
@@ -43,10 +48,10 @@ function Signup({ setIsAuthenticated }) {
         setIsAuthenticated(true);
         navigate("/classification"); // Redirect after signup
       } else {
-        setMessage(data.error || "Signup failed");
+        alert(data.error || "Signup failed");
       }
     } catch (error) {
-      setMessage("Signup failed");
+      alert("Signup failed");
     }
   };
 
@@ -92,8 +97,6 @@ function Signup({ setIsAuthenticated }) {
             Sign Up
           </button>
         </form>
-
-        <p>{message}</p>
 
         <div className="auth-footer">
           <p>Already have an account?</p>

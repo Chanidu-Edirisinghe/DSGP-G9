@@ -26,7 +26,6 @@ function DiabetesClassification() {
   });
 
   const [prediction, setPrediction] = useState(null);
-  const [predictionProbability, setPredictionProbability] = useState(null);
 
   // Calculate BMI from height (cm) and weight (kg)
   const calculateBMI = (height, weight) => {
@@ -157,19 +156,40 @@ function DiabetesClassification() {
 
       const data = await response.json();
       console.log("API Response:", data);
-      setPrediction(
+
+      const predictionText =
         data.prediction === 2
           ? "Diabetes"
           : data.prediction === 1
           ? "Prediabetes"
           : data.prediction === 0
           ? "No Diabetes"
-          : "Error in prediction"
-      );
+          : "Error in prediction";
 
-      if (data.probability !== undefined) {
-        setPredictionProbability(data.probability);
-      }
+      const probabilitiesText = `
+        No Diabetes: ${(data.probabilities.no_diabetes * 100).toFixed(2)}%
+        Prediabetes: ${(data.probabilities.prediabetes * 100).toFixed(2)}%
+        Diabetes: ${(data.probabilities.diabetes * 100).toFixed(2)}%
+      `;
+
+      const probabilityText =
+        data.prediction === 2
+          ? data.probabilities.diabetes
+          : data.prediction === 1
+          ? data.probabilities.prediabetes
+          : data.probabilities.no_diabetes;
+
+      setPrediction(
+        <div className="prediction-results">
+          <div className="prediction-text">
+            <strong>Prediction:</strong> {predictionText}
+          </div>
+          <div className="probabilities">
+            <strong>Confidence: </strong>
+            {(probabilityText * 100).toFixed(2)}%
+          </div>
+        </div>
+      );
     } catch (error) {
       console.error("Error:", error);
       setPrediction("Error in prediction");
@@ -181,6 +201,35 @@ function DiabetesClassification() {
       <div className="container">
         <div className="form-container">
           <form onSubmit={handleSubmit}>
+            {/* Biological Sex */}
+            <div className="input-group">
+              <p>Select your biological sex:</p>
+              <select
+                name="sex"
+                value={formData.sex}
+                onChange={handleChange}
+                required
+              >
+                <option value="</div>">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+
+            {/* Age - Specific age input */}
+            <div className="input-group">
+              <p>What is your age?</p>
+              <input
+                type="number"
+                name="ageValue"
+                min="18"
+                max="99"
+                value={formData.ageValue}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
             {/* Height */}
             <div className="input-group">
               <p>What is your height in centimeters?</p>
@@ -193,9 +242,6 @@ function DiabetesClassification() {
                 onChange={handleChange}
                 required
               />
-              {validationErrors.height && (
-                <div className="error-message">{validationErrors.height}</div>
-              )}
             </div>
 
             {/* Weight */}
@@ -206,7 +252,6 @@ function DiabetesClassification() {
                 name="weight"
                 min="4"
                 max="635"
-                step="0.1"
                 value={formData.weight}
                 onChange={handleChange}
                 required
@@ -308,7 +353,7 @@ function DiabetesClassification() {
 
             {/* Mental Health */}
             <div className="input-group">
-              <p>Days of poor mental health in past month (0-30)?</p>
+              <p>Days of poor mental health in past 30 days (0-30)?</p>
               <input
                 type="number"
                 name="mentHlth"
@@ -335,50 +380,12 @@ function DiabetesClassification() {
               </select>
             </div>
 
-            {/* Biological Sex */}
-            <div className="input-group">
-              <p>Select your biological sex:</p>
-              <select
-                name="sex"
-                value={formData.sex}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-            </div>
-
-            {/* Age - Specific age input */}
-            <div className="input-group">
-              <p>What is your age?</p>
-              <input
-                type="number"
-                name="ageValue"
-                min="18"
-                max="99"
-                value={formData.ageValue}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
             <button type="submit" className="submit-btn">
               Predict
             </button>
           </form>
         </div>
-        {prediction && (
-          <div className="result">
-            <div>Prediction: {prediction}</div>
-            {predictionProbability !== null && (
-              <div>
-                Probability: {(predictionProbability * 100).toFixed(2)}%
-              </div>
-            )}
-          </div>
-        )}
+        {prediction && <div className="result">{prediction}</div>}
       </div>
     </div>
   );

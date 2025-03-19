@@ -7,7 +7,6 @@ function Login({ setIsAuthenticated }) {
     email: "",
     password: "",
   });
-  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -40,11 +39,11 @@ function Login({ setIsAuthenticated }) {
         setIsAuthenticated(true);
         navigate("/classification"); // Redirect after successful login
       } else {
-        setMessage(data.message); // Set error message from the backend
+        alert(data.message || "Login failed"); // Show error message in alert
       }
     } catch (error) {
       console.log(error);
-      setMessage("Login failed");
+      alert("Login failed"); // Show generic error message in alert
     }
   };
 
@@ -79,7 +78,6 @@ function Login({ setIsAuthenticated }) {
             Log In
           </button>
         </form>
-        <div>{message}</div>
 
         <div className="auth-footer">
           <p>Don't have an account yet?</p>

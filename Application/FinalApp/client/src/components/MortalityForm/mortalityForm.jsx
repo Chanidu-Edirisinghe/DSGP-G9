@@ -47,42 +47,42 @@ function MortalityForm({ selectedPatient }) {
     const { name, value } = e.target;
     let updatedFormData = { ...formData, [name]: value };
 
-    // // Define validation limits for specific fields
-    // const fieldLimits = {
-    //   age: { min: 0, max: 105 },
-    //   weight: { min: 5, max: 150 }, // kg
-    //   height: { min: 50, max: 250 }, // cm
-    //   pre_icu_los_days: { min: 0, max: 60 },
-    //   d1_spo2_min: { min: 50, max: 100 },
-    //   d1_diasbp_max: { min: 30, max: 200 },
-    //   d1_diasbp_min: { min: 0, max: 150 },
-    //   d1_heartrate_max: { min: 40, max: 200 },
-    //   d1_heartrate_min: { min: 0, max: 200 },
-    //   d1_mbp_max: { min: 30, max: 200 },
-    //   d1_mbp_min: { min: 0, max: 150 },
-    //   d1_resprate_max: { min: 5, max: 100 },
-    //   d1_resprate_min: { min: 0, max: 100 },
-    //   d1_sysbp_max: { min: 60, max: 250 },
-    //   d1_sysbp_min: { min: 30, max: 190 },
-    //   d1_temp_max: { min: 30, max: 45 },
-    //   d1_temp_min: { min: 25, max: 45 },
-    //   h1_diasbp_max: { min: 30, max: 175 },
-    //   h1_diasbp_min: { min: 0, max: 140 },
-    //   h1_heartrate_max: { min: 30, max: 200 },
-    //   h1_heartrate_min: { min: 0, max: 175 },
-    //   h1_mbp_max: { min: 30, max: 200 },
-    //   h1_mbp_min: { min: 0, max: 150 },
-    //   h1_spo2_max: { min: 0, max: 100 },
-    //   h1_spo2_min: { min: 0, max: 100 },
-    //   h1_resprate_max: { min: 0, max: 100 },
-    //   h1_resprate_min: { min: 0, max: 60 },
-    //   h1_sysbp_max: { min: 50, max: 250 },
-    //   h1_sysbp_min: { min: 50, max: 250 },
-    //   d1_potassium_max: { min: 0, max: 10 },
-    //   d1_potassium_min: { min: 0, max: 10 },
-    //   d1_glucose_max: { min: 0, max: 1000 },
-    //   d1_glucose_min: { min: 0, max: 500 },
-    // };
+    // Define validation limits for specific fields
+    const fieldLimits = {
+      age: { min: 0, max: 105 },
+      weight: { min: 5, max: 150 }, // kg
+      height: { min: 50, max: 250 }, // cm
+      pre_icu_los_days: { min: 0, max: 60 },
+      d1_spo2_min: { min: 50, max: 100 },
+      d1_diasbp_max: { min: 30, max: 200 },
+      d1_diasbp_min: { min: 0, max: 150 },
+      d1_heartrate_max: { min: 40, max: 200 },
+      d1_heartrate_min: { min: 0, max: 200 },
+      d1_mbp_max: { min: 30, max: 200 },
+      d1_mbp_min: { min: 0, max: 150 },
+      d1_resprate_max: { min: 5, max: 100 },
+      d1_resprate_min: { min: 0, max: 100 },
+      d1_sysbp_max: { min: 60, max: 250 },
+      d1_sysbp_min: { min: 30, max: 190 },
+      d1_temp_max: { min: 30, max: 45 },
+      d1_temp_min: { min: 25, max: 45 },
+      h1_diasbp_max: { min: 30, max: 175 },
+      h1_diasbp_min: { min: 0, max: 140 },
+      h1_heartrate_max: { min: 30, max: 200 },
+      h1_heartrate_min: { min: 0, max: 175 },
+      h1_mbp_max: { min: 30, max: 200 },
+      h1_mbp_min: { min: 0, max: 150 },
+      h1_spo2_max: { min: 0, max: 100 },
+      h1_spo2_min: { min: 0, max: 100 },
+      h1_resprate_max: { min: 0, max: 100 },
+      h1_resprate_min: { min: 0, max: 60 },
+      h1_sysbp_max: { min: 50, max: 250 },
+      h1_sysbp_min: { min: 50, max: 250 },
+      d1_potassium_max: { min: 0, max: 10 },
+      d1_potassium_min: { min: 0, max: 10 },
+      d1_glucose_max: { min: 0, max: 1000 },
+      d1_glucose_min: { min: 0, max: 500 },
+    };
 
     // // If the field has a limit, enforce the range
     // if (fieldLimits[name]) {
@@ -103,7 +103,9 @@ function MortalityForm({ selectedPatient }) {
       const height = parseFloat(updatedFormData.height) / 100; // Convert cm to meters
 
       if (weight > 0 && height > 0) {
-        updatedFormData.bmi =  parseFloat((weight / (height * height)).toFixed(2));
+        updatedFormData.bmi = parseFloat(
+          (weight / (height * height)).toFixed(2)
+        );
       } else {
         updatedFormData.bmi = "";
       }
@@ -198,7 +200,11 @@ function MortalityForm({ selectedPatient }) {
     weight: { label: "Weight", unit: "(kg)" },
     height: { label: "Height", unit: "(cm)" },
     bmi: { label: "BMI", unit: "(kg/m²)" },
-    pre_icu_los_days: { label: "Pre-ICU LOS Days", unit: "(days)" },
+    pre_icu_los_days: {
+      label:
+        "Length of stay of the patient between hospital admission and unit admission",
+      unit: "(days)",
+    },
     d1_diasbp: { label: "Diastolic BP (d1)", unit: "(mmHg)" },
     d1_heartrate: { label: "Heart Rate (d1)", unit: "(bpm)" },
     d1_mbp: { label: "Mean BP (d1)", unit: "(mmHg)" },
@@ -227,6 +233,14 @@ function MortalityForm({ selectedPatient }) {
 
     return (
       <div className="form-group">
+        <div className="label-info">
+          {baseKey.startsWith("d1_") && (
+            <span className="info-tag">(During First 24 Hours)</span>
+          )}
+          {baseKey.startsWith("h1_") && (
+            <span className="info-tag">(During First Hour)</span>
+          )}
+        </div>
         <label>
           {label} {unit}
         </label>
