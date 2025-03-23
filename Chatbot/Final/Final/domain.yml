@@ -197,13 +197,15 @@ actions:
 responses:
   utter_out_of_scope:
     - text: Sorry, I can't handle that request.
+
   utter_please_rephrase:
     - text: I'm sorry, I didn't quite understand that. Could you rephrase?
+
   utter_greet:
-    - text: "Hey! I am a medical chatbot that can help you assess your diabetic status."
+    - text: "Hey! I am a medical chatbot that can help you assess your diabetic status or answer any diabetic related questions you have."
 
   utter_form_exit:
-    - text: "Form deactivated."
+    - text: "You have successfully exited the form. If you have any questions, feel free to ask."
 
   utter_goodbye:
     - text: "Bye. Have a nice day."
@@ -381,6 +383,7 @@ responses:
         - Choose healthy foods
         - Stay physically active
         - Keep your blood pressure and cholesterol under control
+
         Regular appointments with your healthcare team will ensure you stay on track with your treatment plan and help you find new strategies if needed.
 
 session_config:
