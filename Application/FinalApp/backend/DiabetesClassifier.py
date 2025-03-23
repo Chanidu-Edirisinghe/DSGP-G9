@@ -40,8 +40,11 @@ class DiabetesClassifier(PredictionService):
         processed_data = self.preprocess_data(data)
         input_scaled = self.scaler.transform(processed_data)
         prediction = self.model.predict(input_scaled)
-        probability = self.model.predict_proba(input_scaled)[:, 1][0] 
-
+        print(prediction)
+        print(self.model.predict_proba(input_scaled))
+        probability = max(self.model.predict_proba(input_scaled)[0])
+        print(probability)
+        
         response = {
             "prediction": int(prediction),  
             "probability": float(probability)

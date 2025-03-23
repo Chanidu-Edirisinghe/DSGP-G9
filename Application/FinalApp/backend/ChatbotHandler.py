@@ -7,15 +7,10 @@ class ChatbotHandler:
 
     def get_diabetes_prediction(self, data):
         converted_data = self.convert_data_format(data)
-        diabetic_predictor = DiabetesClassifier("gradient_boosting.pkl", "minmax_scaler.pkl")
+        diabetic_predictor = DiabetesClassifier("models\\gradient_boosting.pkl", "models\\minmax_scaler.pkl")
         prediction = diabetic_predictor.predict(converted_data)
         return prediction
     
-    def get_mortality_prediction(self, data):
-        return "Low risk of mortality"
-    
-    def get_readmission_prediction(self, data):
-        return "High risk of readmission"
     
     def convert_data_format(self, data):
         return {

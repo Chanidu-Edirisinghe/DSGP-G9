@@ -48,67 +48,30 @@ class DBHandler:
             "patient_name": patientName,
             "features": data,  # All input features from form as received
             "prediction": response,  # ML model prediction result
-            "created_at": datetime.now()  # Timestamp for history tracking
+            "created_at": datetime.now(timezone.utc)  # Timestamp for history tracking
         }
         mortality_record_collection = self.mongo.db['MortalityRecords']  # Access the collection
         mortality_record_collection.insert_one(record)
 
-    def get_patient_names_from_mortality_records(self, email):
+    def get_patients(self, email):
         users_collection = self.mongo.db['User']
         user = users_collection.find_one({"email": email})
         
         if not user:
             return []
         
-        mortality_records = self.mongo.db['MortalityRecords'].find(
-            {"user_id": str(user["_id"])}
-        )
+        # Get patients from the Patients collection
+        patients_collection = self.mongo.db.get_collection('Patients')
+        patients = list(patients_collection.find({"user_id": str(user["_id"])}))
         
-        # Extract unique patient names
-        patient_records = []
-        seen_patients = set()
+        # Format the results and remove ObjectId
+        formatted_patients = []
+        for patient in patients:
+            formatted_patients.append({
+                "patient_name": patient["name"]
+            })
         
-        for record in mortality_records:
-            patient_name = record.get('patient_name')
-            if patient_name and patient_name not in seen_patients:
-                patient_records.append({
-                    "patient_name": patient_name,
-                    "record_type": "mortality"
-                })
-                seen_patients.add(patient_name)
-        
-        return patient_records
-
-    def get_patient_names_from_readmission_records(self, email):
-        users_collection = self.mongo.db['User']
-        user = users_collection.find_one({"email": email})
-        
-        if not user:
-            return []
-        
-        # Check if ReadmissionRecords collection exists
-        collection_names = self.mongo.db.list_collection_names()
-        if 'ReadmissionRecords' not in collection_names:
-            return []
-        
-        readmission_records = self.mongo.db['ReadmissionRecords'].find(
-            {"user_id": str(user["_id"])}
-        )
-        
-        # Extract unique patient names
-        patient_records = []
-        seen_patients = set()
-        
-        for record in readmission_records:
-            patient_name = record.get('patient_name')
-            if patient_name and patient_name not in seen_patients:
-                patient_records.append({
-                    "patient_name": patient_name,
-                    "record_type": "readmission"
-                })
-                seen_patients.add(patient_name)
-        
-        return patient_records
+        return formatted_patients
 
     def add_patient(self, email, patient_name):
         try:
@@ -133,7 +96,7 @@ class DBHandler:
             patients_collection.insert_one({
                 "user_id": str(user["_id"]),
                 "name": patient_name,
-                "created_at": datetime.now()
+                "created_at": datetime.now(timezone.utc)
             })
             
             return True
@@ -185,13 +148,10 @@ class DBHandler:
             "patient_name": patientName,
             "features": data,
             "prediction": response,
-            "created_at": datetime.now()
+            "created_at": datetime.now(timezone.utc)
         }
         readmission_record_collection = self.mongo.db['ReadmissionRecords']  # Access the collection
         readmission_record_collection.insert_one(record)
-
-
-    # Add these methods to your DBHandler class
 
     def get_readmission_records(self, email):
         users_collection = self.mongo.db['User']
@@ -210,12 +170,23 @@ class DBHandler:
             {"user_id": str(user["_id"])}
         ))
         
-        # Convert ObjectId to string for JSON serialization
+        # Format records for JSON serialization
+        formatted_records = []
         for record in records:
+            # Convert ObjectId to string
             if '_id' in record:
                 record['_id'] = str(record['_id'])
+            
+            # Format the timestamp to a readable string
+            if 'created_at' in record:
+                # Convert UTC time to local timezone
+                utc_time = record['created_at']
+                local_time = utc_time.replace(tzinfo=timezone.utc).astimezone()
+                record['created_at'] = local_time.strftime('%Y-%m-%d %H:%M:%S')
+            
+            formatted_records.append(record)
         
-        return records
+        return formatted_records
 
     def get_mortality_records(self, email):
         users_collection = self.mongo.db['User']
@@ -229,9 +200,20 @@ class DBHandler:
             {"user_id": str(user["_id"])}
         ))
         
-        # Convert ObjectId to string for JSON serialization
+        # Format records for JSON serialization
+        formatted_records = []
         for record in records:
+            # Convert ObjectId to string
             if '_id' in record:
                 record['_id'] = str(record['_id'])
+            
+            # Format the timestamp to a readable string
+            if 'created_at' in record:
+                # Convert UTC time to local timezone
+                utc_time = record['created_at']
+                local_time = utc_time.replace(tzinfo=timezone.utc).astimezone()
+                record['created_at'] = local_time.strftime('%Y-%m-%d %H:%M:%S')
+            
+            formatted_records.append(record)
         
-        return records
+        return formatted_records

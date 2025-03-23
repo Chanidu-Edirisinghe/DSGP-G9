@@ -26,7 +26,6 @@ function DiabetesClassification() {
   });
 
   const [prediction, setPrediction] = useState(null);
-  const [predictionProbability, setPredictionProbability] = useState(null);
 
   // Calculate BMI from height (cm) and weight (kg)
   const calculateBMI = (height, weight) => {
@@ -157,19 +156,45 @@ function DiabetesClassification() {
 
       const data = await response.json();
       console.log("API Response:", data);
-      setPrediction(
+
+      const predictionText =
         data.prediction === 2
           ? "Diabetes"
           : data.prediction === 1
           ? "Prediabetes"
           : data.prediction === 0
           ? "No Diabetes"
-          : "Error in prediction"
-      );
+          : "Error in prediction";
 
-      if (data.probability !== undefined) {
-        setPredictionProbability(data.probability);
+      const probabilityText = data.probability;
+
+      // Add advice based on prediction
+      let advice = "";
+      if (data.prediction === 0) {
+        advice =
+          "You are not at risk for diabetes. Maintain a healthy lifestyle with a balanced diet, regular exercise, and routine checkups.";
+      } else if (data.prediction === 1) {
+        advice =
+          "You may have prediabetes. Prevent diabetes by eating healthy, exercising regularly, managing weight, and reducing sugar intake. Consult a doctor for guidance.";
+      } else if (data.prediction === 2) {
+        advice =
+          "You may have diabetes. Consult a doctor for a treatment plan. Manage your blood sugar through diet, exercise, medication (if needed), and regular monitoring.";
       }
+
+      setPrediction(
+        <div className="diabetes-prediction-results">
+          <div className="diabetes-prediction-text">
+            <strong>Prediction:</strong> {predictionText}
+          </div>
+          <div className="diabetes-probabilities">
+            <strong>Confidence: </strong>
+            {(probabilityText * 100).toFixed(2)}%
+          </div>
+          <div className="diabetes-advice">
+            <strong>Advice:</strong> {advice}
+          </div>
+        </div>
+      );
     } catch (error) {
       console.error("Error:", error);
       setPrediction("Error in prediction");
@@ -177,208 +202,224 @@ function DiabetesClassification() {
   };
 
   return (
-    <div className="app-container">
-      <div className="container">
-        <div className="form-container">
+    <div className="diabetes-app-container">
+      <div className="diabetes-container">
+        <div className="diabetes-form-container">
           <form onSubmit={handleSubmit}>
-            {/* Height */}
-            <div className="input-group">
-              <p>What is your height in centimeters?</p>
-              <input
-                type="number"
-                name="height"
-                min="51"
-                max="272"
-                value={formData.height}
-                onChange={handleChange}
-                required
-              />
-              {validationErrors.height && (
-                <div className="error-message">{validationErrors.height}</div>
-              )}
+            <div className="diabetes-form-row">
+              {/* Biological Sex */}
+              <div className="diabetes-form-field">
+                <label>Biological Sex</label>
+                <select
+                  name="sex"
+                  value={formData.sex}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+
+              {/* Age - Specific age input */}
+              <div className="diabetes-form-field">
+                <label>Age</label>
+                <input
+                  type="number"
+                  name="ageValue"
+                  min="18"
+                  max="99"
+                  value={formData.ageValue}
+                  onChange={handleChange}
+                  placeholder="18-99"
+                  required
+                />
+              </div>
             </div>
 
-            {/* Weight */}
-            <div className="input-group">
-              <p>What is your weight in kilograms?</p>
-              <input
-                type="number"
-                name="weight"
-                min="4"
-                max="635"
-                step="0.1"
-                value={formData.weight}
-                onChange={handleChange}
-                required
-              />
-              {validationErrors.weight && (
-                <div className="error-message">{validationErrors.weight}</div>
-              )}
+            <div className="diabetes-form-row">
+              {/* Height */}
+              <div className="diabetes-form-field">
+                <label>Height (cm)</label>
+                <input
+                  type="number"
+                  name="height"
+                  min="51"
+                  max="272"
+                  value={formData.height}
+                  onChange={handleChange}
+                  placeholder="51-272 cm"
+                  required
+                />
+                {validationErrors.height && (
+                  <div className="diabetes-error-message">
+                    {validationErrors.height}
+                  </div>
+                )}
+              </div>
+
+              {/* Weight */}
+              <div className="diabetes-form-field">
+                <label>Weight (kg)</label>
+                <input
+                  type="number"
+                  name="weight"
+                  min="4"
+                  max="635"
+                  value={formData.weight}
+                  onChange={handleChange}
+                  placeholder="4-635 kg"
+                  required
+                />
+                {validationErrors.weight && (
+                  <div className="diabetes-error-message">
+                    {validationErrors.weight}
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* High Blood Pressure */}
-            <div className="input-group">
-              <p>Do you have high blood pressure?</p>
-              <select
-                name="highBP"
-                value={formData.highBP}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
+            <div className="diabetes-form-row">
+              {/* High Blood Pressure */}
+              <div className="diabetes-form-field">
+                <label>Do you have high blood pressure?</label>
+                <select
+                  name="highBP"
+                  value={formData.highBP}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+
+              {/* High Cholesterol */}
+              <div className="diabetes-form-field">
+                <label>Do you have high cholesterol?</label>
+                <select
+                  name="highChol"
+                  value={formData.highChol}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
             </div>
 
-            {/* High Cholesterol */}
-            <div className="input-group">
-              <p>Do you have high cholesterol?</p>
-              <select
-                name="highChol"
-                value={formData.highChol}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
+            <div className="diabetes-form-row">
+              {/* Smoker */}
+              <div className="diabetes-form-field">
+                <label>
+                  Have you smoked at least 100 cigarettes in your life?
+                </label>
+                <select
+                  name="smoker"
+                  value={formData.smoker}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+
+              {/* Physical Activity */}
+              <div className="diabetes-form-field">
+                <label>Any physical activity in past 30 days?</label>
+                <select
+                  name="physActivity"
+                  value={formData.physActivity}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
             </div>
 
-            {/* Smoker */}
-            <div className="input-group">
-              <p>Have you smoked at least 100 cigarettes in your life?</p>
-              <select
-                name="smoker"
-                value={formData.smoker}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
+            <div className="diabetes-form-row">
+              {/* Fruits Consumption */}
+              <div className="diabetes-form-field">
+                <label>Do you consume fruits daily?</label>
+                <select
+                  name="fruits"
+                  value={formData.fruits}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+
+              {/* Vegetables Consumption */}
+              <div className="diabetes-form-field">
+                <label>Do you consume vegetables daily?</label>
+                <select
+                  name="veggies"
+                  value={formData.veggies}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
             </div>
 
-            {/* Physical Activity */}
-            <div className="input-group">
-              <p>Have you done physical activity in the past 30 days?</p>
-              <select
-                name="physActivity"
-                value={formData.physActivity}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
+            <div className="diabetes-form-row">
+              {/* Mental Health */}
+              <div className="diabetes-form-field">
+                <label>Days of poor mental health in past 30 days</label>
+                <input
+                  type="number"
+                  name="mentHlth"
+                  min="0"
+                  max="30"
+                  value={formData.mentHlth}
+                  onChange={handleChange}
+                  placeholder="0-30 days"
+                  required
+                />
+              </div>
+
+              {/* Difficulty Walking */}
+              <div className="diabetes-form-field">
+                <label>
+                  Do you have difficulty walking or climbing stairs?
+                </label>
+                <select
+                  name="diffWalk"
+                  value={formData.diffWalk}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
             </div>
 
-            {/* Fruits Consumption */}
-            <div className="input-group">
-              <p>Do you consume fruits daily?</p>
-              <select
-                name="fruits"
-                value={formData.fruits}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
+            <div className="diabetes-form-submit">
+              <button type="submit" className="diabetes-submit-btn">
+                Predict Risk
+              </button>
             </div>
-
-            {/* Vegetables Consumption */}
-            <div className="input-group">
-              <p>Do you consume vegetables daily?</p>
-              <select
-                name="veggies"
-                value={formData.veggies}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            {/* Mental Health */}
-            <div className="input-group">
-              <p>Days of poor mental health in past month (0-30)?</p>
-              <input
-                type="number"
-                name="mentHlth"
-                min="0"
-                max="30"
-                value={formData.mentHlth}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            {/* Difficulty Walking */}
-            <div className="input-group">
-              <p>Do you have difficulty walking or climbing stairs?</p>
-              <select
-                name="diffWalk"
-                value={formData.diffWalk}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            {/* Biological Sex */}
-            <div className="input-group">
-              <p>Select your biological sex:</p>
-              <select
-                name="sex"
-                value={formData.sex}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-            </div>
-
-            {/* Age - Specific age input */}
-            <div className="input-group">
-              <p>What is your age?</p>
-              <input
-                type="number"
-                name="ageValue"
-                min="18"
-                max="99"
-                value={formData.ageValue}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <button type="submit" className="submit-btn">
-              Predict
-            </button>
           </form>
         </div>
-        {prediction && (
-          <div className="result">
-            <div>Prediction: {prediction}</div>
-            {predictionProbability !== null && (
-              <div>
-                Probability: {(predictionProbability * 100).toFixed(2)}%
-              </div>
-            )}
-          </div>
-        )}
+        {prediction && <div className="diabetes-result">{prediction}</div>}
       </div>
     </div>
   );

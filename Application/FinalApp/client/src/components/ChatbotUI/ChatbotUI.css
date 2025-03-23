@@ -9,14 +9,14 @@
   border-width: 3px;
   border-color: white;
   border-radius: 50%;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
+  background: white;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   z-index: 999;
-  color: white;
+  color: #2575fc;
   transition: transform 0.3s ease;
 }
 

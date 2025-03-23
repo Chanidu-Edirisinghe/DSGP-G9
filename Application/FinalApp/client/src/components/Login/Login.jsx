@@ -17,7 +17,7 @@ function Login({ setIsAuthenticated }) {
   useEffect(() => {
     const savedEmail = localStorage.getItem("savedEmail");
     if (savedEmail) {
-      setFormData(prev => ({ ...prev, email: savedEmail }));
+      setFormData((prev) => ({ ...prev, email: savedEmail }));
     }
   }, []);
 
@@ -33,7 +33,7 @@ function Login({ setIsAuthenticated }) {
     e.preventDefault();
     setIsLoading(true);
     setMessage("");
-    
+
     try {
       // Sending login data to the backend
       const response = await fetch("http://127.0.0.1:5000/login", {
@@ -51,17 +51,19 @@ function Login({ setIsAuthenticated }) {
 
       if (response.ok) {
         console.log("User logged in:", formData);
-        
+
         localStorage.setItem("access_token", data.access_token); // Store JWT token
         setIsAuthenticated(true);
-        
+
         // Success message before redirect
         setMessage("Login successful! Redirecting...");
         setTimeout(() => {
           navigate("/classification"); // Redirect after successful login
         }, 1000);
       } else {
-        setMessage(data.message || "Login failed. Please check your credentials."); // Set error message from the backend
+        setMessage(
+          data.message || "Login failed. Please check your credentials."
+        ); // Set error message from the backend
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -83,19 +85,21 @@ function Login({ setIsAuthenticated }) {
         <div className="noise-overlay"></div>
         <div id="particles-container" className="particles-container"></div>
       </div>
-      
+
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
             <h2>Welcome Back</h2>
             <p className="login-desc">Login to your account</p>
           </div>
-          
+
           <form onSubmit={handleLogin}>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <div className="input-container">
-                {!formData.email && <i className="input-icon fas fa-envelope"></i>}
+                {!formData.email && (
+                  <i className="input-icon fas fa-envelope"></i>
+                )}
                 <input
                   id="email"
                   type="email"
@@ -112,7 +116,9 @@ function Login({ setIsAuthenticated }) {
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <div className="input-container">
-                {!formData.password && <i className="input-icon fas fa-lock"></i>}
+                {!formData.password && (
+                  <i className="input-icon fas fa-lock"></i>
+                )}
                 <input
                   id="password"
                   type="password"
@@ -125,10 +131,10 @@ function Login({ setIsAuthenticated }) {
                 />
               </div>
             </div>
-            
-            <button 
-              type="submit" 
-              className={`btn-primary ${isLoading ? 'loading' : ''}`} 
+
+            <button
+              type="submit"
+              className={`btn-primary ${isLoading ? "loading" : ""}`}
               disabled={isLoading}
             >
               {isLoading ? (
@@ -137,13 +143,17 @@ function Login({ setIsAuthenticated }) {
                   <span>Logging in...</span>
                 </span>
               ) : (
-                'Log In'
+                "Log In"
               )}
             </button>
           </form>
-          
+
           {message && (
-            <div className={`message ${message.includes('successful') ? 'success' : 'error'}`}>
+            <div
+              className={`message ${
+                message.includes("successful") ? "success" : "error"
+              }`}
+            >
               {message}
             </div>
           )}

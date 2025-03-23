@@ -1,63 +1,46 @@
-import React, { useEffect, useState } from "react";
+import { React, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./navbar.css";
 
 function Navbar({ isAuthenticated, setIsAuthenticated }) {
-  const location = useLocation();
-  const [activeRoute, setActiveRoute] = useState("");
-  
-  const currentUser = "Admin"; 
-  
-  // Update active route when location changes
-  useEffect(() => {
-    setActiveRoute(location.pathname);
-  }, [location]);
-  
-  // Get user initials for avatar
-  const getUserInitials = () => {
-    return currentUser.substring(0, 2).toUpperCase();
-  };
-  
+  const location = useLocation(); // Get current location
+
   const handleLogout = () => {
-    setIsAuthenticated(false);
-    // Clear any auth tokens from localStorage
     localStorage.removeItem("access_token");
+    setIsAuthenticated(false);
   };
+
+  // Function to check if a path is active
+  const isActive = (path) => {
+    return location.pathname === path ? "active" : "";
+  };
+
+  // Check if user is trying to access a protected route
+  useEffect(() => {
+    const protectedRoutes = ["/readmission", "/mortality", "/dashboard"];
+    if (!isAuthenticated && protectedRoutes.includes(location.pathname)) {
+      // Redirect to login page if trying to access protected route
+      window.location.href = "/login";
+    }
+  }, [isAuthenticated, location.pathname]);
 
   return (
     <div className="topnav">
       <div className="topnav-left">
         <h2 className="logo">DiaTrack</h2>
         <div className="nav-links">
-          {/* <Link to="/" 
-            className={activeRoute === "/" ? "active" : ""}
-          >
-            Home
-          </Link> */} 
-          <Link 
-            to="/classification" 
-            className={activeRoute === "/classification" ? "active" : ""}
-          >
+          <Link to="/classification" className={isActive("/classification")}>
             Classification
           </Link>
           {isAuthenticated && (
             <>
-              <Link 
-                to="/readmission" 
-                className={activeRoute === "/readmission" ? "active" : ""}
-              >
+              <Link to="/readmission" className={isActive("/readmission")}>
                 Readmission
               </Link>
-              <Link 
-                to="/mortality" 
-                className={activeRoute === "/mortality" ? "active" : ""}
-              >
+              <Link to="/mortality" className={isActive("/mortality")}>
                 Mortality
               </Link>
-              <Link 
-                to="/dashboard" 
-                className={activeRoute === "/dashboard" ? "active" : ""}
-              >
+              <Link to="/dashboard" className={isActive("/dashboard")}>
                 Dashboard
               </Link>
             </>
@@ -67,24 +50,13 @@ function Navbar({ isAuthenticated, setIsAuthenticated }) {
 
       <div className="topnav-right">
         {!isAuthenticated ? (
-          <Link 
-            to="/login"
-            className={activeRoute === "/login" ? "active" : ""}
-          >
+          <Link to="/login" className={isActive("/login")}>
             Login
           </Link>
         ) : (
-          <>
-            <div className="user-info">
-              <div className="user-meta">
-                <div className="username">{currentUser}</div>
-              </div>
-              <div className="user-avatar">{getUserInitials()}</div>
-            </div>
-            <Link to="/classification" onClick={handleLogout} className="logout-btn">
-              Logout
-            </Link>
-          </>
+          <Link to="/classification" onClick={handleLogout}>
+            Logout
+          </Link>
         )}
       </div>
     </div>
