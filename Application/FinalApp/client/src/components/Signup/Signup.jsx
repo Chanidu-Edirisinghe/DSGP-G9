@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./AuthStyles.css";
+import "../../components/Login/AuthStyles.css";
+import "../../components/Login/AnimatedBackground.css";
+import "../../components/Login/particleAnimation.js";
 
 function Signup({ setIsAuthenticated }) {
   const navigate = useNavigate();
@@ -10,102 +12,169 @@ function Signup({ setIsAuthenticated }) {
     password: "",
   });
 
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
-    // Check password length before submitting
-    if (formData.password.length < 6) {
-      alert("Password must be at least 6 characters long");
-      return;
-    }
+    setIsLoading(true);
+    setMessage("");
 
     try {
       const response = await fetch("http://127.0.0.1:5000/signup", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // Sending JSON data
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
           password: formData.password,
-        }), // Convert formData to JSON string to send in the body
+        }),
       });
 
-      const data = await response.json(); // Parse the JSON response body
-      console.log(response.ok);
+      const data = await response.json();
+
       if (response.ok) {
-        // Check if status is 2xx
         console.log("User signed up:", formData);
         localStorage.setItem("access_token", data.access_token);
         setIsAuthenticated(true);
-        navigate("/classification"); // Redirect after signup
+
+        // Success message before redirect
+        setMessage("Account created successfully! Redirecting...");
+        setTimeout(() => {
+          navigate("/classification"); // Redirect after successful signup
+        }, 1000);
       } else {
-        alert(data.error || "Signup failed");
+        setMessage(data.error || "Signup failed. Please try again.");
       }
     } catch (error) {
-      alert("Signup failed");
+      console.error("Signup error:", error);
+      setMessage("Connection error. Please try again later.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <h2>Create Account</h2>
-        <form onSubmit={handleSignup}>
-          <div className="form-group">
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter your name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Create a password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <button type="submit" className="btn-primary">
-            Sign Up
-          </button>
-        </form>
+    <>
+      {/* Animated Background */}
+      <div className="animated-background">
+        <div className="gradient-sphere sphere-1"></div>
+        <div className="gradient-sphere sphere-2"></div>
+        <div className="gradient-sphere sphere-3"></div>
+        <div className="grid-overlay"></div>
+        <div className="glow"></div>
+        <div className="noise-overlay"></div>
+        <div id="particles-container" className="particles-container"></div>
+      </div>
 
-        <div className="auth-footer">
-          <p>Already have an account?</p>
-          <Link to="/login" className="btn-secondary">
-            Log In
-          </Link>
+      <div className="auth-container">
+        <div className="auth-card">
+          <div className="auth-header">
+            <h2>Create Account</h2>
+            <p className="login-desc">Join us today</p>
+          </div>
+
+          <form onSubmit={handleSignup}>
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <div className="input-container">
+                {!formData.name && <i className="input-icon fas fa-user"></i>}
+                <input
+                  id="name"
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  autoComplete="name"
+                  disabled={isLoading}
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <div className="input-container">
+                {!formData.email && (
+                  <i className="input-icon fas fa-envelope"></i>
+                )}
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  autoComplete="email"
+                  disabled={isLoading}
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <div className="input-container">
+                {!formData.password && (
+                  <i className="input-icon fas fa-lock"></i>
+                )}
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  autoComplete="new-password"
+                  disabled={isLoading}
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className={`btn-primary ${isLoading ? "loading" : ""}`}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className="loader-container">
+                  <span className="loader"></span>
+                  <span>Creating account...</span>
+                </span>
+              ) : (
+                "Sign Up"
+              )}
+            </button>
+          </form>
+
+          {message && (
+            <div
+              className={`message ${
+                message.includes("successfully") ? "success" : "error"
+              }`}
+            >
+              {message}
+            </div>
+          )}
+
+          <div className="auth-footer">
+            <p>Already have an account?</p>
+            <Link to="/login" className="btn-secondary">
+              Log In
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
