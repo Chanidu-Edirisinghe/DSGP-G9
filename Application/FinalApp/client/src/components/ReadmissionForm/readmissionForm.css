@@ -50,7 +50,7 @@ input, select {
   border-radius: 8px;
   transition: 0.3s;
   font-size: 14px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 input:focus, select:focus {
@@ -94,5 +94,5 @@ input:focus, select:focus {
   border-radius: 8px;
   background: #e3ffe3;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
+  }
+  

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./dashboard.css";
 import Footer from "../../components/Footer/footer";
+import Hero from "../../components/Hero/hero";
 
 const Dashboard = () => {
   const [readmissionData, setReadmissionData] = useState([]);
@@ -39,8 +40,26 @@ const Dashboard = () => {
         console.log("Readmission data:", readmissionResponse.data);
         console.log("Mortality data:", mortalityResponse.data);
 
-        setReadmissionData(readmissionResponse.data.records || []);
-        setMortalityData(mortalityResponse.data.records || []);
+        // Update data extraction based on the response structure
+        setReadmissionData(
+          readmissionResponse.data && readmissionResponse.data.records
+            ? Array.isArray(readmissionResponse.data.records)
+              ? readmissionResponse.data.records
+              : [readmissionResponse.data.records]
+            : Array.isArray(readmissionResponse.data)
+            ? readmissionResponse.data
+            : []
+        );
+
+        setMortalityData(
+          mortalityResponse.data && mortalityResponse.data.records
+            ? Array.isArray(mortalityResponse.data.records)
+              ? mortalityResponse.data.records
+              : [mortalityResponse.data.records]
+            : Array.isArray(mortalityResponse.data)
+            ? mortalityResponse.data
+            : []
+        );
       } catch (err) {
         console.error("Error fetching data:", err);
         setError("Failed to load patient records. Please try again later.");
@@ -69,14 +88,16 @@ const Dashboard = () => {
 
       console.log("CSV response received:", response);
 
-      // Create download link
+      // Create download link with formatted date for consistent naming
+      const today = new Date();
+      const formattedDate = `${today.getFullYear()}-${String(
+        today.getMonth() + 1
+      ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute(
-        "download",
-        `${type}_records_${new Date().toISOString().slice(0, 10)}.csv`
-      );
+      link.setAttribute("download", `${type}_records_${formattedDate}.csv`);
       document.body.appendChild(link);
       link.click();
 
@@ -88,39 +109,6 @@ const Dashboard = () => {
     } catch (err) {
       console.error(`Error downloading ${type} CSV:`, err);
       alert(`Failed to download ${type} records. Please try again.`);
-    }
-  };
-
-  // Format date for display
-  const formatDate = (dateString) => {
-    // Handle both string dates and MongoDB ISODate objects
-    if (!dateString) return "N/A";
-
-    try {
-      // Check if it's already a Date object
-      if (dateString instanceof Date) {
-        return dateString.toLocaleString();
-      }
-
-      // Handle MongoDB date format which may be a string or an object
-      if (typeof dateString === "object") {
-        if (dateString.$date) {
-          return new Date(dateString.$date).toLocaleString();
-        } else if (dateString.seconds) {
-          return new Date(dateString.seconds * 1000).toLocaleString();
-        }
-      }
-
-      // Regular string date - convert to milliseconds if needed
-      if (typeof dateString === "string" && /^\d+$/.test(dateString)) {
-        return new Date(parseInt(dateString)).toLocaleString();
-      }
-
-      // Standard date string
-      return new Date(dateString).toLocaleString();
-    } catch (err) {
-      console.error("Error formatting date:", err, dateString);
-      return "Invalid Date";
     }
   };
 
@@ -137,19 +125,19 @@ const Dashboard = () => {
             predictionObj.probability * 100
           ).toFixed(2)}%)`;
     } else if (type === "mortality") {
-      return predictionObj.hospital_death === 1
-        ? `High risk (${(predictionObj.death_probability * 100).toFixed(2)}%)`
-        : `Low risk (${(predictionObj.death_probability * 100).toFixed(2)}%)`;
+      return predictionObj.prediction === 1
+        ? `High risk (${(predictionObj.probability * 100).toFixed(2)}%)`
+        : `Low risk (${(predictionObj.probability * 100).toFixed(2)}%)`;
     }
 
     return JSON.stringify(predictionObj);
   };
 
-  // Format feature value for display
+  // Format feature value for display - updated to match readmissionForm.jsx formatting
   const formatFeatureValue = (key, value) => {
     if (value === undefined || value === null) return "N/A";
 
-    // Format specific fields
+    // Format specific fields based on readmissionForm.jsx values
     switch (key) {
       case "metformin":
       case "glipizide":
@@ -157,9 +145,35 @@ const Dashboard = () => {
       case "rosiglitazone":
       case "acarbose":
       case "insulin":
-        return value; // Just return the value without "Dosage:" prefix
+        // Convert medication values to the format in the form
+        switch (value) {
+          case "No":
+            return "No";
+          case "Up":
+            return "Increased";
+          case "Down":
+            return "Decreased";
+          case "Steady":
+            return "Steady";
+          default:
+            return value;
+        }
       case "change":
         return value === "Ch" ? "Yes" : "No";
+      case "race":
+        // Map race values to more readable form
+        const races = {
+          Caucasian: "Caucasian",
+          Asian: "Asian",
+          AfricanAmerican: "African American",
+          Hispanic: "Hispanic",
+          Other: "Other",
+        };
+        return races[value] || value;
+      case "gender":
+        return value;
+      case "age":
+        return value;
       case "admission_type_id":
         const admissionTypes = {
           0: "Emergency",
@@ -169,55 +183,104 @@ const Dashboard = () => {
           4: "Not Available",
           5: "Trauma Center",
         };
-        return `${value} - ${admissionTypes[value] || ""}`;
+        return admissionTypes[value] || value;
       case "admission_source_id":
         const sources = {
           1: "Physician Referral",
           2: "Clinic Referral",
           3: "HMO Referral",
-          4: "Transfer from hospital",
+          4: "Transfer from a hospital",
           5: "Transfer from SNF",
-          6: "Transfer from other facility",
+          6: "Transfer from another facility",
           7: "Emergency Room",
           8: "Court/Law Enforcement",
           9: "Not Available",
-          10: "Transfer from critical access hospital",
+          10: "Transfer from critical access",
           11: "Normal Delivery",
           12: "Sick Baby",
           13: "Extramural Birth",
-          14: "Transfer hospital inpatient",
-          15: "Transfer from Ambulatory Surgery Center",
+          14: "Transfer from inpatient",
+          15: "Transfer from Surgery Center",
         };
-        return `${value} - ${sources[value] || ""}`;
+        return sources[value] || value;
+      case "diag_1":
+      case "diag_2":
+      case "diag_3":
+        return value; // Keep diagnoses as is
       default:
         return value;
     }
   };
 
-  // Get all feature keys from record data
-  const getAllFeatureKeys = (records) => {
+  // Get filtered feature keys - select important ones to show first
+  const getFilteredFeatureKeys = (records, type) => {
+    // Define key order based on form sections
+    const keyOrder =
+      type === "readmission"
+        ? [
+            // Demographics
+            "race",
+            "gender",
+            "age",
+            // Admission info
+            "admission_type_id",
+            "admission_source_id",
+            "time_in_hospital",
+            // Medical info
+            "num_lab_procedures",
+            "num_procedures",
+            "num_medications",
+            "number_outpatient",
+            "number_emergency",
+            "number_inpatient",
+            // Diagnoses
+            "diag_1",
+            "diag_2",
+            "diag_3",
+            "change",
+            // Medications
+            "metformin",
+            "glipizide",
+            "pioglitazone",
+            "rosiglitazone",
+            "acarbose",
+            "insulin",
+          ]
+        : [];
+
+    // Get all keys from records
     const allKeys = new Set();
     records.forEach((record) => {
       if (record.features && typeof record.features === "object") {
         Object.keys(record.features).forEach((key) => allKeys.add(key));
       }
     });
-    return Array.from(allKeys);
+
+    // Return ordered keys (prioritizing the defined order)
+    const orderedKeys = keyOrder.filter((key) => allKeys.has(key));
+    const remainingKeys = Array.from(allKeys).filter(
+      (key) => !keyOrder.includes(key)
+    );
+
+    return [...orderedKeys, ...remainingKeys];
   };
 
-  // Get readmission feature keys
+  // Get readmission feature keys with better ordering
   const readmissionFeatureKeys =
-    readmissionData.length > 0 ? getAllFeatureKeys(readmissionData) : [];
+    readmissionData.length > 0
+      ? getFilteredFeatureKeys(readmissionData, "readmission")
+      : [];
 
-  // Get mortality feature keys
+  // Get mortality feature keys with better ordering
   const mortalityFeatureKeys =
-    mortalityData.length > 0 ? getAllFeatureKeys(mortalityData) : [];
+    mortalityData.length > 0
+      ? getFilteredFeatureKeys(mortalityData, "mortality")
+      : [];
 
   return (
     <>
+      <Hero heading="Dashboard" description="" />
       <div className="dashboard-container">
-        <h1 className="dashboard-title">Patient Records Dashboard</h1>
-
         {error && <div className="error-message">{error}</div>}
 
         {loading ? (
@@ -242,25 +305,42 @@ const Dashboard = () => {
                         <th>Prediction</th>
                         <th>Date</th>
                         {readmissionFeatureKeys.map((key) => (
-                          <th key={key}>{key}</th>
+                          <th key={key}>
+                            {key.charAt(0).toUpperCase() +
+                              key.slice(1).replace(/_/g, " ")}
+                          </th>
                         ))}
                       </tr>
                     </thead>
                     <tbody>
-                      {readmissionData.map((record, index) => (
-                        <tr key={`readmission-${index}`}>
-                          <td>{record.patient_name}</td>
-                          <td>
-                            {formatPrediction(record.prediction, "readmission")}
-                          </td>
-                          <td>{formatDate(record.created_at)}</td>
-                          {readmissionFeatureKeys.map((key) => (
-                            <td key={key}>
-                              {formatFeatureValue(key, record.features?.[key])}
+                      {readmissionData.map((record, index) => {
+                        // Handle record as either an object or dictionary
+                        const features =
+                          typeof record.features === "object"
+                            ? record.features
+                            : {};
+                        const prediction =
+                          typeof record.prediction === "object"
+                            ? record.prediction
+                            : typeof record.prediction === "string"
+                            ? JSON.parse(record.prediction)
+                            : {};
+
+                        return (
+                          <tr key={`readmission-${index}`}>
+                            <td>{record.patient_name}</td>
+                            <td>
+                              {formatPrediction(prediction, "readmission")}
                             </td>
-                          ))}
-                        </tr>
-                      ))}
+                            <td>{record.created_at}</td>
+                            {readmissionFeatureKeys.map((key) => (
+                              <td key={key}>
+                                {formatFeatureValue(key, features[key])}
+                              </td>
+                            ))}
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 )}
@@ -270,7 +350,7 @@ const Dashboard = () => {
                 onClick={() => downloadCSV("readmission")}
                 disabled={readmissionData.length === 0}
               >
-                Download Readmission Records (CSV)
+                Download Readmission Records
               </button>
             </div>
 
@@ -288,23 +368,40 @@ const Dashboard = () => {
                         <th>Prediction</th>
                         <th>Date</th>
                         {mortalityFeatureKeys.map((key) => (
-                          <th key={key}>{key}</th>
+                          <th key={key}>
+                            {key.charAt(0).toUpperCase() +
+                              key.slice(1).replace(/_/g, " ")}
+                          </th>
                         ))}
                       </tr>
                     </thead>
                     <tbody>
-                      {mortalityData.map((record, index) => (
-                        <tr key={`mortality-${index}`}>
-                          <td>{record.patient_name}</td>
-                          <td>
-                            {formatPrediction(record.prediction, "mortality")}
-                          </td>
-                          <td>{formatDate(record.created_at)}</td>
-                          {mortalityFeatureKeys.map((key) => (
-                            <td key={key}>{record.features?.[key] || "N/A"}</td>
-                          ))}
-                        </tr>
-                      ))}
+                      {mortalityData.map((record, index) => {
+                        // Handle record as either an object or dictionary
+                        const features =
+                          typeof record.features === "object"
+                            ? record.features
+                            : {};
+                        const prediction =
+                          typeof record.prediction === "object"
+                            ? record.prediction
+                            : typeof record.prediction === "string"
+                            ? JSON.parse(record.prediction)
+                            : {};
+
+                        return (
+                          <tr key={`mortality-${index}`}>
+                            <td>{record.patient_name}</td>
+                            <td>{formatPrediction(prediction, "mortality")}</td>
+                            <td>{record.created_at}</td>
+                            {mortalityFeatureKeys.map((key) => (
+                              <td key={key}>
+                                {formatFeatureValue(key, features[key])}
+                              </td>
+                            ))}
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 )}
@@ -314,7 +411,7 @@ const Dashboard = () => {
                 onClick={() => downloadCSV("mortality")}
                 disabled={mortalityData.length === 0}
               >
-                Download Mortality Records (CSV)
+                Download Mortality Records
               </button>
             </div>
           </div>

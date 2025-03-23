@@ -4,7 +4,7 @@ import "./ChatbotUI.css";
 export default function ChatbotUI() {
   const [messages, setMessages] = useState([
     {
-      text: "Hello! I can help you in getting your diabetic status classified or answer any other questions you have.",
+      text: "Hello! I can help you in getting your diabetic status classified or answer any other diabetic related questions you have.",
       sender: "bot",
     },
   ]);
@@ -48,13 +48,25 @@ export default function ChatbotUI() {
       );
 
       const botResponses = await response.json();
+      console.log(botResponses);
       const newMessages = botResponses.map((res) => ({
-        text: res.text,
+        text: res.text
+          ? res.text.split("\n").map((line, i) =>
+              i === 0 ? (
+                line
+              ) : (
+                <>
+                  <br key={i} />
+                  {line}
+                </>
+              )
+            )
+          : "",
         sender: "bot",
       }));
       setMessages((prev) => [...prev, ...newMessages]);
     } catch (error) {
-      console.error("Error communicating with Rasa:", error);
+      console.error("Error communicating with chatbot:", error);
       setMessages((prev) => [
         ...prev,
         { text: "Error connecting to chatbot.", sender: "bot" },
@@ -68,8 +80,8 @@ export default function ChatbotUI() {
       <div className={`chat-icon ${isOpen ? "hidden" : ""}`} onClick={openChat}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="30"
-          height="30"
+          width="40"
+          height="40"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"

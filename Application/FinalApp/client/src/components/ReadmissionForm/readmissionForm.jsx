@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios"; // Add this import
+import axios from "axios";
 import "./readmissionForm.css";
 
-// Update function declaration to accept selectedPatient prop
 function ReadmissionForm({ selectedPatient }) {
   const [formData, setFormData] = useState({
     race: "",
@@ -265,7 +264,7 @@ function ReadmissionForm({ selectedPatient }) {
                 <option value="Respiratory">Respiratory</option>
               </select>
             </div>
-            /* Numeric Inputs with Separate Explanations */
+
             <div className="input-group">
               <p>Integer number of days between admission and discharge.</p>
               <input
@@ -417,9 +416,7 @@ function ReadmissionForm({ selectedPatient }) {
           <div className="result">
             <div>Prediction: {prediction}</div>
             {predictionProbability !== null && (
-              <div>
-                Risk Probability: {(predictionProbability * 100).toFixed(2)}%
-              </div>
+              <div>Confidence: {(predictionProbability * 100).toFixed(2)}%</div>
             )}
           </div>
         )}

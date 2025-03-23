@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../../components/Login/AuthStyles.css";
+import "./Signup.css";
 import "../../components/Login/AnimatedBackground.css";
 import "../../components/Login/particleAnimation.js";
 
@@ -27,7 +27,7 @@ function Signup({ setIsAuthenticated }) {
     e.preventDefault();
     setIsLoading(true);
     setMessage("");
-    
+
     try {
       const response = await fetch("http://127.0.0.1:5000/signup", {
         method: "POST",
@@ -41,13 +41,13 @@ function Signup({ setIsAuthenticated }) {
         }),
       });
 
-      const data = await response.json(); 
-      
+      const data = await response.json();
+
       if (response.ok) {
         console.log("User signed up:", formData);
         localStorage.setItem("access_token", data.access_token);
         setIsAuthenticated(true);
-        
+
         // Success message before redirect
         setMessage("Account created successfully! Redirecting...");
         setTimeout(() => {
@@ -76,14 +76,14 @@ function Signup({ setIsAuthenticated }) {
         <div className="noise-overlay"></div>
         <div id="particles-container" className="particles-container"></div>
       </div>
-      
+
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
             <h2>Create Account</h2>
             <p className="login-desc">Join us today</p>
           </div>
-          
+
           <form onSubmit={handleSignup}>
             <div className="form-group">
               <label htmlFor="name">Name</label>
@@ -105,7 +105,9 @@ function Signup({ setIsAuthenticated }) {
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <div className="input-container">
-                {!formData.email && <i className="input-icon fas fa-envelope"></i>}
+                {!formData.email && (
+                  <i className="input-icon fas fa-envelope"></i>
+                )}
                 <input
                   id="email"
                   type="email"
@@ -122,7 +124,9 @@ function Signup({ setIsAuthenticated }) {
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <div className="input-container">
-                {!formData.password && <i className="input-icon fas fa-lock"></i>}
+                {!formData.password && (
+                  <i className="input-icon fas fa-lock"></i>
+                )}
                 <input
                   id="password"
                   type="password"
@@ -135,10 +139,10 @@ function Signup({ setIsAuthenticated }) {
                 />
               </div>
             </div>
-            
-            <button 
-              type="submit" 
-              className={`btn-primary ${isLoading ? 'loading' : ''}`} 
+
+            <button
+              type="submit"
+              className={`btn-primary ${isLoading ? "loading" : ""}`}
               disabled={isLoading}
             >
               {isLoading ? (
@@ -147,13 +151,17 @@ function Signup({ setIsAuthenticated }) {
                   <span>Creating account...</span>
                 </span>
               ) : (
-                'Sign Up'
+                "Sign Up"
               )}
             </button>
           </form>
-          
+
           {message && (
-            <div className={`message ${message.includes('successfully') ? 'success' : 'error'}`}>
+            <div
+              className={`message ${
+                message.includes("successfully") ? "success" : "error"
+              }`}
+            >
               {message}
             </div>
           )}

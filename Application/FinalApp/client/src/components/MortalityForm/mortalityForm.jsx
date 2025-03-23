@@ -6,7 +6,6 @@ import { getRiskColor, getRiskLevel } from "./color.js";
 import { renderFormFields } from "./formRendering.jsx";
 
 function MortalityForm({ selectedPatient }) {
-  
   const [formData, setFormData] = useState({
     age: "", // Patient's Age at Unit Admission
     weight: "", // Add weight input
@@ -52,21 +51,24 @@ function MortalityForm({ selectedPatient }) {
     const { name, value } = e.target;
     let updatedFormData = { ...formData, [name]: value };
     let updatedErrors = { ...formErrors };
-    
+
     // Validate the field
     const error = validateField(name, value);
-    
+
     if (error) {
       updatedErrors[name] = error;
     } else {
       delete updatedErrors[name];
     }
-    
+
     // recalculate BMI
     if (name === "weight" || name === "height") {
-      updatedFormData.bmi = calculateBMI(updatedFormData.weight, updatedFormData.height);
+      updatedFormData.bmi = calculateBMI(
+        updatedFormData.weight,
+        updatedFormData.height
+      );
     }
-    
+
     setFormData(updatedFormData);
     setFormErrors(updatedErrors);
   };
@@ -136,7 +138,9 @@ function MortalityForm({ selectedPatient }) {
               transition: "color 0.5s ease-in-out",
             }}
           >
-            {`Risk Probability: ${(predictionProbability * 100).toFixed(2)}% (${getRiskLevel(predictionProbability)})`}
+            {`Risk Probability: ${(predictionProbability * 100).toFixed(
+              2
+            )}% (${getRiskLevel(predictionProbability)})`}
           </div>
         </div>
       )}
