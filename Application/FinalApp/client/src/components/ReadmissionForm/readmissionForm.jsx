@@ -265,7 +265,7 @@ function ReadmissionForm({ selectedPatient }) {
                 <option value="Respiratory">Respiratory</option>
               </select>
             </div>
-            /* Numeric Inputs with Separate Explanations */
+            
             <div className="input-group">
               <p>Integer number of days between admission and discharge.</p>
               <input
@@ -275,6 +275,7 @@ function ReadmissionForm({ selectedPatient }) {
                 onChange={handleChange}
                 min="1"
                 max="14"
+                placeholder="1-14"
                 required
               />
             </div>
@@ -287,6 +288,7 @@ function ReadmissionForm({ selectedPatient }) {
                 onChange={handleChange}
                 min="1"
                 max="132"
+                placeholder="1-132"
                 required
               />
             </div>
@@ -302,6 +304,7 @@ function ReadmissionForm({ selectedPatient }) {
                 onChange={handleChange}
                 min="0"
                 max="6"
+                placeholder="0-6"
                 required
               />
             </div>
@@ -317,6 +320,7 @@ function ReadmissionForm({ selectedPatient }) {
                 onChange={handleChange}
                 min="1"
                 max="81"
+                placeholder="1-81"
                 required
               />
             </div>
@@ -332,6 +336,7 @@ function ReadmissionForm({ selectedPatient }) {
                 onChange={handleChange}
                 min="0"
                 max="42"
+                placeholder="0-42"
                 required
               />
             </div>
@@ -347,6 +352,7 @@ function ReadmissionForm({ selectedPatient }) {
                 onChange={handleChange}
                 min="0"
                 max="76"
+                placeholder="0-76"
                 required
               />
             </div>
@@ -362,6 +368,7 @@ function ReadmissionForm({ selectedPatient }) {
                 onChange={handleChange}
                 min="0"
                 max="21"
+                placeholder="0-21"
                 required
               />
             </div>
