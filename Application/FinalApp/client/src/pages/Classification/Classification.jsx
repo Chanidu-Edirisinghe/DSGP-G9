@@ -15,7 +15,7 @@ function Classification() {
       />
 
       <section className="content">
-        <InfoBox />
+        {/* <InfoBox /> */}
         <DiabetesClassification />
       </section>
       <ChatbotUI />

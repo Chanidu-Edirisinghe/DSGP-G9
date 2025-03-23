@@ -15,10 +15,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px); /* Subtract navbar height */
   width: 100%;
   background: linear-gradient(135deg, #6a11cb, #2575fc);
   padding: 15px;
+  padding-top: 30px; /* Add top padding to bring it down */
+  margin-top: 80px; /* Add margin for navbar height */
 }
 
 /* Card Styling */

@@ -1,100 +1,139 @@
-
-.app-container {
+.diabetes-app-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60%; 
+  width: 100%; 
+  
+  margin: 0 auto;
 }
 
 /* Form container */
-.container {
+.diabetes-container {
   background: white;
-  padding: 50px;
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
-  margin-bottom: 8%; /* Push the container down */
-
-  transition: transform 0.3s ease-in-out;
-  height: auto;
+  margin-bottom: 40px;
 }
 
-.form-container {
-  max-height: 700px;
-  overflow-y: auto;
+
+.diabetes-form-container {
   width: 100%;
-  padding-right: 5%;
 }
 
-.form-container::-webkit-scrollbar {
-  width: 8px;
+/* Row layout for two fields side by side */
+.diabetes-form-row {
+  display: flex;
+  margin-bottom: 16px;
+  gap: 20px;
 }
 
-.form-container::-webkit-scrollbar-thumb {
-  background: #6a11cb;
-  border-radius: 10px;
+.diabetes-form-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.form-container::-webkit-scrollbar-track {
-  background: #f1f1f1;
+.diabetes-form-field label {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #555;
+  font-weight: 500;
 }
 
 /* Input styles */
-.input-group {
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-input, select {
+.diabetes-form-field input, 
+.diabetes-form-field select {
   width: 100%;
   padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  transition: 0.3s;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   font-size: 14px;
-  box-sizing: border-box; 
+  transition: border-color 0.2s ease;
+  background: #f9f9f9;
+  box-sizing: border-box;
+  height: 40px; /* Ensure consistent height */
+  -webkit-appearance: none; /* Remove browser default styling */
+  -moz-appearance: none;
+  appearance: none;
 }
 
-input:focus, select:focus {
+.diabetes-form-field input:focus, 
+.diabetes-form-field select:focus {
   border-color: #6a11cb;
-  box-shadow: 0 0 8px rgba(106, 17, 203, 0.3);
   outline: none;
+  box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.1);
+}
+
+.diabetes-error-message {
+  color: #d32f2f;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Submit button container */
+.diabetes-form-submit {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
 }
 
 /* Submit button */
-.submit-btn {
+.diabetes-submit-btn {
   background: linear-gradient(90deg, #6a11cb, #2575fc);
   color: white;
   padding: 14px;
   border: none;
-  width: 90%;
   border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: bold;
-  transition: 0.3s;
-  text-transform: uppercase;
-  margin: auto;
-  display: block; /* Ensure it takes full width and centers */
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 200px;
 }
 
 
-.submit-btn:hover {
+.diabetes-submit-btn:hover {
   background: linear-gradient(90deg, #2575fc, #6a11cb);
   box-shadow: 0 4px 12px rgba(106, 17, 203, 0.4);
   transform: scale(1.05);
 }
 
-
 /* Prediction result */
-.result {
-  margin-top: 20px;
-  font-weight: bold;
-  color: #28a745;
-  font-size: 18px;
-  padding: 12px;
-  border-radius: 8px;
-  background: #e3ffe3;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.diabetes-result {
+  margin-top: 30px;
+  padding: 16px;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  border-left: 4px solid #6a11cb;
+  text-align: center;
 }
 
+.diabetes-prediction-results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.diabetes-prediction-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+.diabetes-probabilities {
+  font-size: 14px;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .diabetes-form-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .diabetes-app-container {
+    width: 95%;
+  }
+}

@@ -6,7 +6,7 @@
   color: #333; /* Dark text instead of white */
   padding: 20px;
   text-align: center;
-  width: 100%;
+  width: auto;
 }
 
 /* Flexbox Layout */

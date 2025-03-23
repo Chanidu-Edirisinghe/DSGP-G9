@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../../components/Login/AuthStyles.css";
+import "./Signup.css";
 import "../../components/Login/AnimatedBackground.css";
 import "../../components/Login/particleAnimation.js";
 
