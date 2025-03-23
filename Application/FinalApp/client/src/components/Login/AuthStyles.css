@@ -1,177 +1,260 @@
-/* General layout and background for authentication */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  background-color: #f5f8fe;
+}
+
+/* Authentication Container */
 .auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-    width: auto;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
-    padding: 20px;
-    margin-top: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  padding: 15px;
+}
+
+/* Card Styling */
+.auth-card {
+  background: white;
+  border-radius: 16px;
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); */
+  width: 100%;
+  max-width: 450px;
+  padding: 30px 25px;
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.8s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.auth-header {
+  margin-bottom: 30px;
+}
+
+.auth-header h2 {
+  color: #6a11cb;
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.login-desc {
+  color:#333;
+}
+
+/* Form Elements */
+form {
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* INPUT */
+
+.input-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6a11cb;
+  z-index: 1;
+  pointer-events: none; 
+}
+
+.input-container input {
+  width: 100%;
+  padding: 12px 12px 12px 40px; 
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.input-container input:focus {
+  outline: none;
+  border-color: #6a64f1;
+  box-shadow: 0 0 0 2px rgba(106, 100, 241, 0.2);
+}
+
+/* When input is focused, also highlight the icon container */
+.input-container input:focus {
+  box-shadow: 0 0 0 2px rgba(106, 100, 241, 0.2);
+}
+
+.input-container input:focus ~ .input-icon {
+  border-color: #6a64f1;
+  color: #6a64f1;
+}
+
+/* Form Options */
+.form-options {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 0.9rem;
+}
+.forgot-password {
+  color: #6a11cb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forgot-password:hover {
+  color: #2575fc;
+  text-decoration: underline;
+}
+
+/* Buttons */
+.auth-card button {
+  font-weight: 600;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  border: none;
+  padding: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #5a0db3, #1d65df);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+}
+
+.btn-primary.loading {
+  opacity: 0.9;
+  cursor: not-allowed;
+}
+
+.loader-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #6a11cb;
+  border: 2px solid #6a11cb;
+  border-radius: 12px;
+  padding: 12px 25px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.btn-secondary:hover {
+  background: rgba(106, 17, 203, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Messages */
+.message {
+  margin: 20px 0;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.error {
+  background-color: rgba(255, 0, 0, 0.1);
+  color: #d32f2f;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+.success {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #388e3c;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .auth-card {
+    padding: 30px 25px;
+  }
+  
+  .auth-header h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 15px;
   }
   
   .auth-card {
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 450px;
-    height: auto;
-    max-height: 110vh;
-    overflow-y: auto;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
+    padding: 25px 20px;
   }
   
-  .auth-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
   
-  .auth-card h2 {
-    color: #6a11cb;
-    margin-bottom: 30px;
-    font-weight: 600;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-    text-align: left;
-    width: 100%; /* Ensure the form group takes full width */
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    font-size: 16px;
-    color: #333;
-  }
-  
-  .form-group input {
-    width: 100%; /* Ensure input takes up full width of its parent container */
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 16px;
-    font-size: 16px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box; /* Include padding and border in the width */
-  }
-  
-  
-  .form-group input:focus {
-    outline: none;
-    border-color: #6a11cb;
-    box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.2);
-  }
-  
-  .auth-card button {
-    font-weight: 600;
-    border-radius: 16px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  /* Adjusted button styles */
-  .btn-primary {
-    background: linear-gradient(to right, #6a11cb, #2575fc);
-    color: white;
-    border: none;
-    padding: 14px;
-    width: 100%; /* Keep the login button full width */
-    margin-top: 10px;
-  }
-  
-  .btn-primary:hover {
-    background: linear-gradient(to right, #5a0db3, #1d65df);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
-  }
-  
-  /* Limit the width of the Sign Up button */
   .btn-secondary {
-    background: transparent;
-    color: #6a11cb;
-    border: 2px solid #6a11cb;
-    border-radius: 16px;
-    padding: 12px 20px;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-    margin-top: 10px;
-    width: auto; /* Adjust width to auto to prevent overflow */
-    max-width: 100%; /* Limit the maximum width */
+    width: 100%;
   }
-  
-  .btn-secondary:hover {
-    background: rgba(106, 17, 203, 0.1);
-    transform: translateY(-2px);
-  }
-  
-  .auth-footer {
-    margin-top: 30px;
-  }
-  
-  .auth-footer p {
-    color: #666;
-    margin-bottom: 5px;
-  }
-  
-  /* Animations */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  .auth-card {
-    animation: fadeIn 1s ease;
-  }
-  
-  /* Media Queries for Responsive Design */
-  @media (max-height: 700px) {
-    .auth-card {
-      padding: 25px;
-    }
-  
-    .auth-card h2 {
-      margin-bottom: 20px;
-      font-size: 1.5rem;
-    }
-  
-    .form-group {
-      margin-bottom: 15px;
-    }
-  
-    .form-group input {
-      padding: 10px;
-    }
-  
-    .auth-footer {
-      margin-top: 20px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .auth-card {
-      padding: 25px 20px;
-      width: 95%;
-    }
-  
-    .auth-card h2 {
-      font-size: 1.4rem;
-    }
-  
-    .form-group input {
-      font-size: 14px;
-    }
-  
-    .auth-card button {
-      font-size: 14px;
-    }
-  
-    .btn-secondary {
-      width: 100%; /* Full width for small screens */
-    }
-  }
-  
+}
