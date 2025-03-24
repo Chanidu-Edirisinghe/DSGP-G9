@@ -8,9 +8,7 @@ from DiabetesClassifier import DiabetesClassifier
 
 from flask import Flask, request, jsonify
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-from pymongo import MongoClient
 from datetime import datetime, timedelta
-import bcrypt
 import csv
 from io import StringIO
 
@@ -18,8 +16,8 @@ app = Flask(__name__)
 CORS(app)  # Enable Cross-Origin Resource Sharing
 
 # MongoDB Configuration
-app.config["MONGO_URI"] = "mongodb://localhost:27017/DiatrackDB"  # Ensure this URI is correct
-app.config["JWT_SECRET_KEY"] = "your_secret_key"  # Change this
+app.config["MONGO_URI"] = "mongodb+srv://chanidu1214:P7vWcYtKLFqQnxrG@cluster0.nf09b.mongodb.net/DiatrackDB?retryWrites=true&w=majority"  # Ensure this URI is correct
+app.config["JWT_SECRET_KEY"] = "aaaabbbb2323ccccdgdudbrorb4"  # Change this
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)  # Token valid for 1 hour
 jwt = JWTManager(app)
 
@@ -31,9 +29,9 @@ chatbot_handler = ChatbotHandler()
 
 
 # Initialize Predictor
-predictor = ReadmissionPredictor("catboost_model.pkl", "scaler.pkl")
-diabetic_predictor = DiabetesClassifier("gradient_boosting.pkl", "minmax_scaler.pkl")
-mortality_predictor = MortalityPredictor('models/catboost_model72.cbm')
+predictor = ReadmissionPredictor("models\\catboost_model.pkl", "models\\scaler.pkl")
+diabetic_predictor = DiabetesClassifier("models\\gradient_boosting.pkl", "models\\minmax_scaler.pkl")
+mortality_predictor = MortalityPredictor('models\\catboost_model72.cbm')
 
 @app.route("/predict-readmission", methods=["POST"])
 @jwt_required()
@@ -103,8 +101,11 @@ def predict_mortality():
     data = request.json
     print("Received Data:", data)  # Debugging
     patientName = data.pop("patientName", None)
-    print("Cleaned Data:", data)
-    response = mortality_predictor.predict(data)
+    cleaned_data = data
+    cleaned_data.pop("weight")
+    cleaned_data.pop("height")
+    print("Cleaned Data:", cleaned_data)
+    response = mortality_predictor.predict(cleaned_data)
     if response.get("error"):
         return jsonify({"error": response["error"]})
     db_handler.add_mortality(user_email, data, response, patientName)
@@ -125,11 +126,7 @@ def predict_diabetes():
 def get_patients():
     user_email = get_jwt_identity()
     
-    mortality_records = db_handler.get_patient_names_from_mortality_records(user_email)
-    readmission_records = db_handler.get_patient_names_from_readmission_records(user_email)
-    
-    # Combine records from both collections
-    all_patients = mortality_records + readmission_records
+    all_patients = db_handler.get_patients(user_email)
     
     return jsonify({"patients": all_patients})
 
@@ -171,7 +168,7 @@ def get_readmission_records():
     try:
         print("Fetching readmission records")
         records = db_handler.get_readmission_records(user_email)
-        print("Records:", records)
+        print("All Records:", records)
         return jsonify({"records": records})
     except Exception as e:
         print(f"Error fetching readmission records: {e}")
@@ -184,6 +181,7 @@ def get_mortality_records():
     
     try:
         records = db_handler.get_mortality_records(user_email)
+        print("All Records:", records)
         return jsonify({"records": records})
     except Exception as e:
         print(f"Error fetching mortality records: {e}")
