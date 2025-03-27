@@ -12,12 +12,28 @@ from datetime import datetime, timedelta
 import csv
 from io import StringIO
 
+from dotenv import load_dotenv
+import os
+from pathlib import Path
+
+# Specify the path to the .env file in the root directory
+env_path = Path(__file__).resolve().parent.parent.parent / '.env'
+
+# Load environment variables from the .env file
+load_dotenv(dotenv_path=env_path)
+
+# Access environment variables
+MONGO_URI = os.getenv('MONGO_URI')
+JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
+DEBUG = os.getenv('DEBUG')
+
+
 app = Flask(__name__)
 CORS(app)  # Enable Cross-Origin Resource Sharing
 
 # MongoDB Configuration
-app.config["MONGO_URI"] = "mongodb+srv://chanidu1214:P7vWcYtKLFqQnxrG@cluster0.nf09b.mongodb.net/DiatrackDB?retryWrites=true&w=majority"  # Ensure this URI is correct
-app.config["JWT_SECRET_KEY"] = "aaaabbbb2323ccccdgdudbrorb4"  # Change this
+app.config["MONGO_URI"] = MONGO_URI
+app.config["JWT_SECRET_KEY"] = JWT_SECRET_KEY
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)  # Token valid for 1 hour
 jwt = JWTManager(app)
 
@@ -257,7 +273,7 @@ def download_csv(record_type):
                 row.append(f"{prob * 100:.2f}%")
             else:
                 prediction = record.get("prediction", {})
-                hosp_death = prediction.get("hospital_death")
+                hosp_death = prediction.get("prediction")
                 death_prob = prediction.get("death_probability", 0)
                 
                 row.append("High Risk" if hosp_death == 1 else "Low Risk")
