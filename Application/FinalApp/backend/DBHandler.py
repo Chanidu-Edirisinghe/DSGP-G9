@@ -217,3 +217,17 @@ class DBHandler:
             formatted_records.append(record)
         
         return formatted_records
+
+# for navbar
+    def get_user_info(self, email):
+        users_collection = self.mongo.db['User']
+        user = users_collection.find_one({"email": email})
+    
+        if user:
+            # Return user info without sensitive data like password
+            return {
+                "name": user.get("name", ""),
+                "email": user.get("email", ""),
+                "id": str(user.get("_id", ""))
+            }
+        return None

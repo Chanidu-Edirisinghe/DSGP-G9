@@ -27,7 +27,6 @@ MONGO_URI = os.getenv('MONGO_URI')
 JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 
-
 app = Flask(__name__)
 CORS(app)  # Enable Cross-Origin Resource Sharing
 
@@ -45,9 +44,9 @@ chatbot_handler = ChatbotHandler()
 
 
 # Initialize Predictor
-predictor = ReadmissionPredictor("models\\catboost_model.pkl", "models\\scaler.pkl")
-diabetic_predictor = DiabetesClassifier("models\\gradient_boosting.pkl", "models\\minmax_scaler.pkl")
-mortality_predictor = MortalityPredictor('models\\catboost_model72.cbm')
+predictor = ReadmissionPredictor("Application\\FinalApp\\backend\\models\\catboost_model.pkl", "Application\\FinalApp\\backend\\models\\scaler.pkl")
+diabetic_predictor = DiabetesClassifier("Application\\FinalApp\\backend\\models\\gradient_boosting.pkl", "Application\\FinalApp\\backend\\models\\minmax_scaler.pkl")
+mortality_predictor = MortalityPredictor('Application\\FinalApp\\backend\\models\\catboost_model72.cbm')
 
 @app.route("/predict-readmission", methods=["POST"])
 @jwt_required()
@@ -340,6 +339,22 @@ def download_csv(record_type):
         import traceback
         traceback.print_exc()
         return jsonify({"error": f"Failed to generate {record_type} CSV: {str(e)}"}), 500
+    
+# for nav bar
+@app.route('/api/user/info', methods=['GET'])
+@jwt_required()  # Assuming you're using Flask-JWT-Extended for authentication
+def get_user_info():
+    # Get current user's email from the JWT token
+    email = get_jwt_identity()
+    
+    # Get user info from the database
+    user_info = db_handler.get_user_info(email)
+    print(user_info)
+    
+    if user_info:
+        return jsonify(user_info), 200
+    else:
+        return jsonify({"error": "User not found"}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
