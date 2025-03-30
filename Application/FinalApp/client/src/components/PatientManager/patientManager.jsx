@@ -160,7 +160,6 @@ const PatientManager = ({ onSelectPatient }) => {
                 </option>
               ))}
             </select>
-            {isLoading && <span className="loading-text"> Loading...</span>}
           </div>
 
           {/* Delete Button */}

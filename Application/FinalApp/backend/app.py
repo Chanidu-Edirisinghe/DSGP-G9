@@ -17,7 +17,7 @@ import os
 from pathlib import Path
 
 # Specify the path to the .env file in the root directory
-env_path = Path(__file__).resolve().parent.parent.parent / '.env'
+env_path = Path(__file__).resolve().parent.parent.parent.parent / '.env'
 
 # Load environment variables from the .env file
 load_dotenv(dotenv_path=env_path)

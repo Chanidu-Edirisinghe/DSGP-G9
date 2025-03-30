@@ -70,12 +70,17 @@
   align-items: center;
   padding: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
 }
 
 .chat-heading {
   font-size: 22px;
   font-weight: bold;
   margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }
 
 .close-button {
@@ -127,10 +132,12 @@
 
 .message.user {
   justify-content: flex-end;
+  margin: 0;
 }
 
 .message.bot {
   justify-content: flex-start;
+  margin: 0;
 }
 
 .message-card {
@@ -211,4 +218,107 @@
   .message-card {
     max-width: 85%;
   }
+}
+
+/* Chat Notification Bubble */
+.chat-notification {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  width: 250px;
+  max-width: 80vw;
+  z-index: 998;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notification-content {
+  background: white;
+  color: #333;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.notification-content p {
+  margin: 0;
+  padding-right: 20px;
+}
+
+.notification-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: #777;
+  cursor: pointer;
+  padding: 5px;
+  line-height: 0;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.notification-close:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #333;
+}
+
+.notification-arrow {
+  position: absolute;
+  bottom: -10px;
+  right: 30px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid white;
+}
+
+.prediction-button, .question-button {
+  background-color: white;
+  color: #000000;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.3px;
+  text-align: center;
+
+}
+
+.prediction-button:hover, .question-button:hover {
+  background-color: #f8f8f8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 0 10px;
+}
+
+.prediction-button, .question-button {
+  flex: 1;
+  max-width: 180px;
 }

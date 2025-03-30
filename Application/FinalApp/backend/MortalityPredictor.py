@@ -39,7 +39,7 @@ class MortalityPredictor(PredictionService):
             print(self.model.predict_proba(df))
             return {
                 "prediction": int(prediction[0]),
-                "probability": round(float(prediction_prob), 4)
+                "death_probability": round(float(prediction_prob), 4)
             }
         except Exception as e:
             return {"error": str(e)}

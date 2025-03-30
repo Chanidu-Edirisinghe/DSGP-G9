@@ -163,7 +163,7 @@ function DiabetesClassification() {
           : data.prediction === 1
           ? "Prediabetes"
           : data.prediction === 0
-          ? "No Diabetes"
+          ? "Healthy"
           : "Error in prediction";
 
       const probabilityText = data.probability;
@@ -181,13 +181,21 @@ function DiabetesClassification() {
           "You may have diabetes. Consult a doctor for a treatment plan. Manage your blood sugar through diet, exercise, medication (if needed), and regular monitoring.";
       }
 
+      // Determine text color based on prediction
+      const predictionColor =
+        data.prediction === 2
+          ? "diabetes-text-red"
+          : data.prediction === 1
+          ? "diabetes-text-orange"
+          : "diabetes-text-green";
+
       setPrediction(
         <div className="diabetes-prediction-results">
-          <div className="diabetes-prediction-text">
+          <div className={`diabetes-prediction-text ${predictionColor}`}>
             <strong>Prediction:</strong> {predictionText}
           </div>
-          <div className="diabetes-probabilities">
-            <strong>Confidence: </strong>
+          <div className={`diabetes-probabilities ${predictionColor}`}>
+            <strong>Likelihood: </strong>
             {(probabilityText * 100).toFixed(2)}%
           </div>
           <div className="diabetes-advice">
