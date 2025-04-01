@@ -23,6 +23,7 @@ intents:
   - healthy_lifestyle_and_appointments
   - bot_challenge
   - request_diabetes_prediction
+  - quit
 
 entities:
   - diabetes_type
@@ -152,8 +153,8 @@ slots:
   sex:
     type: categorical
     values:
-      - "yes"
-      - "no"
+      - "male"
+      - "female"
     mappings:
       - type: from_text
         conditions:
