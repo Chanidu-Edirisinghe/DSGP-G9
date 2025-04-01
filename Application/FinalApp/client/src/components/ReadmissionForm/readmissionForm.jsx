@@ -264,7 +264,7 @@ function ReadmissionForm({ selectedPatient }) {
                 <option value="Respiratory">Respiratory</option>
               </select>
             </div>
-            
+
             <div className="input-group">
               <p>Integer number of days between admission and discharge.</p>
               <input
@@ -423,7 +423,7 @@ function ReadmissionForm({ selectedPatient }) {
           <div className="result">
             <div>Prediction: {prediction}</div>
             {predictionProbability !== null && (
-              <div>Confidence: {(predictionProbability * 100).toFixed(2)}%</div>
+              <div>Likelihood: {(predictionProbability * 100).toFixed(2)}%</div>
             )}
           </div>
         )}

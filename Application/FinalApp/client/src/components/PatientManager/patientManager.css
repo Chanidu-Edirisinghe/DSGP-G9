@@ -57,7 +57,7 @@
   }
   
   .select-input {
-    width: 100%;
+    flex: 1;
     padding: 8px 12px;
     border: 1px solid #d1d5db;
     border-radius: 4px;
@@ -74,12 +74,10 @@
   .input-with-button {
     display: flex;
     gap: 8px;
+    width: 100%;
   }
   
-  .button-container {
-    display: flex;
-    align-items: flex-end;
-  }
+
   
   .add-button {
     padding: 8px 16px;

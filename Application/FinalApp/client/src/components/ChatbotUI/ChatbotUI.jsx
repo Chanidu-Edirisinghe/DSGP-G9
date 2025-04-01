@@ -117,18 +117,7 @@ export default function ChatbotUI() {
       const botResponses = await response.json();
       console.log(botResponses);
       const newMessages = botResponses.map((res) => ({
-        text: res.text
-          ? res.text.split("\n").map((line, i) =>
-              i === 0 ? (
-                line
-              ) : (
-                <>
-                  <br key={i} />
-                  {line}
-                </>
-              )
-            )
-          : "",
+        text: res.text || "",
         sender: "bot",
       }));
       setMessages((prev) => [...prev, ...newMessages]);
@@ -233,18 +222,7 @@ export default function ChatbotUI() {
                   .then((response) => response.json())
                   .then((botResponses) => {
                     const newMessages = botResponses.map((res) => ({
-                      text: res.text
-                        ? res.text.split("\n").map((line, i) =>
-                            i === 0 ? (
-                              line
-                            ) : (
-                              <>
-                                <br key={i} />
-                                {line}
-                              </>
-                            )
-                          )
-                        : "",
+                      text: res.text || "",
                       sender: "bot",
                     }));
                     setMessages((prev) => [...prev, ...newMessages]);
@@ -258,38 +236,91 @@ export default function ChatbotUI() {
                   });
               }}
             >
-              Get Prediction
+              Get Diabetic Prediction
             </button>
             <button
               className="question-button"
               onClick={() => {
-                const questionMessage = "Ask questions";
+                // List of predefined diabetes-related questions
+                const questions = [
+                  "What is diabetes?",
+                  "What is a chronic disease?",
+                  "What is insulin?",
+                  "What are your sources?",
+                  "How can I prevent diabetes?",
+                  "What are the symptoms of diabetes?",
+                  "What complications can diabetes cause?",
+                  "What is gestational diabetes?",
+                  "What is prediabetes?",
+                  "What are the symptoms of gestational diabetes?",
+                  "What tests are done for diabetes?",
+                  "Can you tell me how to manage diabetes?",
+                  "How do I manage blood sugar levels with insulin?",
+                  "How do I maintain a healthy lifestyle with diabetes?",
+                  "What is type 1 diabetes?",
+                  "What is type 2 diabetes?",
+                  "What are the symptoms of type 1 diabetes?",
+                  "What are the symptoms of type 2 diabetes?",
+                  "What increases the chances of getting type 1 diabetes?",
+                  "What increases the chances of getting type 2 diabetes?",
+                  "What causes type 1 diabetes?",
+                  "What causes type 2 diabetes?",
+                ];
+
+                // Select a random question from the list
+                const randomIndex = Math.floor(
+                  Math.random() * questions.length
+                );
+                const selectedQuestion = questions[randomIndex];
 
                 // Add user message
                 setMessages([
                   ...messages,
-                  { text: questionMessage, sender: "user" },
+                  { text: selectedQuestion, sender: "user" },
                 ]);
 
-                // Add bot response
-                setTimeout(() => {
-                  setMessages((prev) => [
-                    ...prev,
-                    {
-                      text: "I can answer any diabetic related questions you have. What would you like to know?",
+                // Send to backend
+                fetch("http://localhost:5005/webhooks/rest/webhook", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ message: selectedQuestion }),
+                })
+                  .then((response) => response.json())
+                  .then((botResponses) => {
+                    const newMessages = botResponses.map((res) => ({
+                      text: res.text || "",
                       sender: "bot",
-                    },
-                  ]);
-                }, 500);
+                    }));
+                    setMessages((prev) => [...prev, ...newMessages]);
+                  })
+                  .catch((error) => {
+                    console.error("Error getting answer:", error);
+                    setMessages((prev) => [
+                      ...prev,
+                      {
+                        text: "Error getting answer to your question.",
+                        sender: "bot",
+                      },
+                    ]);
+                  });
               }}
             >
-              Ask questions
+              Ask a question
             </button>
           </div>
           <div className="chat-messages">
             {messages.map((msg, index) => (
               <div key={index} className={`message ${msg.sender}`}>
-                <div className={`message-card ${msg.sender}`}>{msg.text}</div>
+                <div className={`message-card ${msg.sender}`}>
+                  {msg.text && typeof msg.text === "string"
+                    ? msg.text.split("\n").map((line, i) => (
+                        <span key={i}>
+                          {i > 0 && <br />}
+                          {line}
+                        </span>
+                      ))
+                    : msg.text}
+                </div>
               </div>
             ))}
             <div ref={messagesEndRef} />
