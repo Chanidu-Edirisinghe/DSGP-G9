@@ -3,7 +3,7 @@ import "./footer.css";
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer" id="footer">
       <div className="footer-container">
         {/* About & Contact */}
         <div className="footer-section">
@@ -16,21 +16,20 @@ function Footer() {
 
         <div className="footer-section">
           <h3>Contact Us</h3>
-          <p>Email: <a href="mailto:support@diatrack.com">support@diatrack.com</a></p>
-          <p>Phone: +1 (123) 456-7890</p>
+          <p><i className="fa fa-envelope"></i> <a href="mailto:support@diatrack.com">support@diatrack.com</a></p>
         </div>
 
         {/* Social Media Links */}
         <div className="footer-section">
           <h3>Follow Us</h3>
           <div className="social-links">
-            <a href="#" aria-label="Facebook">
+            <a href="https://web.facebook.com/?_rdc=1&_rdr#" aria-label="Facebook">
               <i className="fab fa-facebook"></i>
             </a>
-            <a href="#" aria-label="Twitter">
-              <i className="fab fa-twitter"></i>
+            <a href="https://x.com/i/flow/login?lang=en" aria-label="x">
+              <i className="fab fa-x-twitter"></i>
             </a>
-            <a href="#" aria-label="LinkedIn">
+            <a href="https://lk.linkedin.com/" aria-label="LinkedIn">
               <i className="fab fa-linkedin"></i>
             </a>
           </div>
