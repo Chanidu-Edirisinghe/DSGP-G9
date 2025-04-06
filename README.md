@@ -27,7 +27,7 @@ DiaTrack is a **web-based decision support system** addressing major challenges 
 
 ### 💻 Technological Contribution
 
-- Implemented **supervised machine learning models** (Random Forest, Gradient Boosting, etc.) using patient demographics, lab results, and medical histories.
+- Implemented **supervised machine learning models** (CatBoost, Gradient Boosting, etc.) using patient demographics, lab results, and medical histories.
 - Developed a web app with:
   - **Flask** (Backend)
   - **React** (Frontend)
@@ -59,12 +59,10 @@ DiaTrack is a **web-based decision support system** addressing major challenges 
 
 ### 🧱 System Architecture
 
-- System is divided into components for:
-  - Data input
-  - Machine learning inference
-  - Data storage
-  - Visualization
-- Developed **use case** and **context diagrams** to define user-system interactions.
+![image](https://github.com/user-attachments/assets/d6dbc52b-7f8a-4a47-9335-bb908e521bd0)
+
+##### Class Diagram
+![Class Diagram1](https://github.com/user-attachments/assets/70010c84-4a5f-4737-899f-0df15477e8bf)
 
 ---
 
@@ -72,19 +70,61 @@ DiaTrack is a **web-based decision support system** addressing major challenges 
 
 ### 🛠 Technology Stack
 
-- **Languages**: Python (ML + Backend), JavaScript (Frontend)
-- **Frameworks & Libraries**: Flask, React, Scikit-Learn, TensorFlow, Pandas, RASA
-- **Database**: MongoDB (NoSQL)
+The DiaTrack project uses a modern, full-stack approach that integrates several key technologies:
+
+![Tech Stack](https://github.com/user-attachments/assets/07c71b90-ec57-4191-8105-94539273c5f2)
+
+#### Backend and Machine Learning:
+- Python is used as the primary programming language.
+-  Libraries such as Scikit-learn, Pandas, and TensorFlow are employed for data processing, model training, and evaluation.
+-  lask serves as the REST API framework that connects the machine learning models with the frontend.
+
+•	Frontend:
+- The user interface is built with HTML, CSS, and JavaScript, with React used to develop a dynamic and responsive web experience.
+
+•	Chatbot:
+- The system incorporates a conversational interface using the RASA framework, which handles natural language understanding (NLU) and dialogue management for collecting data and providing health advice.
+
+•	Database and Deployment:
+-	MongoDB, a NoSQL database, is used to store patient data and model results efficiently.
+-	The project utilizes version control with GitHub to manage the codebase and collaboration.
+
+##### Libraries & Frameworks:
+
+| Library              | Version  |
+|----------------------|----------|
+| pandas               | 2.2.2    |
+| seaborn              | 0.13.2   |
+| matplotlib           | 3.10.0   |
+| numpy                | 1.26.4   |
+| sklearn              | 1.6.1    |
+| imblearn             | 0.13.0   |
+| xgboost              | 2.1.4    |
+| catboost             | 1.2.7    |
+| scipy                | 1.13.1   |
+| tensorflow           | 2.12.0   |
+| flask                | 3.1.0    |
+| flask-cors           | 5.0.1    |
+| flask-pymongo        | 3.0.1    |
+| flask-jwt-extended   | 4.7.1    |
+| flask-caching        | 2.3.1    |
+| python-dotenv        | 1.1.0    |
+| pymongo              | 4.11.2   |
+| axios                | 1.8.1    |
+| react-router-dom     | 7.2.0    |
+
+
+This combination of technologies enables DiaTrack to provide a robust, scalable, and user-friendly platform for diabetes risk assessment and predictive analytics.
 
 ### ✅ Testing Procedures
 
 - Functional Testing: Correct predictions, data flow, chatbot responses.
 - Non-Functional Testing: System speed, scalability, and stability.
-- Evaluation Metrics: Accuracy, Precision, Recall, AUC
+- Evaluation Metrics: Accuracy, Precision, Recall, AUC, Macro Avg F1
 
 ### 🧾 Feedback and Evaluation
 
-- Collected insights from **healthcare professionals** and **potential end-users** via surveys/interviews.
+- Collected insights from **healthcare professionals** and **technical experts** via surveys/interviews.
 - High trust and interest in the system’s predictions validated its clinical relevance.
 
 ---
