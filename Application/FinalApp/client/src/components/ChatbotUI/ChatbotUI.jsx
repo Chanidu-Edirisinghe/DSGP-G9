@@ -85,6 +85,24 @@ export default function ChatbotUI() {
     sessionStorage.setItem("hasSeenChatbotNotification", "true");
   };
 
+  // List of thank you phrases to handle at UI level
+  const thankYouPhrases = [
+    "thank you",
+    "thanks",
+    "thank",
+    "thx",
+    "thank u",
+    "thankyou",
+    "thnx",
+    "ty",
+    "tysm",
+    "thanks a lot",
+    "thank you so much",
+    "appreciate it",
+    "much appreciated",
+    "grateful",
+  ];
+
   const sendMessage = async () => {
     if (!input.trim()) return;
     // Check if input starts with '/' (command prefix)
@@ -100,8 +118,36 @@ export default function ChatbotUI() {
       setInput("");
       return;
     }
+
     const userMessage = { text: input, sender: "user" };
     setMessages([...messages, userMessage]);
+
+    // Check if the message is a thank you phrase (case insensitive)
+    const lowerCaseInput = input.toLowerCase().trim();
+    if (thankYouPhrases.some((phrase) => lowerCaseInput === phrase)) {
+      // Handle thank you messages locally without calling the API
+      const responses = [
+        "You're welcome!",
+        "Glad I could help!",
+        "Happy to assist you!",
+        "No problem at all!",
+        "Anytime!",
+        "My pleasure!",
+      ];
+      const randomResponse =
+        responses[Math.floor(Math.random() * responses.length)];
+
+      setTimeout(() => {
+        setMessages((prev) => [
+          ...prev,
+          { text: randomResponse, sender: "bot" },
+        ]);
+      }, 500); // Small delay to make the response feel more natural
+
+      setInput("");
+      return;
+    }
+
     setInput("");
 
     try {

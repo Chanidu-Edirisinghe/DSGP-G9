@@ -572,7 +572,7 @@ class ActionSubmitDetails(Action):
                     elif prediction == 1:
                         advice = "You may have prediabetes. Prevent diabetes by eating healthy, exercising regularly, managing weight, and reducing sugar intake. Consult a doctor for guidance."
                     elif prediction == 2:
-                        advice = "You may have diabetes. Consult a doctor for a treatment plan. Manage your blood sugar through diet, exercise, medication (if needed), and regular monitoring."
+                        advice = "You may have diabetes. Consult a doctor about having a fasting blood glucose test. Act now to manage your health."
                     else:
                         advice = "Error in prediction"
                     
