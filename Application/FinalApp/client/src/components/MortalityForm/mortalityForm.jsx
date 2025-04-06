@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./mortalityForm.css";
 import { validateField, calculateBMI } from "./validate.js";
-import { getRiskColor, getRiskLevel } from "./color.js";
+import { getRiskColor } from "./color.js";
 import { renderFormFields } from "./formRendering.jsx";
 
 function MortalityForm({ selectedPatient }) {
@@ -45,6 +45,7 @@ function MortalityForm({ selectedPatient }) {
 
   const [prediction, setPrediction] = useState(null);
   const [predictionProbability, setPredictionProbability] = useState(null);
+  const [riskLevel, setRiskLevel] = useState(null);
   const [formErrors, setFormErrors] = useState({});
 
   const handleChange = (e) => {
@@ -108,6 +109,7 @@ function MortalityForm({ selectedPatient }) {
       );
       setPrediction(response.data.hospital_death);
       setPredictionProbability(response.data.death_probability);
+      setRiskLevel(response.data.prediction);
     } catch (error) {
       setPrediction("error");
       console.error("Error making prediction", error);
@@ -115,7 +117,6 @@ function MortalityForm({ selectedPatient }) {
   };
 
   return (
-    // <div className="form-container">
     <div className="form-box">
       <form onSubmit={handleSubmit} className="form-grid">
         {renderFormFields(formData, formErrors, handleChange)}
@@ -129,18 +130,19 @@ function MortalityForm({ selectedPatient }) {
           <div
             className="prediction-result-box"
             style={{
-              fontSize: "20px",
+              fontSize: "23px",
               fontWeight: "bold",
               textAlign: "center",
               padding: "10px",
               borderRadius: "8px",
-              color: getRiskColor(predictionProbability), // Using the imported function
+              color: getRiskColor(riskLevel),
               transition: "color 0.5s ease-in-out",
             }}
           >
-            {`Risk Probability: ${(predictionProbability * 100).toFixed(
-              2
-            )}% (${getRiskLevel(predictionProbability)})`}
+            <div>{`Risk Level: ${riskLevel}`}</div>
+            <div>{`Probability: ${(predictionProbability * 100).toFixed(
+
+            )}%`}</div>
           </div>
         </div>
       )}
