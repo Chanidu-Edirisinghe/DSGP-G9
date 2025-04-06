@@ -56,8 +56,8 @@ function DiabetesClassification() {
   // Validate height
   const validateHeight = (height) => {
     const height_value = parseFloat(height);
-    if (height_value <= 50 || height_value > 272) {
-      return "Height must be between 51 and 272 cm";
+    if (height_value < 130 || height_value > 215) {
+      return "Height must be between 130 and 215 cm";
     }
     return "";
   };
@@ -65,8 +65,8 @@ function DiabetesClassification() {
   // Validate weight
   const validateWeight = (weight) => {
     const weight_value = parseFloat(weight);
-    if (weight_value <= 3 || weight_value > 635) {
-      return "Weight must be between 4 and 635 kg";
+    if (weight_value < 35 || weight_value > 180) {
+      return "Weight must be between 35 and 180 kg";
     }
     return "";
   };
@@ -166,7 +166,8 @@ function DiabetesClassification() {
           ? "Healthy"
           : "Error in prediction";
 
-      const probabilityText = data.probability;
+      // Use risk_level from the API response instead of probability
+      const riskLevelText = data.risk_level;
 
       // Add advice based on prediction
       let advice = "";
@@ -178,7 +179,7 @@ function DiabetesClassification() {
           "You may have prediabetes. Prevent diabetes by eating healthy, exercising regularly, managing weight, and reducing sugar intake. Consult a doctor for guidance.";
       } else if (data.prediction === 2) {
         advice =
-          "You may have diabetes. Consult a doctor for a treatment plan. Manage your blood sugar through diet, exercise, medication (if needed), and regular monitoring.";
+          "You may have diabetes. Consult a doctor about having a fasting blood glucose test. Act now to manage your health.";
       }
 
       // Determine text color based on prediction
@@ -194,9 +195,11 @@ function DiabetesClassification() {
           <div className={`diabetes-prediction-text ${predictionColor}`}>
             <strong>Prediction:</strong> {predictionText}
           </div>
-          <div className={`diabetes-probabilities ${predictionColor}`}>
-            <strong>Likelihood: </strong>
-            {(probabilityText * 100).toFixed(2)}%
+
+          <div className={`diabetes-risk-level-text ${predictionColor}`}>
+            <strong>Risk Level: </strong>
+            {riskLevelText}
+
           </div>
           <div className="diabetes-advice">
             <strong>Advice:</strong> {advice}
@@ -253,11 +256,11 @@ function DiabetesClassification() {
                 <input
                   type="number"
                   name="height"
-                  min="51"
-                  max="272"
+                  min="130"
+                  max="215"
                   value={formData.height}
                   onChange={handleChange}
-                  placeholder="51-272 cm"
+                  placeholder="130-215 cm"
                   required
                 />
                 {validationErrors.height && (
@@ -273,11 +276,11 @@ function DiabetesClassification() {
                 <input
                   type="number"
                   name="weight"
-                  min="4"
-                  max="635"
+                  min="35"
+                  max="180"
                   value={formData.weight}
                   onChange={handleChange}
-                  placeholder="4-635 kg"
+                  placeholder="35-180 kg"
                   required
                 />
                 {validationErrors.weight && (
