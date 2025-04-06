@@ -43,11 +43,11 @@ class MortalityPredictor(PredictionService):
             
             # Determine risk level based on probability thresholds
             if probability < 1/3:
-                risk_level = "Low Risk of Mortality"
+                risk_level = "Low Risk"
             elif probability < 2/3:
-                risk_level = "Medium Risk of Mortality"
+                risk_level = "Medium Risk"
             else:
-                risk_level = "High Risk of Mortality"
+                risk_level = "High Risk"
                 
             return {
                 "prediction": risk_level,
