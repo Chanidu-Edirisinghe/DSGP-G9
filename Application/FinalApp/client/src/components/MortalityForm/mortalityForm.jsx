@@ -140,9 +140,7 @@ function MortalityForm({ selectedPatient }) {
             }}
           >
             <div>{`Risk Level: ${riskLevel}`}</div>
-            <div>{`Probability: ${(predictionProbability * 100).toFixed(
-
-            )}%`}</div>
+            <div>{`Probability: ${(predictionProbability * 100).toFixed(2)}%`}</div>
           </div>
         </div>
       )}
