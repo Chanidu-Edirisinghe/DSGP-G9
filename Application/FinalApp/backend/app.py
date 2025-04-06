@@ -98,7 +98,7 @@ def predict_readmission():
             if doctor:
                 from PredictionRecord import PredictionRecord
                 record = PredictionRecord(
-                    user_id=str(doctor.id),
+                    doctor_id=str(doctor.id),
                     patient_name=patientName,
                     features=data,
                     prediction=response,
@@ -168,7 +168,7 @@ def predict_mortality():
     if doctor:
         from PredictionRecord import PredictionRecord
         record = PredictionRecord(
-            user_id=str(doctor.id),
+            doctor_id=str(doctor.id),
             patient_name=patientName,
             features=data,
             prediction=response,

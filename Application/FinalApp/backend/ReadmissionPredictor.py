@@ -63,11 +63,22 @@ class ReadmissionPredictor(PredictionService):
         try:
             processed_data = self.preprocess_data(data)
             processed_data = self.scaler.transform(processed_data)
-            predictionT = self.model.predict(processed_data)
             probabilities = self.model.predict_proba(processed_data)[:, 1]
-            threshold = 0.7
-            prediction = int(probabilities[0] >= threshold)
-            # return {"true_pred":predictionT[0], "prediction": prediction, "probability": round(float(probabilities[0]), 4)}
-            return {"prediction": prediction, "probability": round(float(probabilities[0]), 4)}
+            probability = float(probabilities[0])
+            print("Prediction: ", self.model.predict(processed_data))
+            print("Probabilities", self.model.predict_proba(processed_data))
+            
+            # Determine risk level based on probability thresholds
+            if probability < 1/3:
+                risk_level = "Low Risk of Readmission"
+            elif probability < 2/3:
+                risk_level = "Medium Risk of Readmission"
+            else:
+                risk_level = "High Risk of Readmission"
+                
+            return {
+                "prediction": risk_level,
+                "probability": round(probability, 4)
+            }
         except Exception as e:
             return {"error": str(e)}

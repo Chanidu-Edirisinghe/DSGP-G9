@@ -13,7 +13,10 @@ class Doctor:
     """Add a new patient to the doctor's records"""
     result = db_handler.add_patient(self.email, patient_name)
     if result:
-      new_patient = PatientRecord(patient_name, self.id)
+      # Create PatientRecord without setting doctor_id in constructor
+      new_patient = PatientRecord(patient_name, None)
+      # Manually set the _doctor_id attribute to bypass the property
+      new_patient._doctor_id = self.id
       self.patientRecords.append(new_patient)
     return result
   
@@ -50,6 +53,13 @@ class Doctor:
   @property
   def user_id(self):
       return self._id
+  
+  @user_id.setter
+  def user_id(self, new_id):
+      if isinstance(new_id, str) and new_id.strip():
+          self._id = new_id
+      else:
+          raise ValueError("Invalid user ID!")
 
   @property
   def name(self):

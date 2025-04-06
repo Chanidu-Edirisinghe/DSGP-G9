@@ -527,17 +527,27 @@ const Dashboard = () => {
     if (!predictionObj) return "N/A";
 
     if (type === "readmission") {
-      return predictionObj.prediction === 1
-        ? `Likely to be readmitted (${(predictionObj.probability * 100).toFixed(
-            2
-          )}%)`
-        : `Not likely to be readmitted (${(
-            predictionObj.probability * 100
-          ).toFixed(2)}%)`;
+      const probability = predictionObj.probability * 100;
+      const formattedProbability = probability.toFixed(2);
+
+      if (predictionObj.prediction === "High Risk of Readmission") {
+        return `High risk of readmission (${formattedProbability}%)`;
+      } else if (predictionObj.prediction === "Medium Risk of Readmission") {
+        return `Medium risk of readmission (${formattedProbability}%)`;
+      } else {
+        return `Low risk of readmission (${formattedProbability}%)`;
+      }
     } else if (type === "mortality") {
-      return predictionObj.prediction === 1
-        ? `High risk (${(predictionObj.death_probability * 100).toFixed(2)}%)`
-        : `Low risk (${(predictionObj.death_probability * 100).toFixed(2)}%)`;
+      const probability = predictionObj.death_probability * 100;
+      const formattedProbability = probability.toFixed(2);
+
+      if (predictionObj.prediction === "High Risk of Mortality") {
+        return `High risk of mortality (${formattedProbability}%)`;
+      } else if (predictionObj.prediction === "Medium Risk of Mortality") {
+        return `Medium risk of mortality (${formattedProbability}%)`;
+      } else {
+        return `Low risk of mortality (${formattedProbability}%)`;
+      }
     }
 
     return JSON.stringify(predictionObj);

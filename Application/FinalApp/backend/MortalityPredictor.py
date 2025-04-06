@@ -33,13 +33,25 @@ class MortalityPredictor(PredictionService):
     def predict(self, data):
         try:
             df = self.preprocess_data(data)
-            prediction = self.model.predict(df)
-            print(prediction)
-            prediction_prob = self.model.predict_proba(df)[0][prediction]
-            print(self.model.predict_proba(df))
+            probabilities = self.model.predict_proba(df)[:, 1]
+            probability = float(probabilities[0])
+        
+            print("Prediction: ", self.model.predict(df))
+            print("Probabilities", self.model.predict_proba(df))
+            print("Probability: ", probabilities)
+
+            
+            # Determine risk level based on probability thresholds
+            if probability < 1/3:
+                risk_level = "Low Risk of Mortality"
+            elif probability < 2/3:
+                risk_level = "Medium Risk of Mortality"
+            else:
+                risk_level = "High Risk of Mortality"
+                
             return {
-                "prediction": int(prediction[0]),
-                "death_probability": round(float(prediction_prob), 4)
+                "prediction": risk_level,
+                "death_probability": round(probability, 4)
             }
         except Exception as e:
             return {"error": str(e)}

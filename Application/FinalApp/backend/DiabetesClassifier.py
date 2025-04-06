@@ -40,14 +40,21 @@ class DiabetesClassifier(PredictionService):
         processed_data = self.preprocess_data(data)
         input_scaled = self.scaler.transform(processed_data)
         prediction = self.model.predict(input_scaled)
-        print(prediction)
-        print(self.model.predict_proba(input_scaled))
-        probability = max(self.model.predict_proba(input_scaled)[0])
-        print(probability)
+        print("Prediction: ", self.model.predict(input_scaled))
+        print("Probabilities", self.model.predict_proba(input_scaled))
+        
+        # Determine risk level based on prediction
+        risk_level = ""
+        if prediction == 0:  # healthy
+            risk_level = "Low Risk"
+        elif prediction == 1:  # pre-diabetes
+            risk_level = "Medium Risk"
+        elif prediction == 2:  # diabetes
+            risk_level = "High Risk"
         
         response = {
-            "prediction": int(prediction),  
-            "probability": float(probability)
+            "prediction": int(prediction),
+            "risk_level": risk_level
         }
 
         return response
