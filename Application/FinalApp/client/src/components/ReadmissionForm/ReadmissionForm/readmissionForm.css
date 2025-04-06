@@ -1,9 +1,8 @@
-
 .app-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60%; 
+  width: 63%; 
 }
 
 /* Form container */
@@ -74,6 +73,7 @@ input:focus, select:focus {
   margin: auto;
   text-transform: uppercase;
   display: block; /* Ensure it takes full width and centers */
+  margin-bottom: 2%;
 }
 
 
@@ -86,13 +86,28 @@ input:focus, select:focus {
 
 /* Prediction result */
 .result {
-  margin-top: 20px;
+  margin-top: 10px;
   font-weight: bold;
-  color: #28a745;
-  font-size: 18px;
+  font-size: 23px;
   padding: 12px;
   border-radius: 8px;
-  background: #e3ffe3;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
+  text-align: center;
+  background-color: #ffffff;
+}
+
+/* Risk level specific styling */
+.result-high {
+  color: #dc0f23;
+  background: #fff;
+}
+
+.result-medium {
+  color: #eca91a;
+  background: #fff;
+}
+
+.result-low {
+  color: #22c548;
+  background: #fff;
+}
+

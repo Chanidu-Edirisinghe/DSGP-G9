@@ -66,13 +66,8 @@ function ReadmissionForm({ selectedPatient }) {
       );
 
       console.log("API Response:", response.data);
-      setPrediction(
-        response.data.prediction === 1
-          ? "Likely to be readmitted"
-          : response.data.prediction === 0
-          ? "Likely not to be readmitted"
-          : "Error in prediction"
-      );
+      // Set the prediction based on the risk level returned from the API
+      setPrediction(response.data.prediction || "Error in prediction");
 
       // Store the probability if it exists in the response
       if (response.data.probability !== undefined) {
@@ -172,7 +167,9 @@ function ReadmissionForm({ selectedPatient }) {
                 <option value="">Select</option>
                 <option value="1">Physician Referral</option>
                 <option value="2">Clinic Referral</option>
-                <option value="3">HMO Referral</option>
+                <option value="3">
+                  Health Maintenance Organization(HMO) Referral
+                </option>
                 <option value="4">Transfer from a hospital</option>
                 <option value="5">
                   Transfer from a Skilled Nursing Facility (SNF)
@@ -201,8 +198,8 @@ function ReadmissionForm({ selectedPatient }) {
             {/* Diagnosis Selection */}
             <div className="input-group">
               <p>
-                The main condition that led to hospitalization (ICD-9
-                categories).
+                The main condition that led to hospitalization (primary
+                diagnosis).
               </p>
               <select
                 name="diag_1"
@@ -224,7 +221,8 @@ function ReadmissionForm({ selectedPatient }) {
             </div>
             <div className="input-group">
               <p>
-                A condition that coexists with or arises during hospitalization.
+                A condition that coexists with or arises during
+                hospitalization(secondary diagnosis).
               </p>
               <select
                 name="diag_2"
@@ -245,7 +243,10 @@ function ReadmissionForm({ selectedPatient }) {
               </select>
             </div>
             <div className="input-group">
-              <p>An additional condition noted during the hospital stay.</p>
+              <p>
+                An additional condition noted during the hospital
+                stay(Additional secondary diagnosis).
+              </p>
               <select
                 name="diag_3"
                 value={formData.diag_3}
@@ -266,7 +267,7 @@ function ReadmissionForm({ selectedPatient }) {
             </div>
 
             <div className="input-group">
-              <p>Integer number of days between admission and discharge.</p>
+              <p>Number of days between admission and discharge.</p>
               <input
                 type="number"
                 name="time_in_hospital"
@@ -309,8 +310,8 @@ function ReadmissionForm({ selectedPatient }) {
             </div>
             <div className="input-group">
               <p>
-                Number of distinct generic names administered during the
-                encounter.
+                Number of distinct generic names (medicine) administered during
+                the encounter.
               </p>
               <input
                 type="number"
@@ -381,7 +382,10 @@ function ReadmissionForm({ selectedPatient }) {
               "insulin",
             ].map((med) => (
               <div className="input-group" key={med}>
-                <p>Was the dosage of {med} changed during treatment?</p>
+                <p>
+                  Was {med} prescribed or was there a change in dosage during
+                  the encounter?
+                </p>
                 <select
                   name={med}
                   value={formData[med]}
@@ -389,10 +393,10 @@ function ReadmissionForm({ selectedPatient }) {
                   required
                 >
                   <option value="">Select</option>
-                  <option value="No">No</option>
-                  <option value="Up">Up</option>
-                  <option value="Down">Down</option>
-                  <option value="Steady">Steady</option>
+                  <option value="No">Not prescribed</option>
+                  <option value="Up">Prescribed Dosage increased</option>
+                  <option value="Down">Prescribed Dosage decreased</option>
+                  <option value="Steady">Prescribed Dosage unchanged</option>
                 </select>
               </div>
             ))}
@@ -420,10 +424,22 @@ function ReadmissionForm({ selectedPatient }) {
         </div>
 
         {prediction && (
-          <div className="result">
+          <div
+            className={`result ${
+              prediction.includes("High")
+                ? "result-high"
+                : prediction.includes("Medium")
+                ? "result-medium"
+                : prediction.includes("Low")
+                ? "result-low"
+                : ""
+            }`}
+          >
             <div>Prediction: {prediction}</div>
             {predictionProbability !== null && (
-              <div>Likelihood: {(predictionProbability * 100).toFixed(2)}%</div>
+              <div>
+                Probability: {(predictionProbability * 100).toFixed(2)}%
+              </div>
             )}
           </div>
         )}
