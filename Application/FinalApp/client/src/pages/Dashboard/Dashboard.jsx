@@ -4,6 +4,239 @@ import "./dashboard.css";
 import Footer from "../../components/Footer/footer";
 import Hero from "../../components/Hero/hero";
 
+// Utils for formatting and mapping values
+const READMISSION_FEATURE_DISPLAY_NAMES = {
+  race: "Ethnicity",
+  gender: "Gender",
+  age: "Age Group",
+  admission_type_id: "Admission Type",
+  admission_source_id: "Admission Source",
+  time_in_hospital: "Number of days between admission and discharge.",
+  num_lab_procedures: "Number of Lab Procedures",
+  num_procedures: "Number of Procedures",
+  num_medications: "Number of Medications",
+  number_outpatient: "Number of Outpatient Visits",
+  number_emergency: "Number of Emergency Visits",
+  number_inpatient: "Number of Inpatient Visits",
+  diag_1: "Primary Diagnosis",
+  diag_2: "Secondary Diagnosis",
+  diag_3: "Additional Diagnosis",
+  change: "Medication Changed",
+  metformin: "Metformin dosage changed",
+  glipizide: "Glipizide dosage changed",
+  pioglitazone: "Pioglitazone dosage changed",
+  rosiglitazone: "Rosiglitazone dosage changed",
+  acarbose: "Acarbose dosage changed",
+  insulin: "Insulin dosage changed",
+};
+
+// Mortality features display names
+const MORTALITY_FEATURE_DISPLAY_NAMES = {
+  age: "Age",
+  weight: "Weight",
+  height: "Height",
+  bmi: "Body Mass Index",
+  pre_icu_los_days: "Length of Stay Before ICU Admission",
+  d1_diasbp_max: "Highest Diastolic BP (first 24 hrs)",
+  d1_diasbp_min: "Lowest Diastolic BP (first 24 hrs)",
+  d1_heartrate_max: "Highest Heart Rate (first 24 hrs)",
+  d1_heartrate_min: "Lowest Heart Rate (first 24 hrs)",
+  d1_mbp_max: "Highest Mean BP (first 24 hrs)",
+  d1_mbp_min: "Lowest Mean BP (first 24 hrs)",
+  d1_resprate_max: "Highest Respiratory Rate (first 24 hrs)",
+  d1_resprate_min: "Lowest Respiratory Rate (first 24 hrs)",
+  d1_spo2_min: "Lowest SpO2 (first 24 hrs)",
+  d1_sysbp_max: "Highest Systolic BP (first 24 hrs)",
+  d1_sysbp_min: "Lowest Systolic BP (first 24 hrs)",
+  d1_temp_max: "Highest Temperature (first 24 hrs)",
+  d1_temp_min: "Lowest Temperature (first 24 hrs)",
+  h1_diasbp_max: "Highest Diastolic BP (first hour)",
+  h1_diasbp_min: "Lowest Diastolic BP (first hour)",
+  h1_heartrate_max: "Highest Heart Rate (first hour)",
+  h1_heartrate_min: "Lowest Heart Rate (first hour)",
+  h1_mbp_max: "Highest Mean BP (first hour)",
+  h1_mbp_min: "Lowest Mean BP (first hour)",
+  h1_resprate_max: "Highest Respiratory Rate (first hour)",
+  h1_resprate_min: "Lowest Respiratory Rate (first hour)",
+  h1_spo2_max: "Highest SpO2 (first hour)",
+  h1_spo2_min: "Lowest SpO2 (first hour)",
+  h1_sysbp_max: "Highest Systolic BP (first hour)",
+  h1_sysbp_min: "Lowest Systolic BP (first hour)",
+  d1_glucose_max: "Highest Glucose (first 24 hrs)",
+  d1_glucose_min: "Lowest Glucose (first 24 hrs)",
+  d1_potassium_max: "Highest Potassium (first 24 hrs)",
+  d1_potassium_min: "Lowest Potassium (first 24 hrs)",
+};
+
+// Admission types mapping
+const ADMISSION_TYPES = {
+  0: "Emergency",
+  1: "Urgent",
+  2: "Elective",
+  3: "Newborn",
+  4: "Not Available",
+  5: "Trauma Center",
+};
+
+// Admission sources mapping
+const ADMISSION_SOURCES = {
+  1: "Physician Referral",
+  2: "Clinic Referral",
+  3: "HMO Referral",
+  4: "Transfer from a hospital",
+  5: "Transfer from SNF",
+  6: "Transfer from another facility",
+  7: "Emergency Room",
+  8: "Court/Law Enforcement",
+  9: "Not Available",
+  10: "Transfer from critical access",
+  11: "Normal Delivery",
+  12: "Sick Baby",
+  13: "Extramural Birth",
+  14: "Transfer from inpatient",
+  15: "Transfer from Surgery Center",
+};
+
+// Ethnicity mapping
+const RACE_MAPPING = {
+  Caucasian: "Caucasian",
+  Asian: "Asian",
+  AfricanAmerican: "African American",
+  Hispanic: "Hispanic",
+  Other: "Other",
+};
+
+// Medication status mapping
+const MEDICATION_STATUS = {
+  No: "No",
+  Up: "Increased",
+  Down: "Decreased",
+  Steady: "Steady",
+};
+
+// Format prediction for display
+const formatPrediction = (predictionObj, type) => {
+  if (!predictionObj) return "N/A";
+
+  if (type === "readmission") {
+    return predictionObj.prediction === 1
+      ? `Likely to be readmitted (${(predictionObj.probability * 100).toFixed(
+          2
+        )}%)`
+      : `Not likely to be readmitted (${(
+          predictionObj.probability * 100
+        ).toFixed(2)}%)`;
+  } else if (type === "mortality") {
+    return predictionObj.prediction === 1
+      ? `High risk (${(predictionObj.death_probability * 100).toFixed(2)}%)`
+      : `Low risk (${(predictionObj.death_probability * 100).toFixed(2)}%)`;
+  }
+
+  return JSON.stringify(predictionObj);
+};
+
+// Format feature value for display
+const formatFeatureValue = (key, value) => {
+  if (value === undefined || value === null) return "N/A";
+
+  // Format specific fields based on their types
+  switch (key) {
+    case "metformin":
+    case "glipizide":
+    case "pioglitazone":
+    case "rosiglitazone":
+    case "acarbose":
+    case "insulin":
+      return MEDICATION_STATUS[value] || value;
+    case "change":
+      return value === "Ch" ? "Yes" : "No";
+    case "race":
+      return RACE_MAPPING[value] || value;
+    case "gender":
+    case "age":
+      return value;
+    case "admission_type_id":
+      return ADMISSION_TYPES[value] || value;
+    case "admission_source_id":
+      return ADMISSION_SOURCES[value] || value;
+    default:
+      return value;
+  }
+};
+
+// Define ordered keys for better display
+const READMISSION_KEY_ORDER = [
+  // Demographics
+  "race",
+  "gender",
+  "age",
+  // Admission info
+  "admission_type_id",
+  "admission_source_id",
+  "time_in_hospital",
+  // Medical info
+  "num_lab_procedures",
+  "num_procedures",
+  "num_medications",
+  "number_outpatient",
+  "number_emergency",
+  "number_inpatient",
+  // Diagnoses
+  "diag_1",
+  "diag_2",
+  "diag_3",
+  "change",
+  // Medications
+  "metformin",
+  "glipizide",
+  "pioglitazone",
+  "rosiglitazone",
+  "acarbose",
+  "insulin",
+];
+
+// Define ordered keys for mortality data
+const MORTALITY_KEY_ORDER = [
+  // Demographics and basic info
+  "age",
+  "weight",
+  "height",
+  "bmi",
+  "pre_icu_los_days",
+  // First hour vital signs
+  "h1_sysbp_max",
+  "h1_sysbp_min",
+  "h1_diasbp_max",
+  "h1_diasbp_min",
+  "h1_mbp_max",
+  "h1_mbp_min",
+  "h1_heartrate_max",
+  "h1_heartrate_min",
+  "h1_resprate_max",
+  "h1_resprate_min",
+  "h1_spo2_max",
+  "h1_spo2_min",
+  // First 24 hours vital signs
+  "d1_sysbp_max",
+  "d1_sysbp_min",
+  "d1_diasbp_max",
+  "d1_diasbp_min",
+  "d1_mbp_max",
+  "d1_mbp_min",
+  "d1_heartrate_max",
+  "d1_heartrate_min",
+  "d1_resprate_max",
+  "d1_resprate_min",
+  "d1_spo2_min",
+  "d1_temp_max",
+  "d1_temp_min",
+  // Lab values
+  "d1_glucose_max",
+  "d1_glucose_min",
+  "d1_potassium_max",
+  "d1_potassium_min",
+];
+
 const Dashboard = () => {
   const [readmissionData, setReadmissionData] = useState([]);
   const [mortalityData, setMortalityData] = useState([]);
@@ -77,6 +310,183 @@ const Dashboard = () => {
     try {
       console.log(`Downloading ${type} CSV...`);
 
+      // For readmission data, format on client side to maintain consistent display names
+      if (type === "readmission" && readmissionData.length > 0) {
+        // Format keys for the CSV header
+        const keys = [
+          "patient_name",
+          "prediction",
+          "created_at",
+          ...readmissionFeatureKeys,
+        ];
+        const headers = [
+          "Patient Name",
+          "Prediction",
+          "Date",
+          ...readmissionFeatureKeys.map(
+            (key) =>
+              READMISSION_FEATURE_DISPLAY_NAMES[key] ||
+              key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " ")
+          ),
+        ];
+
+        // Create CSV content
+        let csvContent = headers.join(",") + "\n";
+
+        // Add data rows
+        readmissionData.forEach((record) => {
+          const features =
+            typeof record.features === "object" ? record.features : {};
+          const prediction =
+            typeof record.prediction === "object"
+              ? record.prediction
+              : typeof record.prediction === "string"
+              ? JSON.parse(record.prediction)
+              : {};
+
+          const row = keys.map((key) => {
+            if (key === "patient_name") return record.patient_name;
+            if (key === "prediction")
+              return formatPrediction(prediction, "readmission").replace(
+                /,/g,
+                " -"
+              );
+            if (key === "created_at") return record.created_at;
+
+            // Format feature value using the same function as the table
+            return formatFeatureValue(key, features[key]).replace(/,/g, " -"); // Replace commas to avoid CSV issues
+          });
+
+          csvContent += row.join(",") + "\n";
+        });
+
+        // Create and download the CSV file
+        const blob = new Blob([csvContent], {
+          type: "text/csv;charset=utf-8;",
+        });
+        const today = new Date();
+        const formattedDate = `${today.getFullYear()}-${String(
+          today.getMonth() + 1
+        ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute(
+          "download",
+          `readmission_records_${formattedDate}.csv`
+        );
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(link);
+        }, 100);
+
+        return;
+      }
+
+      // For mortality data, format on client side to maintain consistent display names
+      if (type === "mortality" && mortalityData.length > 0) {
+        // Format keys for the CSV header
+        const keys = [
+          "patient_name",
+          "prediction",
+          "created_at",
+          ...mortalityFeatureKeys,
+        ];
+        const headers = [
+          "Patient Name",
+          "Prediction",
+          "Date",
+          ...mortalityFeatureKeys.map(
+            (key) =>
+              MORTALITY_FEATURE_DISPLAY_NAMES[key] ||
+              key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " ")
+          ),
+        ];
+
+        // Create CSV content
+        let csvContent = headers.join(",") + "\n";
+
+        // Add data rows
+        mortalityData.forEach((record) => {
+          const features =
+            typeof record.features === "object" ? record.features : {};
+          const prediction =
+            typeof record.prediction === "object"
+              ? record.prediction
+              : typeof record.prediction === "string"
+              ? JSON.parse(record.prediction)
+              : {};
+
+          const row = keys.map((key) => {
+            if (key === "patient_name") return record.patient_name || "";
+            if (key === "prediction") {
+              try {
+                return formatPrediction(prediction, "mortality").replace(
+                  /,/g,
+                  " -"
+                );
+              } catch (err) {
+                console.error("Error formatting prediction:", err);
+                return "Error";
+              }
+            }
+            if (key === "created_at") return record.created_at || "";
+
+            // Format feature value using the same function as the table
+            try {
+              const formattedValue = formatFeatureValue(key, features[key]);
+              return formattedValue
+                ? formattedValue.toString().replace(/,/g, " -")
+                : "";
+            } catch (err) {
+              console.error(`Error formatting feature ${key}:`, err);
+              return "";
+            }
+          });
+
+          csvContent += row.join(",") + "\n";
+        });
+
+        // Create and download the CSV file
+        try {
+          const blob = new Blob([csvContent], {
+            type: "text/csv;charset=utf-8;",
+          });
+          const today = new Date();
+          const formattedDate = `${today.getFullYear()}-${String(
+            today.getMonth() + 1
+          ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute(
+            "download",
+            `mortality_records_${formattedDate}.csv`
+          );
+          document.body.appendChild(link);
+          link.click();
+
+          // Clean up
+          setTimeout(() => {
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(link);
+          }, 100);
+        } catch (blobErr) {
+          console.error("Error creating blob or downloading:", blobErr);
+          alert(`Failed to download mortality records: ${blobErr.message}`);
+        }
+
+        return;
+      }
+
+      // Fallback to server-side download if client-side processing fails or if no data
+      console.log("Using server-side download for", type);
       const response = await axios({
         method: "get",
         url: `http://127.0.0.1:5000/download-csv/${type}`,
@@ -126,8 +536,8 @@ const Dashboard = () => {
           ).toFixed(2)}%)`;
     } else if (type === "mortality") {
       return predictionObj.prediction === 1
-        ? `High risk (${(predictionObj.probability * 100).toFixed(2)}%)`
-        : `Low risk (${(predictionObj.probability * 100).toFixed(2)}%)`;
+        ? `High risk (${(predictionObj.death_probability * 100).toFixed(2)}%)`
+        : `Low risk (${(predictionObj.death_probability * 100).toFixed(2)}%)`;
     }
 
     return JSON.stringify(predictionObj);
@@ -217,35 +627,9 @@ const Dashboard = () => {
     // Define key order based on form sections
     const keyOrder =
       type === "readmission"
-        ? [
-            // Demographics
-            "race",
-            "gender",
-            "age",
-            // Admission info
-            "admission_type_id",
-            "admission_source_id",
-            "time_in_hospital",
-            // Medical info
-            "num_lab_procedures",
-            "num_procedures",
-            "num_medications",
-            "number_outpatient",
-            "number_emergency",
-            "number_inpatient",
-            // Diagnoses
-            "diag_1",
-            "diag_2",
-            "diag_3",
-            "change",
-            // Medications
-            "metformin",
-            "glipizide",
-            "pioglitazone",
-            "rosiglitazone",
-            "acarbose",
-            "insulin",
-          ]
+        ? READMISSION_KEY_ORDER
+        : type === "mortality"
+        ? MORTALITY_KEY_ORDER
         : [];
 
     // Get all keys from records
@@ -306,8 +690,9 @@ const Dashboard = () => {
                         <th>Date</th>
                         {readmissionFeatureKeys.map((key) => (
                           <th key={key}>
-                            {key.charAt(0).toUpperCase() +
-                              key.slice(1).replace(/_/g, " ")}
+                            {READMISSION_FEATURE_DISPLAY_NAMES[key] ||
+                              key.charAt(0).toUpperCase() +
+                                key.slice(1).replace(/_/g, " ")}
                           </th>
                         ))}
                       </tr>
@@ -369,8 +754,9 @@ const Dashboard = () => {
                         <th>Date</th>
                         {mortalityFeatureKeys.map((key) => (
                           <th key={key}>
-                            {key.charAt(0).toUpperCase() +
-                              key.slice(1).replace(/_/g, " ")}
+                            {MORTALITY_FEATURE_DISPLAY_NAMES[key] ||
+                              key.charAt(0).toUpperCase() +
+                                key.slice(1).replace(/_/g, " ")}
                           </th>
                         ))}
                       </tr>

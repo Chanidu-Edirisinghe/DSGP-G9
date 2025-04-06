@@ -195,9 +195,11 @@ function DiabetesClassification() {
           <div className={`diabetes-prediction-text ${predictionColor}`}>
             <strong>Prediction:</strong> {predictionText}
           </div>
+
           <div className={`diabetes-risk-level-text ${predictionColor}`}>
             <strong>Risk Level: </strong>
             {riskLevelText}
+
           </div>
           <div className="diabetes-advice">
             <strong>Advice:</strong> {advice}

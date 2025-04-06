@@ -40,14 +40,14 @@ class DBHandler:
 
         return {"message": "User registered successfully"}, 201
     
-    def add_mortality(self, email, data, response, patientName):
+    def add_mortality(self, email, prediction_record):
         users_collection = self.mongo.db['User']  # Access the collection
         user = users_collection.find_one({"email": email})
         record = {
             "user_id": str(user["_id"]),  # Link record to logged-in user
-            "patient_name": patientName,
-            "features": data,  # All input features from form as received
-            "prediction": response,  # ML model prediction result
+            "patient_name": prediction_record.patient_name,
+            "features": prediction_record.features,  # All input features from form as received
+            "prediction": prediction_record.prediction,  # ML model prediction result
             "created_at": datetime.now(timezone.utc)  # Timestamp for history tracking
         }
         mortality_record_collection = self.mongo.db['MortalityRecords']  # Access the collection
@@ -140,14 +140,14 @@ class DBHandler:
             print(f"Error deleting patient: {e}")
             return False
         
-    def add_readmission(self, email, data, response, patientName):
+    def add_readmission(self, email, prediction_record):
         users_collection = self.mongo.db['User']  # Access the collection
         user = users_collection.find_one({"email": email})
         record = {
             "user_id": str(user["_id"]),
-            "patient_name": patientName,
-            "features": data,
-            "prediction": response,
+            "patient_name": prediction_record.patient_name,
+            "features": prediction_record.features,
+            "prediction": prediction_record.prediction,
             "created_at": datetime.now(timezone.utc)
         }
         readmission_record_collection = self.mongo.db['ReadmissionRecords']  # Access the collection
@@ -217,3 +217,17 @@ class DBHandler:
             formatted_records.append(record)
         
         return formatted_records
+
+# for navbar
+    def get_user_info(self, email):
+        users_collection = self.mongo.db['User']
+        user = users_collection.find_one({"email": email})
+    
+        if user:
+            # Return user info without sensitive data like password
+            return {
+                "name": user.get("name", ""),
+                "email": user.get("email", ""),
+                "id": str(user.get("_id", ""))
+            }
+        return None

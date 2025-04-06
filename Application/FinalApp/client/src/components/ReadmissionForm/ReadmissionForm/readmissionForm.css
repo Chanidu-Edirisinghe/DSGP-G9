@@ -1,0 +1,113 @@
+.app-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 63%; 
+}
+
+/* Form container */
+.container {
+  background: white;
+  padding: 50px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  margin-bottom: 8%; /* Push the container down */
+  transition: transform 0.3s ease-in-out;
+}
+
+.form-container {
+  max-height: 750px;
+  overflow-y: auto;
+  width: 100%;
+  padding-right: 5%;
+}
+
+.form-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.form-container::-webkit-scrollbar-thumb {
+  background: #6a11cb;
+  border-radius: 10px;
+}
+
+.form-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Input styles */
+.input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  transition: 0.3s;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus {
+  border-color: #6a11cb;
+  box-shadow: 0 0 8px rgba(106, 17, 203, 0.3);
+  outline: none;
+}
+
+/* Submit button */
+.submit-btn {
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  color: white;
+  padding: 14px;
+  border: none;
+  width: 90%;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.3s;
+  margin: auto;
+  text-transform: uppercase;
+  display: block; /* Ensure it takes full width and centers */
+  margin-bottom: 2%;
+}
+
+
+.submit-btn:hover {
+  background: linear-gradient(90deg, #2575fc, #6a11cb);
+  box-shadow: 0 4px 12px rgba(106, 17, 203, 0.4);
+  transform: scale(1.05);
+}
+
+
+/* Prediction result */
+.result {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 23px;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+/* Risk level specific styling */
+.result-high {
+  color: #dc0f23;
+  background: #fff;
+}
+
+.result-medium {
+  color: #eca91a;
+  background: #fff;
+}
+
+.result-low {
+  color: #22c548;
+  background: #fff;
+}
+

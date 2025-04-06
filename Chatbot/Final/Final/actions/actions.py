@@ -175,10 +175,10 @@ class ValidateDiabetesForm(FormValidationAction):
         # Validate the input
         if normalized_value in ["yes", "y"]:
             print("Set high_blood_pressure to 1")
-            return {"high_blood_pressure": "1"}
+            return {"high_blood_pressure": "yes"}
         elif normalized_value in ["no", "n"]:
             print("Set high_blood_pressure to 0")
-            return {"high_blood_pressure": "0"}
+            return {"high_blood_pressure": "no"}
         else:
             print("Invalid input for high_blood_pressure")
             dispatcher.utter_message(text="Invalid input. Please respond with 'yes' or 'no'.")
@@ -203,10 +203,10 @@ class ValidateDiabetesForm(FormValidationAction):
         # Validate the input
         if normalized_value in ["yes", "y"]:
             print("Set high_cholesterol to 1")
-            return {"high_cholesterol": "1"}
+            return {"high_cholesterol": "yes"}
         elif normalized_value in ["no", "n"]:
             print("Set high_cholesterol to 0")
-            return {"high_cholesterol": "0"}
+            return {"high_cholesterol": "no"}
         else:
             print("Invalid input for high_cholesterol")
             dispatcher.utter_message(text="Invalid input. Please respond with 'yes' or 'no'.")
@@ -304,9 +304,9 @@ class ValidateDiabetesForm(FormValidationAction):
         
         # Validate the input
         if normalized_value in ["yes", "y"]:
-            return {"smoker": "1"}
+            return {"smoker": "yes"}
         elif normalized_value in ["no", "n"]:
-            return {"smoker": "0"}
+            return {"smoker": "no"}
         else:
             dispatcher.utter_message(text="Invalid input. Please respond with 'yes' or 'no'.")
             return {"smoker": None}
@@ -326,9 +326,9 @@ class ValidateDiabetesForm(FormValidationAction):
         
         # Validate the input
         if normalized_value in ["yes", "y"]:
-            return {"physical_activity": "1"}
+            return {"physical_activity": "yes"}
         elif normalized_value in ["no", "n"]:
-            return {"physical_activity": "0"}
+            return {"physical_activity": "no"}
         else:
             dispatcher.utter_message(text="Invalid input. Please respond with 'yes' or 'no'.")
             return {"physical_activity": None}  
@@ -347,9 +347,9 @@ class ValidateDiabetesForm(FormValidationAction):
             return {"fruits": None, "continue_form": None} 
         # Validate the input
         if normalized_value in ["yes", "y"]:
-            return {"fruits": "1"}
+            return {"fruits": "yes"}
         elif normalized_value in ["no", "n"]:
-            return {"fruits": "0"}
+            return {"fruits": "no"}
         else:
             dispatcher.utter_message(text="Invalid input. Please respond with 'yes' or 'no'.")
             return {"fruits": None}  
@@ -368,9 +368,9 @@ class ValidateDiabetesForm(FormValidationAction):
             return {"veggies": None, "continue_form": None} 
         # Validate the input
         if normalized_value in ["yes", "y"]:
-            return {"veggies": "1"}
+            return {"veggies": "yes"}
         elif normalized_value in ["no", "n"]:
-            return {"veggies": "0"}
+            return {"veggies": "no"}
         else:
             dispatcher.utter_message(text="Invalid input. Please respond with 'yes' or 'no'.")
             return {"veggies": None}
@@ -410,9 +410,9 @@ class ValidateDiabetesForm(FormValidationAction):
         
         # Validate the input
         if normalized_value in ["yes", "y"]:
-            return {"diffWalk": "1"}
+            return {"diffWalk": "yes"}
         elif normalized_value in ["no", "n"]:
-            return {"diffWalk": "0"}
+            return {"diffWalk": "no"}
         else:
             dispatcher.utter_message(text="Invalid input. Please respond with 'yes' or 'no'.")
             return {"diffWalk": None}
@@ -432,9 +432,9 @@ class ValidateDiabetesForm(FormValidationAction):
         
         # Validate the input
         if normalized_value in ["male", "m"]:
-            return {"sex": "1"}
+            return {"sex": "male"}
         elif normalized_value in ["female", "f"]:
-            return {"sex": "0"}
+            return {"sex": "female"}
         else:
             dispatcher.utter_message(text="Invalid input. Please respond with 'male' or 'female'.")
             return {"sex": None}

@@ -147,33 +147,30 @@ const PatientManager = ({ onSelectPatient }) => {
           {/* Select Patient Section */}
           <div className="control-group">
             <label className="input-label">Select Patient</label>
-            <select
-              value={selectedPatientId}
-              onChange={handleSelectChange}
-              className="select-input"
-              disabled={isLoading}
-            >
-              <option value="">-- Select a patient --</option>
-              {patients.map((patient) => (
-                <option key={patient.id} value={patient.id}>
-                  {patient.name}
-                </option>
-              ))}
-            </select>
-            {isLoading && <span className="loading-text"> Loading...</span>}
-          </div>
-
-          {/* Delete Button */}
-          <div className="button-container">
-            <button
-              onClick={handleDeletePatient}
-              disabled={!selectedPatientId}
-              className={
-                selectedPatientId ? "delete-button" : "delete-button disabled"
-              }
-            >
-              Delete
-            </button>
+            <div className="input-with-button">
+              <select
+                value={selectedPatientId}
+                onChange={handleSelectChange}
+                className="select-input"
+                disabled={isLoading}
+              >
+                <option value="">-- Select a patient --</option>
+                {patients.map((patient) => (
+                  <option key={patient.id} value={patient.id}>
+                    {patient.name}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={handleDeletePatient}
+                disabled={!selectedPatientId}
+                className={
+                  selectedPatientId ? "delete-button" : "delete-button disabled"
+                }
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
 

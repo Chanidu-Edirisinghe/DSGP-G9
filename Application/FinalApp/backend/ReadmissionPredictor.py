@@ -11,8 +11,8 @@ class ReadmissionPredictor(PredictionService):
             self.scaler = pickle.load(f)
         
         # Encoding dictionaries
-        self.medication_encoding = {"No": 0, "Down": 2, "Steady": 3, "Up": 1}
-        self.age_encoding = {"[0-10)": 1, "[10-20)": 2, "[20-30)": 3, "[30-40)": 4, "[40-50)": 5, "[50-60)": 6, "[60-70)": 7, "[70-80)": 8, "[80-90)": 9, "[90-100)": 0}
+        self.medication_encoding = {"No": 0, "Down": 1, "Steady": 2, "Up": 3}
+        self.age_encoding = {"[0-10)": 0, "[10-20)": 1, "[20-30)": 2, "[30-40)": 3, "[40-50)": 4, "[50-60)": 5, "[60-70)": 6, "[70-80)": 7, "[80-90)": 8, "[90-100)": 9}
         self.admission_type_encoding = {1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5}
         self.admission_source_encoding = {i: i - 1 for i in range(1, 16)}
         self.race_encoding = {"AfricanAmerican": 0, "Asian": 1, "Caucasian": 2, "Hispanic": 3, "Other": 4}
