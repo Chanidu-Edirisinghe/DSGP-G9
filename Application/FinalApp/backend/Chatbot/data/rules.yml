@@ -1,0 +1,45 @@
+version: "3.1"
+
+rules:
+  - rule: User greets
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - rule: User says goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - rule: User asks if he is talking to a bot
+    steps:
+      - intent: bot_challenge
+      - action: utter_iamabot
+
+  - rule: Activate diabetes classification form
+    steps:
+      - intent: request_diabetes_prediction
+      - action: utter_gather_data
+      - action: diabetes_classification_form
+      - active_loop: diabetes_classification_form
+
+  - rule: The form ends
+    condition:
+      - active_loop: diabetes_classification_form
+    steps:
+      - action: diabetes_classification_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: action_submit_details # handle with custom action
+      - action: action_clear_slots
+
+  - rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+    steps:
+      - intent: nlu_fallback
+      - action: utter_please_rephrase
+
+  - rule: out-of-scope
+    steps:
+      - intent: out_of_scope
+      - action: utter_out_of_scope
