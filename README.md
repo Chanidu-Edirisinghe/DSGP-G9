@@ -122,8 +122,15 @@ This combination of technologies enables DiaTrack to provide a robust, scalable,
 
 The requirements documents for the application's backend and the chatbot are included:
 
-- Backend Requirements: [requirements.txt](Application\FinalApp\backend\requirements.txt)
-- Chatbot Requirements: [chatbotRequirements.txt](Application\FinalApp\backend\chatbotRequirements.txt)
+- Backend Requirements: [requirements.txt](Application/FinalApp/backend/requirements.txt)
+- Chatbot Requirements: [chatbotRequirements.txt](Application/FinalApp/backend/chatbotRequirements.txt)
+
+To run the application, you need to create a .env file in the root directory with the following environment variables:
+
+MONGO_URI="your_mongo_connection_string"
+JWT_SECRET_KEY="your_jwt_secret_key"
+
+Replace the placeholders with your actual values.
 
 To set up the chatbot, refer to this guide: https://www.youtube.com/watch?v=RVoFqxmG8p0&ab_channel=Rasa
 
