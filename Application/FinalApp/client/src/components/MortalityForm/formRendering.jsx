@@ -5,7 +5,7 @@ export const labelMapping = {
   weight: { label: "Weight", unit: "(kg)" },
   height: { label: "Height", unit: "(cm)" },
   bmi: { label: "BMI", unit: "(kg/m²)" },
-  pre_icu_los_days: { label: "Pre-ICU LOS Days", unit: "(days)" },
+  pre_icu_los_days: { label: "Pre-ICU Length of Stay", unit: "(days)" },
   d1_diasbp: { label: "Diastolic BP (first 24 hrs)", unit: "(mmHg)" },
   d1_heartrate: { label: "Heart Rate (first 24 hrs)", unit: "(bpm)" },
   d1_mbp: { label: "Mean BP (first 24 hrs)", unit: "(mmHg)" },

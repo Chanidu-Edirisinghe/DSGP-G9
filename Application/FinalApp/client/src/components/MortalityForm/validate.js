@@ -1,8 +1,8 @@
 // Field validation limits with error messages
 export const fieldLimits = {
-    age: { min: 0, max: 105, message: "Age must be between 0 and 105 years" },
-    weight: { min: 5, max: 150, message: "Weight must be between 5 and 150 kg" },
-    height: { min: 50, max: 250, message: "Height must be between 50 and 250 cm" },
+    age: { min: 0, max: 100, message: "Age must be between 0 and 100 years" },
+    weight: { min: 5, max: 180, message: "Weight must be between 5 and 180 kg" },
+    height: { min: 40, max: 215, message: "Height must be between 40 and 215 cm" },
     pre_icu_los_days: { min: 0, max: 60, message: "Pre-ICU stay must be between 0 and 60 days" },
     d1_spo2_min: { min: 50, max: 100, message: "SpO2 must be between 50% and 100%" },
     d1_diasbp_max: { min: 30, max: 200, message: "Diastolic BP must be between 30 and 200 mmHg" },
