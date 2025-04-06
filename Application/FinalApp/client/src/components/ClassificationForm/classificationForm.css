@@ -117,14 +117,31 @@
 }
 
 .diabetes-prediction-text {
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 500;
   color: #333;
 }
 
-.diabetes-probabilities {
-  font-size: 14px;
+.diabetes-risk-level-text{
+  font-size: 20px;
   color: #555;
+}
+
+.diabetes-advice{
+  font-size: 18px;
+}
+
+/* Prediction text colors */
+.diabetes-text-red {
+  color: #fe2720; /* Red color for diabetes */
+}
+
+.diabetes-text-orange {
+  color: #ffa11e; /* Orange color for prediabetes */
+}
+
+.diabetes-text-green {
+  color: #25e125; /* Green color for healthy */
 }
 
 @media (max-width: 768px) {
