@@ -62,6 +62,7 @@ DiaTrack is a **web-based decision support system** addressing major challenges 
 ![WhatsApp Image 2025-04-06 at 12 55 53_fe4ddcd1](https://github.com/user-attachments/assets/eafa35a7-4763-4a72-a5ee-38e1a59e5cee)
 
 ##### Class Diagram
+
 ![Class Diagram1](https://github.com/user-attachments/assets/70010c84-4a5f-4737-899f-0df15477e8bf)
 
 ---
@@ -75,46 +76,56 @@ The DiaTrack project uses a modern, full-stack approach that integrates several 
 ![Tech Stack](https://github.com/user-attachments/assets/07c71b90-ec57-4191-8105-94539273c5f2)
 
 #### Backend and Machine Learning:
-- Python is used as the primary programming language.
--  Libraries such as Scikit-learn, Pandas, and TensorFlow are employed for data processing, model training, and evaluation.
--  lask serves as the REST API framework that connects the machine learning models with the frontend.
 
-•	Frontend:
+- Python is used as the primary programming language.
+- Libraries such as Scikit-learn, Pandas, and TensorFlow are employed for data processing, model training, and evaluation.
+- lask serves as the REST API framework that connects the machine learning models with the frontend.
+
+• Frontend:
+
 - The user interface is built with HTML, CSS, and JavaScript, with React used to develop a dynamic and responsive web experience.
 
-•	Chatbot:
+• Chatbot:
+
 - The system incorporates a conversational interface using the RASA framework, which handles natural language understanding (NLU) and dialogue management for collecting data and providing health advice.
 
-•	Database and Deployment:
--	MongoDB, a NoSQL database, is used to store patient data and model results efficiently.
--	The project utilizes version control with GitHub to manage the codebase and collaboration.
+• Database and Deployment:
+
+- MongoDB, a NoSQL database, is used to store patient data and model results efficiently.
+- The project utilizes version control with GitHub to manage the codebase and collaboration.
 
 ##### Libraries & Frameworks:
 
-| Library              | Version  |
-|----------------------|----------|
-| pandas               | 2.2.2    |
-| seaborn              | 0.13.2   |
-| matplotlib           | 3.10.0   |
-| numpy                | 1.26.4   |
-| sklearn              | 1.6.1    |
-| imblearn             | 0.13.0   |
-| xgboost              | 2.1.4    |
-| catboost             | 1.2.7    |
-| scipy                | 1.13.1   |
-| tensorflow           | 2.12.0   |
-| flask                | 3.1.0    |
-| flask-cors           | 5.0.1    |
-| flask-pymongo        | 3.0.1    |
-| flask-jwt-extended   | 4.7.1    |
-| flask-caching        | 2.3.1    |
-| python-dotenv        | 1.1.0    |
-| pymongo              | 4.11.2   |
-| axios                | 1.8.1    |
-| react-router-dom     | 7.2.0    |
-
+| Library            | Version |
+| ------------------ | ------- |
+| pandas             | 2.2.3   |
+| seaborn            | 0.13.2  |
+| matplotlib         | 3.10.0  |
+| numpy              | 1.26.4  |
+| sklearn            | 1.6.1   |
+| imblearn           | 0.13.0  |
+| xgboost            | 2.1.4   |
+| catboost           | 1.2.7   |
+| scipy              | 1.15.2  |
+| tensorflow         | 2.12.0  |
+| flask              | 3.1.0   |
+| flask-cors         | 5.0.1   |
+| flask-pymongo      | 3.0.1   |
+| flask-jwt-extended | 4.7.1   |
+| flask-caching      | 2.3.1   |
+| python-dotenv      | 1.1.0   |
+| pymongo            | 4.11.3  |
+| axios              | 1.8.1   |
+| react-router-dom   | 7.2.0   |
 
 This combination of technologies enables DiaTrack to provide a robust, scalable, and user-friendly platform for diabetes risk assessment and predictive analytics.
+
+The requirements documents for the application's backend and the chatbot are included:
+
+- Backend Requirements: [requirements.txt](Application\FinalApp\backend\requirements.txt)
+- Chatbot Requirements: [chatbotRequirements.txt](Application\FinalApp\backend\chatbotRequirements.txt)
+
+To set up the chatbot, refer to this guide: https://www.youtube.com/watch?v=RVoFqxmG8p0&ab_channel=Rasa
 
 ### ✅ Testing Procedures
 
@@ -136,8 +147,7 @@ This combination of technologies enables DiaTrack to provide a robust, scalable,
 ### 🔮 Future Enhancements
 
 - Include **additional risk factors** in predictive models.
-- Improve **chatbot's natural language understanding** for more personalized advice.
+- Improve **chatbot's natural language understanding** to provide answers that are easy to comprehend, varied, and offer more personalized advice.
 - Expand to **mobile platforms** for broader accessibility.
 
 ---
-
