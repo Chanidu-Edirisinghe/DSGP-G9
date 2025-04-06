@@ -49,7 +49,7 @@ DiaTrack is a **web-based decision support system** addressing major challenges 
 - Utilized **three datasets** for:
   - Diabetes Classification
   - 30-day Readmission Prediction
-  - In-hospital Mortality Prediction[https://docs.google.com/spreadsheets/d/1W0qma92R2J2PvwkTL4eGow5TBEEdIVG5B2Hmo7yX7kQ/edit?usp=drive_link]
+  - In-hospital Mortality Prediction
 - Conducted thorough experimentation with ML algorithms to select the most accurate models.
 
 ### 🚀 Development Approach
